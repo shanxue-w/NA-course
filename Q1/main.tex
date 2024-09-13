@@ -1,0 +1,267 @@
+\documentclass[a4paper]{article}
+\usepackage[affil-it]{authblk}
+\usepackage{float}
+\usepackage{amsmath, amssymb, amsthm, amsfonts}
+\usepackage[backend=bibtex,style=numeric]{biblatex}
+\usepackage{graphicx}
+
+\usepackage{geometry}
+\geometry{margin=1.5cm, vmargin={0pt,1cm}}
+\setlength{\topmargin}{-1cm}
+\setlength{\paperheight}{29.7cm}
+\setlength{\textheight}{25.3cm}
+
+\addbibresource{citation.bib}
+
+\begin{document}
+% =================================================
+\title{Numerical Analysis homework \# 1}
+
+\author{Wanghao 3220104819
+  \thanks{Electronic address: \texttt{3220104819@zju.edu.cn}}}
+\affil{(Mathematics and Applied Mathematics 2201), Zhejiang University }
+
+
+\date{Due time: \today}
+
+\maketitle
+
+% \begin{abstract}
+%     The abstract is not necessary for the theoretical homework, 
+%     but for the programming project, 
+%     you are encouraged to write one.      
+% \end{abstract}
+
+
+% ============================================
+\section*{I. Bisection Method Interval Width and Root Proximity}
+
+\subsection*{I-a}
+
+We can easily determine the initial interval width:
+\begin{equation}
+  l_0 = 3.5 - 1.5 = 2
+\end{equation}
+
+Thus, let the interval width at the $n$-th step be $l_n$, it satisfies the following relation:
+\begin{equation}
+  l_n = l_0 \times 2^{-n} = 2^{1-n}
+\end{equation}
+
+
+\subsection*{I-b}
+\label{subsection:1-b}
+
+We let the interval to be $[a_n, b_n]$, then the midpoint $c_n = \frac{a_n + b_n}{2}$. For the root $r \in [a_n, b_n]$, the distance between $c_n$ and $r$ satisfies:
+
+\begin{equation}
+  \vert c_n - r \vert \leq \min \{r-a_n, b_n-r\} \leq \frac{b_n - a_n}{2} = \frac{l_n}{2} = 2^{-n}
+\end{equation}
+
+Therefore the supermum distance between $c_n$ and $r$ is $2^{-n}$.
+
+\section*{II. Bisection Algorithm Accuracy Proof}
+\label{sec::II}
+
+Proof: the relative error at the $n$-th step is $\eta_n = \frac{\vert c_n - r \vert}{\vert r \vert} $. Using the similar method in \ref{subsection:1-b}, we have $\vert c_n - r \vert \leq (b_0 - a_0) 2^{-n-1}$, thus we have:
+
+\begin{equation}
+  \eta_n = \frac{\vert c_n - r \vert}{\vert r \vert} \leq \frac{(b_0 - a_0) 2^{-n-1}}{r} \leq \frac{(b_0 - a_0) 2^{-n-1}}{a_0}
+\end{equation}
+
+In order to make the relative error less than $\epsilon$, we get the inequality:
+\begin{equation}
+  \frac{(b_0 - a_0) 2^{-n-1}}{a_0} \leq \epsilon
+  \label{eq::II-1}
+\end{equation}
+
+By solving \ref{eq::II-1}, we get the following inequality:
+\begin{equation}
+  n \ge \frac{\log (b_0-a_0) - \log \epsilon - \log a_0}{\log 2} - 1
+\end{equation}
+
+Thus we prove the inequality.
+
+\section*{III. Newton's Method Iterations for Polynomial Equation}
+
+For the polynomial $p(x) = 4x^3-2x^2+3$, so $p^{\prime} = 12x^2-4x$. Therefore, the iteration relation is:
+\begin{equation}
+  x_{n+1} = x_n - \frac{p(x_n)}{p^{\prime}(x_n)} = x_n - \frac{4x_n^3-2x_n^2+3}{12x_n^2-4x_n}
+\end{equation}
+
+\newpage
+
+The iteration table is shown below:
+
+\begin{table}[H]
+  \begin{center}
+    \begin{tabular}{|c|c|c|}
+      \hline
+      $n$ & $x_n$ & $p(x_n)$\\ \hline
+      0 & -1.000000000 & -3.000000000 \\ \hline
+      1 & -0.812500000 & -0.465820312 \\ \hline
+      2 & -0.770804196 & -0.020137887 \\ \hline
+      3 & -0.768832384 & -0.000043708 \\ \hline
+      4 & -0.768828086 & -0.000000000 \\ \hline
+      5 & -0.768828086 & 0.000000000 \\ \hline
+      6 & -0.768828086 & 0.000000000 \\ \hline
+    \end{tabular}
+  \end{center}
+\end{table}
+
+\section*{IV. Convergence of another Newton's Method}
+
+In this section, we will consider a variation of Newton's method and study its convergence properties, which is defined as follows:
+\begin{equation}
+  x_{n+1} = x_n - \frac{p(x_n)}{p^{\prime}(x_0)}
+\end{equation}
+
+We give some notations here: $\alpha$ is the root of the function $f(x)$, $e_n$ is the error at the $n$-th step, $e_n = \vert x_n - \alpha \vert$. 
+
+By Taylor expansion, we have:
+\begin{equation}
+  \begin{aligned}
+    f(x_n) = f(\alpha) + f^{\prime}(\xi) (x_n - \alpha) = f^{\prime}(\xi) (x_n - \alpha)\\
+  \end{aligned}
+\end{equation}
+
+So we have:
+\begin{equation}
+  e_{n+1} = \vert x_{n+1} - \alpha \vert = \vert 1-\frac{f^\prime(\xi)}{f^\prime(x_0)} \vert e_n, ~~\xi \in (x_n, \alpha) ~or~ \xi \in (\alpha, x_n)
+\end{equation}
+
+Therefore $C = \vert 1-\frac{f^\prime(\xi)}{f^\prime(x_0)} \vert, ~~\xi \in (x_n, \alpha) ~or~ \xi \in (\alpha, x_n)$, $s = 1$
+
+\section*{V. Convergence of A Certain Iterative Function}
+
+In this section, we will consider the convergence of the following iteration:
+\begin{equation}
+  x_{n+1} = \tanh^{-1} (x_n), ~~x_0 \in (-\frac{\pi}{2}, \frac{\pi}{2}) 
+\end{equation}
+
+We need some properties of the function $f(x) = \tanh^{-1}(x)$. If $x>0$, then $f(x) > 0$, if $x<0$, then $f(x) < 0$. 
+
+Moreover, when $x>0,~\tanh^{-1}(x) < x$, when $x<0,~\tanh^{-1}(x) > x$.
+
+Therefore, if $x_0 > 0$, then $0< x_1 < x_0$. By mathematical induction, we have $0 < x_n < x_{n-1} < \cdots < x_0$. So this is a monotonically decreasing and bounded sequence, thus it converges.
+
+If $x_0 < 0$, then $0 > x_1 > x_0$. By mathematical induction, we have $0 > x_n > x_{n-1} > \cdots > x_0$. So this is a monotonically increasing and bounded sequence, thus it converges.
+
+If $x_0 = 0$, then $x_1 = 0, \cdots, x_n = 0$, so it converges.
+
+In conclusion, the sequence converges for all $x_0 \in (-\frac{\pi}{2}, \frac{\pi}{2})$.
+
+\section*{VI. Value of A Continued Fraction}
+
+In this section, we will calculate the value of the continued fraction:
+\begin{equation}
+  x = \frac{1}{p + \frac{1}{p + \frac{1}{p + \cdots}}}, p>1
+\end{equation}
+
+To solve this, we define $x_1 = \frac{1}{p}, x_2 = \frac{1}{p+\frac{1}{p}}$ and so forth. Then we have a iteration relation:
+\begin{equation}
+  x_{n+1} = \frac{1}{p + x_n}, ~~x_0 = \frac{1}{p}
+\end{equation}
+
+So the value of the continued fraction is the limit of the sequence $\{x_n\}$. Next, we will prove the convergence of the sequence and calculate the limit of the sequence.
+
+\textbf{1. Convergence of the sequence}
+
+We have $x_1 > 0$, $x_{n+1} = \frac{1}{p + x_n}$, so by mathematical induction, we have $x_n > 0$. Consider the function $f(x) = \frac{1}{p+x}$, we know that $f^\prime = -\frac{1}{(p+x)^2}$. We have $\forall x>0, \vert f\prime(x) \vert = \frac{1}{(p+x)^2} < \frac{1}{p^2} < 1$. 
+
+By the convergence of contractions, we know that the sequence converges.
+
+\textbf{2. Calculate the limit of the sequence}
+
+Now we know that the sequence converges, let the limit be $x$, then we have:
+\begin{equation}
+  \begin{aligned}
+    x &= f(x) = \frac{1}{p+x}\\
+    \Rightarrow x &= \frac{\sqrt{p^2+4} - p}{2}
+  \end{aligned}
+\end{equation}
+
+In conclusion, the value of the continued fraction is $\frac{\sqrt{p^2+4} - p}{2}$.
+
+\section*{VII. Bisection Method with Negative Initial Interval}
+
+Similar to \ref{sec::II}, we can prove the relative error at the $n$-th step is $\eta_n \le \frac{\vert (b_0-a_0)2^{-n-1}\vert}{\vert r \vert} $.
+
+So $\eta_n \le \epsilon \Rightarrow n \ge \frac{\log (b_0-a_0) - \log \epsilon - \log \vert r \vert}{\log 2} - 1$, $r$ represents the root of the function.
+
+There is no better way to imporve the inequality, because we don't know more information about the function and root. 
+
+Due to the root $r$ may very close to $0$ and the inequality is hard to compute, so the relative error is not an appropriate measure of the accuracy of the bisection method.
+
+\section*{VII. Newton's Method with Multiple Zeros}
+
+\subsection*{VII-a}
+\label{subsec::VII-a}
+
+We first prove that Newton's method converges linearly when the root is multiple. We assume that the root is $x^*$ and the multiplicity of the root is $k$. So we can write $f(x) = (x-x^*)^k g(x), g(x^*) \ne 0$. Let $\varphi(x) = x - \frac{f(x)}{f^\prime(x)}$, then we have:
+\begin{equation}
+  \varphi^\prime (x) = 1 - \frac{[f^\prime (x)]^2 - f(x)f^{\prime \prime}(x)}{[f^\prime (x)]^2} = \frac{f(x)f^{\prime \prime}(x)}{[f^\prime (x)]^2}
+\end{equation}
+
+$\varphi^\prime (x^*) = 0$. Therefore, when $x$ is close to $x^*$, $\vert \varphi^\prime (x) \vert < 1$, by the convergence of contractions, we know that the Newton's method converges. 
+
+\textbf{The convergence rate of the Newton's method is linear.}
+
+By Newton's method, we have:
+
+\begin{equation}
+  \begin{aligned}
+    x_{n+1} &= x_n - \frac{f(x_n)}{f^\prime(x_n)} = x_n - \frac{(x_n-x^*)^k g(x_n)}{k(x_n-x^*)^{k-1}g(x_n) + (x_n-x^*)^k g^\prime(x_n)}\\
+    &= x_n - \frac{(x_n-x^*) g(x_n)}{k g(x_n) + (x_n-x^*) g^\prime(x_n)} \\ 
+    x_{n+1} - x^* &= (x_n - x^*) (1 - \frac{g(x_n)}{k g(x_n) + (x_n-x^*) g^\prime(x_n)}) \\ 
+    \lim_{n \rightarrow +\infty}\frac{x_{n+1} - x^*}{x_n - x^*} &= \frac{k-1}{k}
+  \end{aligned}
+  \label{eq::VII-a}
+\end{equation}
+
+By \ref{eq::VII-a}, we can easily know that $\lim_{n \rightarrow +\infty}\vert \frac{x_{n+2} - x_{n+1}}{x_{n+1} - x_{n}} \vert = \frac{k-1}{k}$
+
+Therefore, the Newton's method converges linearly when the root is a multiple root. 
+
+So if we have the points $(x_n, f(x_n))$. We just calculate $\lim_{n \rightarrow +\infty}\vert \frac{x_{n+2} - x_{n+1}}{x_{n+1} - x_{n}} \vert$, if it converges to $\frac{k-1}{k}$, then it's a $k$-th root. If it converges to 0, then it's a single root. 
+
+\subsection*{VII-b}
+
+Similar to \ref{eq::VII-a}, we define $f(x) = (x-r)^k g(x), g(r) \ne 0$, so by \ref{eq::VII-a}, we have:
+\begin{equation}
+  x_{n+1} - x^* = \frac{(x_n - x^*)^2 g^\prime(x_n)}{k g(x_n) + (x_n-x^*) g^\prime(x_n)}
+  \label{eq::VII-b}
+\end{equation}
+
+\textbf{Convergence of the new form of Newton's method}
+
+Define $\varphi(x) = x - k \frac{f(x)}{f^\prime(x)}, f(x) = (x-r)^k g(x)$, then we have:
+\begin{equation}
+  \varphi^\prime (r) = 1 - k \frac{[f^\prime (r)]^2 - f(r)f^{\prime \prime}(r)}{[f^\prime (r)]^2} = 1-k + k \frac{k(k-1)}{k^2} = 0
+\end{equation}
+
+So $\vert \varphi^\prime (x) \vert < 1$ when $x$ is close to $r$, by the convergence of contractions, the iteration converges. 
+
+\textbf{The convergence is quadratic}
+
+By \ref{eq::VII-b}, we have:
+\begin{equation}
+  \begin{aligned}
+    \frac{x_{n+1} - r}{(x_n - r)^2} = \frac{ g^\prime(x_n)}{k g(x_n) + (x_n-r) g^\prime(x_n)}\\
+    \Rightarrow \lim_{n \rightarrow +\infty} \frac{x_{n+1} - r}{(x_n - r)^2} = \frac{g^\prime(r)}{k g(r)}
+  \end{aligned}
+\end{equation}
+
+% ===============================================
+\section*{ \center{\normalsize {Acknowledgement}} }
+The section title is generated by \textbf{Kimi}, with a little revise. 
+\begin{figure}[H]
+  \begin{center}
+    \includegraphics[width=0.8\textwidth]{./figure/kimi.png}
+  \end{center}
+\end{figure}
+
+\printbibliography
+
+
+\end{document}
