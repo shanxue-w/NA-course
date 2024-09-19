@@ -1,6 +1,7 @@
 *
 !*/
 
+
 !*.cpp
 !*.cc
 !*.h
@@ -11,3 +12,6 @@
 !*/*/figure/*.png
 !Makefile
 !Doxyfile
+
+python/*
+tmp/*
