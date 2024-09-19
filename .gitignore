@@ -1,3 +1,13 @@
-./python/
-./tmp/
-./Q1/.vscode/
+*
+!*/
+
+!*.cpp
+!*.cc
+!*.h
+!*.hpp
+!*.md
+!Theoretical/*/*.tex
+!*.bib
+!*/*/figure/*.png
+!Makefile
+!Doxyfile

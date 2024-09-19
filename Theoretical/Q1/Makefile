@@ -1,9 +1,9 @@
 
-OBJ = $(wildcard *.tex)
+OBJ = Q1.tex
 
 doc: ${OBJ}
 	@pdflatex $^
-	@bibtex main.aux
+	@bibtex Q1.aux
 	@pdflatex $^
 	@pdflatex $^
 

@@ -5,6 +5,15 @@
 \usepackage[backend=bibtex,style=numeric]{biblatex}
 \usepackage{graphicx}
 
+\usepackage{hyperref}
+% 设置超链接样式
+\hypersetup{
+	colorlinks=true,
+	linkcolor=blue,
+	citecolor=blue,
+	urlcolor=blue,
+}
+
 \usepackage{geometry}
 \geometry{margin=1.5cm, vmargin={0pt,1cm}}
 \setlength{\topmargin}{-1cm}
@@ -203,7 +212,7 @@ We first prove that Newton's method converges linearly when the root is multiple
   \varphi^\prime (x) = 1 - \frac{[f^\prime (x)]^2 - f(x)f^{\prime \prime}(x)}{[f^\prime (x)]^2} = \frac{f(x)f^{\prime \prime}(x)}{[f^\prime (x)]^2}
 \end{equation}
 
-$\varphi^\prime (x^*) = 0$. Therefore, when $x$ is close to $x^*$, $\vert \varphi^\prime (x) \vert < 1$, by the convergence of contractions, we know that the Newton's method converges. 
+$\varphi^\prime (x^*) = \frac{k(k-1)}{k^2} = \frac{k-1}{k} < 1$ (L'Hospital's rule). Therefore, when $x$ is close to $x^*$, $\vert \varphi^\prime (x) \vert < 1$, by the convergence of contractions, we know that the Newton's method converges. 
 
 \textbf{The convergence rate of the Newton's method is linear.}
 
@@ -235,7 +244,7 @@ Similar to \ref{eq::VII-a}, we define $f(x) = (x-r)^k g(x), g(r) \ne 0$, so by \
 
 \textbf{Convergence of the new form of Newton's method}
 
-Define $\varphi(x) = x - k \frac{f(x)}{f^\prime(x)}, f(x) = (x-r)^k g(x)$, then we have:
+Define $\varphi(x) = x - k \frac{f(x)}{f^\prime(x)}, f(x) = (x-r)^k g(x)$, then by L'Hospital's rule we have:
 \begin{equation}
   \varphi^\prime (r) = 1 - k \frac{[f^\prime (r)]^2 - f(r)f^{\prime \prime}(r)}{[f^\prime (r)]^2} = 1-k + k \frac{k(k-1)}{k^2} = 0
 \end{equation}
