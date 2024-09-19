@@ -9,9 +9,9 @@
  * 
  */
 
-#include "BisectionSolver.h"
-#include "NewtonSolver.h"
-#include "SecantSolver.h"
+#include "BisectionSolver.hpp"
+#include "NewtonSolver.hpp"
+#include "SecantSolver.hpp"
 #include <iostream>
 #include <cmath>
 #include <algorithm>
@@ -43,6 +43,9 @@ double df(double x)
 
 int main(void)
 {
+    std::cout << "=========================================\n"
+              << "Quesiton F. Solving a real problem.\n\n";
+    Function F(f, df);
     // Part 1
     {
         l = 89;
@@ -53,7 +56,7 @@ int main(void)
         B = l*std::cos(beta_1);
         C = (h+0.5*D)*std::sin(beta_1) - 0.5*D*std::tan(beta_1);
         E = (h+0.5*D)*std::cos(beta_1) - 0.5*D;
-        NewtonSolver solver1(f, df, 20);
+        NewtonSolver solver1(F, 20);
         double x1 = solver1.solve();
         std::cout << "When l=89, h=49, beta_1=11.5, D=55, the angle is: " 
                 << std::fixed << std::setprecision(9) << x1 
@@ -73,7 +76,7 @@ int main(void)
         C = (h+0.5*D)*std::sin(beta_1) - 0.5*D*std::tan(beta_1);
         E = (h+0.5*D)*std::cos(beta_1) - 0.5*D;
 
-        NewtonSolver solver2(f, df, 33);
+        NewtonSolver solver2(F, 33);
         double x2 = solver2.solve();
         std::cout << "When l=89, h=49, beta_1=11.5, D=30, the angle is: " 
                 << std::fixed << std::setprecision(9) << x2 
@@ -92,7 +95,7 @@ int main(void)
         C = (h+0.5*D)*std::sin(beta_1) - 0.5*D*std::tan(beta_1);
         E = (h+0.5*D)*std::cos(beta_1) - 0.5*D;
 
-        SecantSolver solver3(f, 0, 33);
+        SecantSolver solver3(F, 0, 33);
         double x3 = solver3.solve();
         std::cout << "When l=89, h=49, beta_1=11.5, D=30, the angle is: " 
                 << std::fixed << std::setprecision(9) << x3 
@@ -100,5 +103,7 @@ int main(void)
                 << std::fixed << std::setprecision(9) << f(x3) << "\n\n";
     }
     
+    std::cout << "\nQuesiton F. Solving a real problem. Done.\n"
+              << "=========================================\n";
     return 0;
 }

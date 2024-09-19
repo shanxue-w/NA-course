@@ -12,21 +12,20 @@
 #ifndef NewtonSolver_H
 #define NewtonSolver_H
 
-#include "EquationSolver.h"
+#include "EquationSolver.hpp"
 
 class NewtonSolver : public EquationSolver
 {
 public:
-    NewtonSolver (double (*f)(double), double (*df)(double), double x0); // 构造函数，传入函数指针和初始值
-    NewtonSolver (double (*f)(double), double (*df)(double), double x0, int MaxIter); // 构造函数，传入函数指针和初始值
+    NewtonSolver (Function f, double x0, double eps=1e-12, double delta=1e-9, int MaxIter=100); // 构造函数
     double solve() override; // 重载求解函数
     double getRoot() const { return x; } // 获取解
     int    getIter() const { return iter; } // 获取迭代次数
 private:
-    double (*f)(double); // 函数指针
-    double (*df)(double); // 函数导数指针
+    Function f; // 函数指针
     double x0; // 初始值
     double eps;
+    double delta;
     int MaxIter;
     int    iter; // 迭代次数
     double x; // 解

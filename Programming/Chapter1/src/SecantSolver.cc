@@ -9,30 +9,21 @@
  * 
  */
 
-#include "SecantSolver.h"
-#include <cmath>
+#include "SecantSolver.hpp"
+
 
 /**
  * @brief Construct a new Secant Solver:: Secant Solver object
  * 
- * @param f The function to be solved
- * @param x0 The initial value
- * @param x1 The initial value
- */
-SecantSolver::SecantSolver(double (*f)(double), double x0, double x1) :
-    f(f), x0(x0), x1(x1), eps(1e-12), MaxIter(50), iter(0), x(0)
-{}
-
-/**
- * @brief Construct a new Secant Solver:: Secant Solver object
- * 
- * @param f The function to be solved
- * @param x0 The initial value
- * @param x1 The initial value
+ * @param f The function
+ * @param x0 The init value
+ * @param x1 The init value
+ * @param eps The tolerance of f(x)
+ * @param delta The tolerance of the interval
  * @param MaxIter The maximum number of iterations
  */
-SecantSolver::SecantSolver(double (*f)(double), double x0, double x1, int MaxIter) :
-    f(f), x0(x0), x1(x1), eps(1e-12), MaxIter(MaxIter), iter(0), x(0)
+SecantSolver::SecantSolver(Function f, double x0, double x1, double eps, double delta, int MaxIter)
+    : f(f), x0(x0), x1(x1), eps(eps), delta(delta), MaxIter(MaxIter), iter(0), x(0)
 {}
 
 /**
@@ -54,7 +45,7 @@ double SecantSolver::solve()
     double x2=0;
     for (iter=0; iter<MaxIter; iter++)
     {
-        if (std::abs(fx1) < eps)
+        if (std::abs(fx1) < eps || std::abs(x1 - x0) < delta)
             break;
         x2 = x1 - fx1 * (x1 - x0) / (fx1 - fx0);
         x0 = x1;

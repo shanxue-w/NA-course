@@ -12,23 +12,24 @@
 #ifndef BisectionSolver_H
 #define BisectionSolver_H
 
-#include "EquationSolver.h"
+#include "EquationSolver.hpp"
+#include "Function.hpp"
 
 class BisectionSolver : public EquationSolver
 {
 public:
-    BisectionSolver (double (*f)(double), double a, double b); // 构造函数，传入函数指针和区间
-    BisectionSolver (double (*f)(double), double a, double b, int MaxIter); // 构造函数，传入函数指针和区间
+    BisectionSolver (Function f, double a, double b, double eps=1e-12, double delta=1e-9, int MaxIter=100); // 构造函数
     double solve() override; // 重载求解函数
     double getRoot() const { return x; } // 获取解
     int    getIter() const { return iter; } // 获取迭代次数
 private:
-    double (*f)(double); // 函数指针
-    double a, b; // 区间
-    double eps;
-    int MaxIter;
-    int    iter; // 迭代次数
-    double x; // 解
+    Function f; /*<< The function*/
+    double   a, b; /*<< */
+    double   eps;
+    double   delta;
+    int      MaxIter;
+    int      iter; // 迭代次数
+    double   x; // 解
 };
 
 

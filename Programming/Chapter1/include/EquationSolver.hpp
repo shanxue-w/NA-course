@@ -11,6 +11,12 @@
 #ifndef EquationSolver_H
 #define EquationSolver_H
 
+#include <cmath>
+#include <iostream>
+#include <algorithm>
+#include <stdexcept>
+#include "Function.hpp"
+
 class EquationSolver
 {
 public:

@@ -9,11 +9,7 @@
  * 
  */
 
-#include "BisectionSolver.h"
-#include <cmath>
-#include <iostream>
-#include <algorithm>
-#include <stdexcept>
+#include "BisectionSolver.hpp"
 
 /**
  * @brief Construct a new Bisection Solver:: Bisection Solver object
@@ -21,21 +17,12 @@
  * @param f The function to be solved
  * @param a The left end of the interval
  * @param b The right end of the interval
- */
-BisectionSolver::BisectionSolver(double (*f)(double), double a, double b) :
-    f(f), a(a), b(b), eps(1e-12), MaxIter(100), iter(0), x(0)
-{}
-
-/**
- * @brief Construct a new Bisection Solver:: Bisection Solver object
- * 
- * @param f The function to be solved
- * @param a The left end of the interval
- * @param b The right end of the interval
+ * @param eps The tolerance of f(x)
+ * @param delta The tolerance of the interval
  * @param MaxIter The maximum number of iterations
  */
-BisectionSolver::BisectionSolver(double (*f)(double), double a, double b, int MaxIter) :
-    f(f), a(a), b(b), eps(1e-12), MaxIter(MaxIter), iter(0), x(0)
+BisectionSolver::BisectionSolver(Function f, double a, double b, double eps, double delta, int MaxIter) :
+    f(f), a(a), b(b), eps(eps), delta(delta), MaxIter(MaxIter), iter(0), x(0)
 {}
 
 
@@ -64,10 +51,17 @@ double BisectionSolver::solve()
         h /= 2;
         c = a + h;
         fc = f(c);
-        if (std::abs(fc) < eps)
+        if (std::abs(fc) < eps || h < delta)
             break;
         else if (fa * fc > 0)
             a = c;
+    }
+    if (std::abs(fc) >= 1e2)
+    {
+        std::cerr << "The iteration does not converge! Please check the interval. Or may be the function is not continuous." << std::endl;
+        iter = -1;
+        x = 0;
+        return x;
     }
     x = c;
     return x;
