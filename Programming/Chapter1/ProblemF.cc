@@ -94,13 +94,26 @@ int main(void)
         B = l*std::cos(beta_1);
         C = (h+0.5*D)*std::sin(beta_1) - 0.5*D*std::tan(beta_1);
         E = (h+0.5*D)*std::cos(beta_1) - 0.5*D;
-
-        SecantSolver solver3(F, 0, 33);
-        double x3 = solver3.solve();
-        std::cout << "When l=89, h=49, beta_1=11.5, D=30, the angle is: " 
-                << std::fixed << std::setprecision(9) << x3 
+        SecantSolver solver3_1(F, 0, 33);
+        double x3_1 = solver3_1.solve();
+        std::cout << "with initial guess 0 and 33, the angle is: " 
+                << std::fixed << std::setprecision(9) << x3_1 
                 << "\nf(x3) = "
-                << std::fixed << std::setprecision(9) << f(x3) << "\n\n";
+                << std::fixed << std::setprecision(9) << f(x3_1) << "\n\n";
+        
+        SecantSolver solver3_2(F, -1000, 33);
+        double x3_2 = solver3_2.solve();
+        std::cout << "with initial guess -1000 and 33, the angle is: " 
+                << std::fixed << std::setprecision(9) << x3_2 
+                << "\nf(x3) = "
+                << std::fixed << std::setprecision(9) << f(x3_2) << "\n\n";
+
+        SecantSolver solver3_3(F, 1000, 33);
+        double x3_3 = solver3_3.solve();
+        std::cout << "with initial guess 1000 and 33, the angle is: " 
+                << std::fixed << std::setprecision(9) << x3_3 
+                << "\nf(x3) = "
+                << std::fixed << std::setprecision(9) << f(x3_3) << "\n\n";
     }
     
     std::cout << "\nQuesiton F. Solving a real problem. Done.\n"

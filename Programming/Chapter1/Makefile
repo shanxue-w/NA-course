@@ -15,7 +15,7 @@ MAIN_FILES = $(wildcard *.cc)
 
 TARGETS = $(patsubst %.cc, $(BIN_DIR)/%, $(MAIN_FILES))
 
-all: $(OBJ_FILES) $(TARGETS)
+all: $(OBJ_FILES) $(TARGETS) run report
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.cc
 	@mkdir -p $(OBJ_DIR)
@@ -25,11 +25,9 @@ $(TARGETS): $(BIN_DIR)/%: %.cc $(OBJ_FILES)
 	@mkdir -p $(BIN_DIR)
 	$(CXX) $(CXXFLAGS) $< $(OBJ_FILES) -o $@
 
-clean:
-	rm -f $(TARGETS)
-
-distclean: clean
-	rm -f $(OBJ_DIR)/*
+report: report.tex
+	pdflatex report.tex
+	pdflatex report.tex
 
 run: $(TARGETS)
 	@for target in $(TARGETS); do \
@@ -38,5 +36,14 @@ run: $(TARGETS)
 		echo "\n";                \
 	done
 
+doxygen: 
+	doxygen Doxyfile
+
+clean:
+	rm -f $(TARGETS) *.log *.aux *.bbl *.blg *.out *.pdf *.run.xml
+
+distclean: clean
+	rm -rf $(OBJ_DIR)/* latex/ html/ 
+
 # Phony targets
-.PHONY: all clean distclean run
+.PHONY: all clean distclean run report doxygen

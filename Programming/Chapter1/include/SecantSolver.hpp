@@ -13,7 +13,6 @@
 #define SecantSolver_H
 
 #include "EquationSolver.hpp"
-#include "Function.hpp"
 
 class SecantSolver : public EquationSolver
 {

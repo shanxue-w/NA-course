@@ -13,7 +13,6 @@
 #define BisectionSolver_H
 
 #include "EquationSolver.hpp"
-#include "Function.hpp"
 
 class BisectionSolver : public EquationSolver
 {
@@ -23,7 +22,7 @@ public:
     double getRoot() const { return x; } // 获取解
     int    getIter() const { return iter; } // 获取迭代次数
 private:
-    Function f; /*<< The function*/
+    Function f; /*<< The function */
     double   a, b; /*<< */
     double   eps;
     double   delta;

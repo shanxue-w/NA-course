@@ -1,5 +1,5 @@
 /**
- * @file BisectionSolver.c
+ * @file BisectionSolver.cc
  * @author WangHao (3220104819@zju.edu.cn)
  * @brief 
  * @version 0.1
@@ -43,7 +43,7 @@ double BisectionSolver::solve()
         return x;
     }
     if (a > b)
-        std::swap(a, b);
+        std::swap(a, b); 
     double h = b - a;
     double c=0, fc=0;
     for (iter=0; iter<MaxIter; iter++)

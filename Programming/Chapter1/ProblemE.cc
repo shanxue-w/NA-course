@@ -43,7 +43,8 @@ int main(void)
             std::cout << "The root of f(h) = 10*(pi/2 - asin(h) - h*sqrt(1-h^2)) - 12.4 using Bisection is: " 
                     << std::fixed << std::setprecision(9) << h1 
                     << "\nf(h1) = "
-                    << std::fixed << std::setprecision(9) << f(h1) << "\n\n";
+                    << std::fixed << std::setprecision(9) << f(h1) << "\n"
+                    << "So the depth of the water is " << 1.0-h1 << " ft.\n\n";
         }
     }
 
@@ -54,7 +55,8 @@ int main(void)
         std::cout << "The root of f(h) = 10*(pi/2 - asin(h) - h*sqrt(1-h^2)) - 12.4 using Newton is: " 
                 << std::fixed << std::setprecision(9) << h2 
                 << "\nf(h2) = "
-                << std::fixed << std::setprecision(9) << f(h2) << "\n\n";
+                << std::fixed << std::setprecision(9) << f(h2) << "\n"
+                << "So the depth of the water is " << 1.0-h2 << " ft.\n\n";
     }
 
     /*<< Part 3 */
@@ -64,7 +66,8 @@ int main(void)
         std::cout << "The root of f(h) = 10*(pi/2 - asin(h) - h*sqrt(1-h^2)) - 12.4 using Secant is: " 
                 << std::fixed << std::setprecision(9) << h3 
                 << "\nf(h3) = "
-                << std::fixed << std::setprecision(9) << f(h3) << "\n\n";
+                << std::fixed << std::setprecision(9) << f(h3) << "\n"
+                << "So the depth of the water is " << 1.0-h3 << " ft.\n\n";
     }
 
     std::cout << "\nQuesiton E. Testing the BisectionSolver, NewtonSolver and SecantSolver. Done.\n"
