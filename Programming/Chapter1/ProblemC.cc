@@ -15,11 +15,31 @@
 #include <algorithm>
 #include <iomanip>
 
+/**
+ * @brief Function of this question
+ * 
+ * \f[
+ * f(x) = x - \tan x
+ * \f]
+ * 
+ * @param x 
+ * @return double 
+ */
 double f(double x)
 {
     return x - std::tan(x);
 }
 
+/**
+ * @brief The derivative of the function f.
+ * 
+ * \f[
+ * f^\prime (x) = 1 - \frac{1}{\cos^2 x}
+ * \f]
+ * 
+ * @param x 
+ * @return double 
+ */
 double df(double x)
 {
     double cosx = std::cos(x);
@@ -33,7 +53,7 @@ int main(void)
     
     Function F(f, df);
 
-    /*<< Part 1, for root near 4.5 */
+    /*<< ================= Part 1, for root near 4.5 ================= */
     {
         NewtonSolver solver1(F, 4.5);
         double x1 = solver1.solve();
@@ -42,8 +62,9 @@ int main(void)
                 << "\nf(x1) = "
                 << std::fixed << std::setprecision(9) << f(x1) << "\n\n";
     }
+    /*<< ================= Part 1, for root near 4.5 ================= */
 
-    /*<< Part 2, for root near 7.7 */
+    /*<< ================= Part 2, for root near 7.7 ================= */
     {
         NewtonSolver solver2(F, 7.7);
         double x2 = solver2.solve();
@@ -52,6 +73,7 @@ int main(void)
                 << "\nf(x2) = "
                 << std::fixed << std::setprecision(9) << f(x2) << "\n\n";
     }
+    /*<< ================= Part 2, for root near 7.7 ================= */
 
     std::cout << "\nQuesiton C. Testing the NewtonSolver. Done.\n"
               << "=========================================\n";

@@ -18,7 +18,7 @@ public:
     Function(double (*f)(double), double (*df)(double)) : f(f), df(df) {}
     Function(double (*f)(double)) : f(f), df(nullptr) {}
 
-    double operator()(double x) { return f(x); }
+    inline double operator()(double x) { return f(x); }
     inline double derivative(double x) 
     { 
         if (df != nullptr) 
@@ -26,7 +26,7 @@ public:
         else
         {
             /**<< use \f$f^{\prime} (x_0) = \frac{f(x_0 + \Delta x) - f(x_0 - \Delta x)}{2\Delta x}\f$ */
-            double delta_x = 1e-3;
+            double delta_x = 1e-4;
             return (f(x+delta_x) - f(x-delta_x)) / (2.0 * delta_x);
         }
     }

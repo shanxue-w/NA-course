@@ -34,7 +34,7 @@ int main(void)
     
     Function F(f, df);
 
-    /*<< Part 1 */
+    /*<< ================= Part 1 ================= */
     {
         BisectionSolver solver1(F, 0.0, 1.0);
         double h1 = solver1.solve();
@@ -47,8 +47,9 @@ int main(void)
                     << "So the depth of the water is " << 1.0-h1 << " ft.\n\n";
         }
     }
+    /*<< ================= Part 1 ================= */
 
-    /*<< Part 2 */
+    /*<< ================= Part 2 ================= */
     {
         NewtonSolver solver2(F, 0.5);
         double h2 = solver2.solve();
@@ -58,8 +59,9 @@ int main(void)
                 << std::fixed << std::setprecision(9) << f(h2) << "\n"
                 << "So the depth of the water is " << 1.0-h2 << " ft.\n\n";
     }
+    /*<< ================= Part 2 ================= */
 
-    /*<< Part 3 */
+    /*<< ================= Part 3 ================= */
     {
         SecantSolver solver3(F, 0.0, 1.0);
         double h3 = solver3.solve();
@@ -69,6 +71,7 @@ int main(void)
                 << std::fixed << std::setprecision(9) << f(h3) << "\n"
                 << "So the depth of the water is " << 1.0-h3 << " ft.\n\n";
     }
+    /*<< ================= Part 3 ================= */
 
     std::cout << "\nQuesiton E. Testing the BisectionSolver, NewtonSolver and SecantSolver. Done.\n"
               << "=========================================\n";

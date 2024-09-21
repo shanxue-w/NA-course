@@ -17,14 +17,23 @@
 #include <algorithm>
 #include <iomanip>
 
-double l;
-double beta_1;
-double h;
-double D;
+double l; /**<< the distance between the two wheels. */
+double beta_1; /**<< \f$\beta_1\f$ is the angle. */
+double h; /**<< param used in the equation */
+double D; /**<< param used in the equation */
 
-double A, B, C, E;
-const double M_OVER_180 = M_PI/180.0; // 180/M_PI
+double A; /**<< \f$A = l \sin\beta_1\f$ */
+double B; /**<< \f$B = l\cos\beta_1\f$ */
+double C; /**<< \f$C = (h+0.5D)\sin\beta_1 - 0.5D\tan\beta_1\f$ */
+double E; /**<< \f$E = (h+0.5D)\cos\beta_1 - 0.5D\f$ */
+const double M_OVER_180 = M_PI/180.0; /**<< \f$\frac{\pi}{180}\f$ */
 
+/**
+ * @brief For function \f$A\sin^2 x + B\sin^2 x - C\cos x - E\sin x\f$
+ * 
+ * @param x 
+ * @return double 
+ */
 double f(double x)
 {
     x = x * M_OVER_180;
@@ -33,6 +42,12 @@ double f(double x)
     return A*sinx*cosx + B*sinx*sinx - C*cosx - E*sinx; 
 }
 
+/**
+ * @brief For derivate of function. \f$\frac{\pi}{180}(A\cos^2 x - A\sin^2 x + 2B\sin x\cos x + C\sin x - E\cos x)\f$
+ * 
+ * @param x 
+ * @return double 
+ */
 double df(double x)
 {
     x = x * M_OVER_180;
@@ -46,10 +61,11 @@ int main(void)
     std::cout << "=========================================\n"
               << "Quesiton F. Solving a real problem.\n\n";
     Function F(f, df);
-    // Part 1
+    
+    /*<< ================= Part 1 ================= */
     {
         l = 89;
-        beta_1 = 11.5/180.0*M_PI;
+        beta_1 = 11.5 * M_OVER_180;
         h = 49;
         D = 55;
         A = l*std::sin(beta_1);
@@ -63,12 +79,12 @@ int main(void)
                 << "\nf(x1) = "
                 << std::fixed << std::setprecision(9) << f(x1) << "\n\n";
     }
+    /*<< ================= Part 1 ================= */
 
-
-    // Part 2
+    /*<< ================= Part 2 ================= */
     {
         l = 89;
-        beta_1 = 11.5/180.0*M_PI;
+        beta_1 = 11.5 * M_OVER_180;
         h = 49;
         D = 30;
         A = l*std::sin(beta_1);
@@ -83,11 +99,12 @@ int main(void)
                 << "\nf(x2) = "
                 << std::fixed << std::setprecision(9) << f(x2) << "\n\n";
     }
+    /*<< ================= Part 2 ================= */
 
-    // Part 3
+    /*<< ================= Part 3 ================= */
     {
         l = 89;
-        beta_1 = 11.5/180.0*M_PI;
+        beta_1 = 11.5 * M_OVER_180;
         h = 49;
         D = 30;
         A = l*std::sin(beta_1);
@@ -115,6 +132,7 @@ int main(void)
                 << "\nf(x3) = "
                 << std::fixed << std::setprecision(9) << f(x3_3) << "\n\n";
     }
+    /*<< ================= Part 3 ================= */
     
     std::cout << "\nQuesiton F. Solving a real problem. Done.\n"
               << "=========================================\n";

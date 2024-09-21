@@ -75,12 +75,13 @@ int main(void)
 {
     std::cout << "=========================================\n"
               << "Quesiton B. Testing the BisectionSolver.\n\n";
-    /*<< Part 1 */
+
+    /*<< ================= Part 1 =================*/
     {
         Function F1(f1);
-        BisectionSolver solver1(F1, 0.0, M_PI_2);
+        BisectionSolver solver1(F1, 0.0, M_PI_2); /**< function, a, b */
         double x1 = solver1.solve();
-        if (solver1.getIter() >= 0)
+        if (solver1.getIter() >= 0) /**< This is for error case. */
         {
             std::cout << "The root of f1(x) = 1/x - tan(x) is: " 
                     << std::fixed << std::setprecision(9) << x1 
@@ -88,8 +89,10 @@ int main(void)
                     << std::fixed << std::setprecision(9) << f1(x1) << "\n\n";
         }
     }
+    /*<< ================= Part 1 =================*/
 
-    /*<< Part 2 */
+
+    /*<< ================= Part 2 =================*/
     {
         Function F2(f2);
         BisectionSolver solver2(F2, 0.0, 1.0);
@@ -102,8 +105,9 @@ int main(void)
                     << std::fixed << std::setprecision(9) << f2(x2) << "\n\n";
         }
     }
+    /*<< ================= Part 2 =================*/
 
-    /*<< Part 3 */
+    /*<< ================= Part 3 =================*/
     {
         Function F3(f3);
         BisectionSolver solver3(F3, 1.0, 3.0);
@@ -116,8 +120,10 @@ int main(void)
                     << std::fixed << std::setprecision(9) << f3(x3) << "\n\n";
         }
     }
+    /*<< ================= Part 3 =================*/
 
-    /*<< Part 4 */
+
+    /*<< ================= Part 4 =================*/
     {
         Function F4(f4);
         BisectionSolver solver4(F4, 0.0, 4.0);
@@ -148,6 +154,8 @@ int main(void)
                     << std::fixed << std::setprecision(9) << f4_puls(x4_puls) << "\n\n";
         }
     }
+    /*<< ================= Part 4 =================*/
+
 
     std::cout << "\nQuestion B. Testing the BisectionSolver. Done.\n"
               << "=========================================\n";

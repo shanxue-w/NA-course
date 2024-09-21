@@ -19,8 +19,8 @@ class BisectionSolver : public EquationSolver
 public:
     BisectionSolver (Function f, double a, double b, double eps=1e-12, double delta=1e-9, int MaxIter=100); // 构造函数
     double solve() override; // 重载求解函数
-    double getRoot() const { return x; } // 获取解
-    int    getIter() const { return iter; } // 获取迭代次数
+    inline double getRoot() const { return x; } // 获取解
+    inline int    getIter() const { return iter; } // 获取迭代次数
 private:
     Function f; /*<< The function */
     double   a, b; /*<< */

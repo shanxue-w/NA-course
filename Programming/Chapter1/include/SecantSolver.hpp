@@ -19,8 +19,8 @@ class SecantSolver : public EquationSolver
 public:
     SecantSolver (Function f, double x0, double x1, double eps=1e-12, double delta=1e-9, int MaxIter=100); 
     double solve() override; 
-    double getRoot() const { return x; } 
-    int    getIter() const { return iter; }
+    inline double getRoot() const { return x; } 
+    inline int    getIter() const { return iter; }
 private:
     Function f;
     double x0, x1; // 初始值

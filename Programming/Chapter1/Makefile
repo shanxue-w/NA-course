@@ -38,6 +38,7 @@ run: $(TARGETS)
 
 doxygen: 
 	doxygen Doxyfile
+	cd latex && make
 
 clean:
 	rm -f $(TARGETS) *.log *.aux *.bbl *.blg *.out *.pdf *.run.xml
