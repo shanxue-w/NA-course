@@ -123,7 +123,7 @@ std::ostream &operator<<(std::ostream &os, const Polynomial &poly)
     int flag = 0;
     for (int i = poly.degree; i >= 0; i--)
     {
-        if (std::abs(poly.coefficients[i]) < 1e-12)
+        if (std::abs(poly.coefficients[i]) < 1e-16)
         {
             continue;
         }
@@ -151,7 +151,7 @@ std::ostream &operator<<(std::ostream &os, const Polynomial &poly)
                     os << " + " << poly.coefficients[i] << "x";
                 }
             }
-            else if (std::abs(poly.coefficients[i]) < 1e-12)
+            else if (std::abs(poly.coefficients[i]) < 1e-16)
             {
                 continue;
             }
@@ -182,7 +182,7 @@ std::ostream &operator<<(std::ostream &os, const Polynomial &poly)
                     os << " + " << poly.coefficients[i];
                 }
             }
-            else if (std::abs(poly.coefficients[i]) < 1e-12)
+            else if (std::abs(poly.coefficients[i]) < 1e-16)
             {
                 continue;
             }
@@ -213,7 +213,7 @@ std::ostream &operator<<(std::ostream &os, const Polynomial &poly)
                     os << " + " << poly.coefficients[i] << "x^" << i;
                 }
             }
-            else if (std::abs(poly.coefficients[i]) < 1e-12)
+            else if (std::abs(poly.coefficients[i]) < 1e-16)
             {
                 continue;
             }
