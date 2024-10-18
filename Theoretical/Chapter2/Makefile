@@ -1,9 +1,9 @@
 
-OBJ = Q2.tex
+OBJ = HW2_3220104819_WangHao.tex
 
 doc: ${OBJ}
-	@pdflatex $^
-	@pdflatex $^
+	@xelatex $^
+	@xelatex $^
 
 .PHONY:clean
 clean:

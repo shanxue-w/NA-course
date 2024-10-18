@@ -18,7 +18,7 @@ MAIN_FILES = $(wildcard *.cc)
 
 TARGETS = $(patsubst %.cc, $(BIN_DIR)/%, $(MAIN_FILES))
 
-all: $(OBJ_FILES) $(TARGETS)
+all: $(OBJ_FILES) $(TARGETS) run
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.cc
 	@mkdir -p $(OBJ_DIRS)

@@ -22,6 +22,11 @@ int main()
     std::cout << hermite(10.0) << std::endl;
 
     Polynomial poly = hermite.get_polynomial(1);
-
+    Polynomial poly2 = hermite.get_polynomial(2);
+    std::vector<double> roots = poly2.Get_all_roots();
+    for(auto root : roots)
+    {
+        std::cout << "t = " << root << ", speed = " << poly(root) << std::endl;
+    }
     return 0;
 }

@@ -41,9 +41,11 @@ Poly Hermite<Poly>::interpolate(const std::vector<double> &xData, const std::vec
         divided_diff[i].resize(i + 1, nan(""));
         int index = i-std::get<2>(data[i]);
         divided_diff[i][0] = std::get<1>(data[index]); 
+        double divisor = 1.0;
         for (int j = 1; j<=std::get<2>(data[i]); j++)
         {
-            divided_diff[i][j] = std::get<1>(data[index+j]);
+            divided_diff[i][j] = std::get<1>(data[index+j]) / divisor;
+            divisor *= (j+1);
         }
     }
     for (int j = 1; j < n; j++)
