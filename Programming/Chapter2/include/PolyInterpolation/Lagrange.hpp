@@ -2,32 +2,21 @@
 #define __LANGRANGE_HPP__
 
 #include "PolyInterpolation.hpp"
+#include "LagPoly.hpp"
 #include <iostream>
 
-template <class Poly>
-class Lagrange : public PolyInterpolation<Poly>
+class Lagrange : public PolyInterpolation
 {
 public:
     Lagrange();
     Lagrange(const std::vector<double> &xData, const std::vector<double> &yData);
-    Poly interpolate(const std::vector<double> &xData, const std::vector<double> &yData) override;
+    Lagrange(const std::vector<double> &xData, const std::vector<double> &yData, const std::vector<double> &wData);
     double operator()(double x) const override;
-    double derivative(double x, int n) const;
-    double integral(double a, double b) const;
     int degree() const override;
-
-    template <class P>
-    friend std::ostream &operator<<(std::ostream &os, const Lagrange<P> &lagrange)
-    {
-        os << lagrange.m_poly;
-        return os;
-    }
-    ~Lagrange() {}
-
+    LagPoly get_polynomial() const;
+    friend std::ostream &operator<<(std::ostream &os, const Lagrange &lagrange);
 private:
-    std::vector<double> x_lists;
-    std::vector<double> y_lists;
-    Poly          m_poly;
+    LagPoly poly;
 };
 
 #endif

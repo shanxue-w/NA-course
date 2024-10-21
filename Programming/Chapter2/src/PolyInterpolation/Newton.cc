@@ -1,25 +1,24 @@
 #include "Newton.hpp"
 #include "Polynomial.hpp"
+#include "NewtonPoly.hpp"
 
-template <class Poly>
-Newton<Poly>::Newton()
+Newton::Newton()
 {
     x_lists = {};
     y_lists = {};
-    m_poly = Poly();
+    m_poly = NewtonPoly();
     divided_diff = {};
 }
 
-template <class Poly>
-Newton<Poly>::Newton(const std::vector<double> &xData, const std::vector<double> &yData)
+
+Newton::Newton(const std::vector<double> &xData, const std::vector<double> &yData)
 {
     x_lists = xData;
     y_lists = yData;
     m_poly = interpolate(xData, yData);
 }
 
-template <class Poly>
-Poly Newton<Poly>::interpolate(const std::vector<double> &xData, const std::vector<double> &yData)
+NewtonPoly Newton::interpolate(const std::vector<double> &xData, const std::vector<double> &yData)
 {
     int n = xData.size();
     divided_diff.resize(n);
@@ -35,21 +34,17 @@ Poly Newton<Poly>::interpolate(const std::vector<double> &xData, const std::vect
             divided_diff[i][j] = (divided_diff[i][j - 1] - divided_diff[i - 1][j - 1]) / (xData[i] - xData[i - j]);
         }
     }
-    Poly result;
+    std::vector<double> w_lists;
     for (int i = 0; i < n; i++)
     {
-        Poly tmp({divided_diff[i][i]});
-        for (int j = 0; j < i; j++)
-        {
-            tmp = tmp * Poly({-xData[j], 1});
-        }
-        result = result + tmp;
+        w_lists.push_back(divided_diff[i][i]);
     }
-    return result;
+    NewtonPoly newtonPoly(xData, yData, w_lists);
+    return newtonPoly;
 }
 
-template <class Poly>
-Poly Newton<Poly>::add_point(double x, double y)
+
+NewtonPoly Newton::add_point(double x, double y)
 {
     x_lists.push_back(x);
     y_lists.push_back(y);
@@ -60,22 +55,23 @@ Poly Newton<Poly>::add_point(double x, double y)
     {
         divided_diff[n - 1][j] = (divided_diff[n - 1][j - 1] - divided_diff[n - 2][j - 1]) / (x - x_lists[n - 1 - j]);
     }
-    Poly tmp({divided_diff[n - 1][n - 1]});
-    for (int j = 0; j < n - 1; j++)
+    std::vector<double> w_lists;
+    for (int i = 0; i < n; i++)
     {
-        tmp = tmp * Poly({-x_lists[j], 1});
+        w_lists.push_back(divided_diff[i][i]);
     }
-    return m_poly + tmp;
+    NewtonPoly newtonPoly(x_lists, y_lists, w_lists);
+    return newtonPoly;
 }
 
-template <class Poly>
-double Newton<Poly>::operator()(double x) const
+
+double Newton::operator()(double x) const
 {
     return m_poly(x);
 }
 
-template <class Poly>
-int Newton<Poly>::degree() const
+
+int Newton::degree() const
 {
     return m_poly.get_degree();
 }
@@ -87,15 +83,24 @@ int Newton<Poly>::degree() const
 //     return os;
 // }
 
-template <class Poly>
-double Newton<Poly>::derivative(double x, int n) const
+
+double Newton::derivative(double x) const
 {
-    Poly poly = m_poly;
-    for (int i = 0; i < n; i++)
-    {
-        poly = poly.derivative();
-    }
-    return poly(x);
+    return m_poly.derivative(x);
 }
 
-template class Newton<Polynomial>;
+
+double Newton::integral(double a, double b) const
+{
+    return m_poly.integral(a, b);
+}
+
+NewtonPoly Newton::getNewtonPoly() const
+{
+    return m_poly;
+}
+
+Polynomial Newton::Convert_to_Polynomial() const
+{
+    return m_poly.Convert_to_Polynomial();
+}

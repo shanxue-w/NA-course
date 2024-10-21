@@ -11,6 +11,7 @@ double f(double x)
 
 int main() 
 {
+    std::cout << "\n==================== B ====================" << std::endl;
     for (int n=2; n<=8; n+=2)
     {
         std::vector<double> xData = {};
@@ -22,13 +23,13 @@ int main()
             yData.push_back(f(l));
         }
         std::cout << "====================" << n << "====================" << std::endl;
-        Lagrange<Polynomial> lagrange(xData, yData);
+        Lagrange lagrange(xData, yData);
         std::cout << lagrange << std::endl;
 
-        Newton<Polynomial> newton(xData, yData);
+        Newton newton(xData, yData);
         std::cout << newton << std::endl;
         std::cout << "====================" << n << "====================" << std::endl;
     }
-
+    std::cout << "==================== B ====================\n" << std::endl;
     return 0;
 }

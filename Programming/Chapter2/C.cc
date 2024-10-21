@@ -24,6 +24,7 @@ double f(double x)
 
 int main(void)
 {
+    std::cout << "\n==================== C ====================" << std::endl;
     for (int n=5; n<=20; n+=5)
     {
         std::vector<double> xData = ChebyshevNodes(n);
@@ -33,8 +34,14 @@ int main(void)
             yData.push_back(f(xData[i]));
         }
         std::cout << "====================" << n << "====================" << std::endl;
-        Newton<Polynomial> newton(xData, yData);
-        std::cout << newton << std::endl;
+        Newton newton(xData, yData);
+        // std::cout << newton << std::endl;
+        for (int i = 0; i < n; i++)
+        {
+            std::cout << "Newton(" << xData[i] << ") = " << newton(xData[i])
+                      << " f(" << xData[i] << ") = " << f(xData[i]) << std::endl;
+        }
         std::cout << "====================" << n << "====================" << std::endl;
     }
+    std::cout << "==================== C ====================\ns" << std::endl;
 }

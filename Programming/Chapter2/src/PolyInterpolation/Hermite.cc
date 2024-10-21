@@ -5,12 +5,13 @@
 #include <numeric>
 #include <tuple>
 #include "Polynomial.hpp"
+#include "NewtonPoly.hpp"
 
-template <class Poly>
-Hermite<Poly>::Hermite() : data({}), m_poly(Poly()), divided_diff({}), x_lists({}), y_lists({}) {}
 
-template <class Poly>
-Hermite<Poly>::Hermite(const std::vector<double> &xData, const std::vector<double> &yData, const std::vector<int> &nData)
+Hermite::Hermite() : data({}), divided_diff({}), x_lists({}), y_lists({}) {}
+
+
+Hermite::Hermite(const std::vector<double> &xData, const std::vector<double> &yData, const std::vector<int> &nData)
 {
     x_lists = xData;
     y_lists = yData;
@@ -28,23 +29,28 @@ Hermite<Poly>::Hermite(const std::vector<double> &xData, const std::vector<doubl
         }
         return std::get<0>(a) < std::get<0>(b);
     });
-    m_poly = interpolate(xData, yData);
+    // std::cout << data << std::endl;
+    for (auto i=0; i<n; i++)
+    {
+        x_lists[i] = std::get<0>(data[i]);
+    }
+    m_poly = interpolate(data);
 }
 
-template <class Poly>
-Poly Hermite<Poly>::interpolate(const std::vector<double> &xData, const std::vector<double> &yData)
+
+NewtonPoly Hermite::interpolate(std::vector<std::tuple<double, double, int>> &data_lists)
 {
-    int n = xData.size();
+    int n = x_lists.size();
     divided_diff.resize(n);
     for (int i = 0; i < n; i++)
     {
         divided_diff[i].resize(i + 1, nan(""));
-        int index = i-std::get<2>(data[i]);
-        divided_diff[i][0] = std::get<1>(data[index]); 
+        int index = i-std::get<2>(data_lists[i]);
+        divided_diff[i][0] = std::get<1>(data_lists[index]); 
         double divisor = 1.0;
-        for (int j = 1; j<=std::get<2>(data[i]); j++)
+        for (int j = 1; j<=std::get<2>(data_lists[i]); j++)
         {
-            divided_diff[i][j] = std::get<1>(data[index+j]) / divisor;
+            divided_diff[i][j] = std::get<1>(data_lists[index+j]) / divisor;
             divisor *= (j+1);
         }
     }
@@ -62,36 +68,34 @@ Poly Hermite<Poly>::interpolate(const std::vector<double> &xData, const std::vec
             }
         }
     }
-    Poly result;
+    std::vector<double> w_lists;
     for (int i = 0; i < n; i++)
     {
-        Poly tmp({divided_diff[i][i]});
-        for (int j = 0; j < i; j++)
-        {
-            tmp = tmp * Poly({-std::get<0>(data[j]), 1});
-        }
-        result = result + tmp;
+        w_lists.push_back(divided_diff[i][i]);
     }
-    return result;
+    NewtonPoly newtonPoly(x_lists, y_lists, w_lists);
+    return newtonPoly;
 }
 
-template <class Poly>
-Poly Hermite<Poly>::add_point(double x, double y, int n)
+
+NewtonPoly Hermite::add_point(double x, double y, int n)
 {
     x_lists.push_back(x);
     y_lists.push_back(y);
     data.push_back(std::make_tuple(x, y, n));
-    return interpolate(x_lists, y_lists);
+    NewtonPoly newtonPoly;
+    newtonPoly = interpolate(data);
+    return newtonPoly;
 }
 
-template <class Poly>
-double Hermite<Poly>::operator()(double x) const
+
+double Hermite::operator()(double x) const
 {
     return m_poly(x);
 }
 
-template <class Poly>
-int Hermite<Poly>::degree() const
+
+int Hermite::degree() const
 {
     return m_poly.get_degree();
 }
@@ -103,34 +107,24 @@ int Hermite<Poly>::degree() const
 //     return os;
 // }
 
-template <class Poly>
-double Hermite<Poly>::derivative(double x, int n) const
+
+double Hermite::derivative(double x) const
 {
-    Poly poly = m_poly;
-    for (int i = 0; i < n; i++)
-    {
-        poly = poly.derivative();
-    }
-    return poly(x);
+    return m_poly.derivative(x);
 }
 
-template <class Poly>
-double Hermite<Poly>::integral(double a, double b) const
+double Hermite::integral(double a, double b) const
 {
-    Poly poly = m_poly;
-    poly = poly.integral();
-    return poly(b) - poly(a);
+    return m_poly.integral(a, b);
 }
 
-template <class Poly>
-Poly Hermite<Poly>::get_polynomial(int n) const
+
+NewtonPoly Hermite::get_polynomial()
 {
-    Poly poly = m_poly;
-    for (int i = 0; i < n; i++)
-    {
-        poly = poly.derivative();
-    }
-    return poly;
+    return m_poly;
 }
 
-template class Hermite<Polynomial>;
+Polynomial Hermite::Convert_to_Polynomial() const
+{
+    return m_poly.Convert_to_Polynomial();
+}

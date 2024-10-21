@@ -55,19 +55,19 @@ For $f(x) = \frac{1}{x}, x_0=1, x_1=2$, we can easily get the Interpolation poly
 So by $f(x) - p_1(f; x) = \frac{f^{\prime \prime} (\xi (x))}{2} (x-x_0) (x-x_1)$, we can get $\xi(x)$ as follows:
 \begin{equation}
   \begin{aligned}
-    f^{\prime \prime} (\xi (x)) &= \frac{2}{x}, \\
-    \Rightarrow \xi (x) = &\sqrt[3]{x}.
+    f^{\prime \prime} (\xi (x)) &= \frac{1}{x}, \\
+    \Rightarrow \xi (x) = &\sqrt[3]{2x}.
   \end{aligned}
 \end{equation}
 \subsection*{I-b Find the Bounds of $\xi(x)$}
 
-We already know that $\xi(x) = \sqrt[3]{x}$, so in the domain $[1,2]$, we can easily know that:
+We already know that $\xi(x) = \sqrt[3]{2x}$, so in the domain $[1,2]$, we can easily know that:
 \begin{equation}
-  \min \xi(x) = \sqrt[3]{1} = 1, \quad \max \xi(x) = \sqrt[3]{2},
+  \min \xi(x) = \sqrt[3]{2}, \quad \max \xi(x) = \sqrt[3]{4},
 \end{equation}
-and $f^{\prime \prime}(\xi(x)) = \frac{2}{x}$. Therefore we can know
+and $f^{\prime \prime}(\xi(x)) = \frac{1}{x}$. Therefore we can know
 \begin{equation}
-  \max f^{\prime \prime}(\xi(x)) = \frac{2}{1} = 2. 
+  \max f^{\prime \prime}(\xi(x)) = \frac{1}{1} = 1. 
 \end{equation}
 
 \section*{II. Interpolation on $\mathbb{P}_{m}^+$}
@@ -243,6 +243,11 @@ Therefore, for $g(x) = x(x-1)^2(x-3)^2$, we have $g^{\prime}(x)=(x-1)(x-3)(5x^2-
 In conclusion, we can know that:
 \begin{equation}
   \vert R(x)\vert \leq 0.017162 M, \forall x \in [0,3].
+\end{equation}
+
+For above answer, we only need to set $x=2$, and then we get
+\begin{equation}
+  \vert R(2) \vert \leq \frac{M}{60}.
 \end{equation}
 
 \section*{VII. Difference Proof}
