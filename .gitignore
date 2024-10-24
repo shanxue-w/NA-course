@@ -6,7 +6,9 @@
 !*.cc
 !*.h
 !*.hpp
-!*.md
+!*.mds
+!*.tex
+!*.py
 !Theoretical/*/*.tex
 !*.bib
 !*/*/figure/*.png
@@ -17,3 +19,5 @@ python/*
 tmp/*
 Programming/Chapter1/latex/*
 Programming/Chapter1/html/*
+Programming/Chapter2/latex/*
+Programming/Chapter2/html/*

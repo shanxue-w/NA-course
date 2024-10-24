@@ -1,0 +1,217 @@
+\documentclass[a4paper]{article}
+\usepackage[affil-it]{authblk}
+\usepackage{float}
+\usepackage{amsmath, amssymb, amsthm, amsfonts}
+\usepackage[backend=bibtex,style=numeric]{biblatex}
+\usepackage{graphicx}
+\usepackage{hyperref}
+% 设置超链接样式
+\hypersetup{
+	colorlinks=true,
+	linkcolor=blue,
+	citecolor=blue,
+	urlcolor=blue,
+}
+
+\usepackage{listings}
+\usepackage{color}
+
+\definecolor{mygray}{rgb}{0.4,0.4,0.4}
+\definecolor{mygreen}{rgb}{0,0.8,0.6}
+\definecolor{myorange}{rgb}{1.0,0.4,0}
+
+\lstset{
+	basicstyle=\footnotesize\sffamily\color{black},
+	breaklines=true,
+	commentstyle=\color{mygray},
+	frame=single,
+	numbers=left,
+	numbersep=5pt,
+	numberstyle=\tiny\color{mygray},
+	keywordstyle=\color{mygreen},
+	showspaces=false,
+	showstringspaces=false,
+	stringstyle=\color{myorange},
+	tabsize=2
+}
+
+\usepackage{geometry}
+\geometry{margin=1.5cm, vmargin={0pt,1cm}}
+\setlength{\topmargin}{-1cm}
+\setlength{\paperheight}{29.7cm}
+\setlength{\textheight}{25.3cm}
+
+\usepackage[titletoc,title]{appendix}
+
+\addbibresource{citation.bib}
+
+\begin{document}
+% =================================================
+\title{Numerical Analysis homework \# 1}
+
+\author{Wanghao 3220104819
+  \thanks{Electronic address: \texttt{3220104819@zju.edu.cn}}}
+\affil{(Mathematics and Applied Mathematics 2201), Zhejiang University }
+
+
+\date{Due time: \today}
+
+\maketitle
+
+\section*{A. Design of The Classes}
+
+In this chapter, we will discuss the design of the classes used in the project, you can also use \texttt{make doxygen} to generate the doxygen file. 
+
+\begin{description}
+	\item[\textbf{Function}] This class represents a function and its derivative. You can initialize the class object using either:
+	\begin{itemize}
+		\item \texttt{Function(double(*f)(double), double(*df)(double))} if you provide both the function \texttt{f} and its derivative \texttt{df}.
+		\item \texttt{Function(double(*f)(double))} if you only provide the function \texttt{f}. In this case, the class will use the central difference method to approximate the derivative, given by $\frac{f(x+h) - f(x-h)}{2h}$
+	\end{itemize}
+
+	\item[\textbf{EquationSolver}] This is an abstract class representing a general method for solving equations. It defines the following pure virtual function:
+	\begin{itemize}
+		\item \texttt{double solve()} This function is responsible for solving the equation. It must be implemented by any derived class.
+	\end{itemize}
+
+	\item[\textbf{BisectionSolver}] This class inherits from the EquationSolver class and implements the Bisection method for solving equations. And the following member functions:
+	\begin{itemize}
+		\item \texttt{BisectionSolver (Function f, double a, double b, double eps=1e-12, double delta=1e-9, int MaxIter=100)} This constructor initializes the solver with a class Function \texttt{f} and an interval $[a, b]$. It also accepts optional parameters for precision (\texttt{eps}) and convergence criteria (\texttt{delta}), as well as a maximum number of iterations (\texttt{MaxIter}).
+		\item \texttt{double solve()} The standard Bisection method, but add three additional conditions to it. One is $f(a)*f(b) > 0$ (print error message), one is the interval $[a,b]$ is $a>b$ (auto change a,b), and the final is $f(c) > 100$ (not continuous or just not converge in the given steps).
+		\item \texttt{double getRoot()} Get the root $x$. 
+		\item \texttt{int getIter()} Get the iteration steps when exit. 
+	\end{itemize}
+	
+	\item[\textbf{NewtonSolver}] This class inherits from the EquationSolver class and implements the Newton method for solving equations. And the following member functions:
+	\begin{itemize}
+		\item \texttt{NewtonSolver (Function f, double x0, double eps=1e-12, double delta=1e-9, int MaxIter=100)} This constructor initializes the solver with a class Function \texttt{f} and the initial guess value $x_0$. It also accepts optional parameters for precision (\texttt{eps}) and convergence criteria (\texttt{delta}), as well as a maximum number of iterations (\texttt{MaxIter}).
+		\item \texttt{double solve()} The standard Newton method, use the iteration $x_{n+1} = x_n - \frac{f(x_n)}{f^{\prime} (x_n)}$ to calculate, the operation $f^\prime (x_n)$ is provided in the class Funtion.
+		\item \texttt{double getRoot()} Get the root $x$. 
+		\item \texttt{int getIter()} Get the iteration steps when exit. 
+	\end{itemize}
+
+	\item[\textbf{SecantSolver}] This class inherits from the EquationSolver class and implements the Secant method for solving equations. And the following member functions:
+	\begin{itemize}
+		\item \texttt{SecantSolver (Function f, double x0, double x1, double eps=1e-12, }
+		
+		\hspace{73pt}\texttt{double delta=1e-9, int MaxIter=100)} 
+		
+		This constructor initializes the solver with a class Function \texttt{f} and the initial guess value $x_0$ and $x_1$. It also accepts optional parameters for precision (\texttt{eps}) and convergence criteria (\texttt{delta}), as well as a maximum number of iterations (\texttt{MaxIter}).
+		\item \texttt{double solve()} The standard Newton method, use the iteration $x_{n+1} = x_n - f(x_n) \frac{x_n - x_{n-1}}{f(x_n) - f(x_{n-1})}$ to calculate. 
+		\item \texttt{double getRoot()} Get the root $x$. 
+		\item \texttt{int getIter()} Get the iteration steps when exit. 
+	\end{itemize}
+\end{description}
+
+\section*{B. Testing Bisection Method}
+
+\begin{itemize}
+	\item $f_1(x) = \frac{1}{x} - \tan (x) = 0, [0, \frac{\pi}{2}]$ the result by Bisection method is $x_1 = 0.860333588$, and $f_1(x_1) = 0.000000002$
+	\item $f_2(x) = \frac{1}{x} - 2^x = 0, [0, 1]$ the result by Bisection method is $x_2 = 0.641185745$, and $f_2(x_2) = -0.000000001$
+	\item $f_3(x) = 0.5^x + e^x + 2\cos (x) - 6, [1, 3]$ the result by Bisection method is $x_3 = 1.829383601$, and $f_3(x_3) = -0.000000002$
+	\item $f_4(x) = \frac{x^3 + 4x^2 + 3x + 5}{2x^3 - 9x^2 + 18x - 2} = 0, [0, 4]$ has no result in the interval. I give two ways to show this. One is to consider function $g(x) = x^3 + 4x^2 + 3x + 5 > 0 ~ \forall x \in [0, 4]$, or the Bisection method's converge limit of $\vert f_4(x_4) \vert > 100$, which may mean it's not continuous. The two are all in my source code \ref{appendices::QB}. 
+\end{itemize}
+
+\section*{C. Testing Newton Method}
+
+\begin{itemize}
+	\item $f(x) = x - \tan (x) = 0, x_0=4.5$, the result by the Newton method is $x^* = 4.493409458$ and $f(x^*) = 0.000000000$
+	\item $f(x) = x - \tan (x) = 0, x_0=7.7$, the result by the Newton method is $x^* = 7.725251837$ and $f(x^*) = 0.000000000$
+\end{itemize}
+
+\section*{D. Testing Secant Method}
+
+\begin{description}
+	\item[$f(x) = \sin (x/2) - 1$] $~$
+	\begin{itemize}
+		\item $x_0 = 0, x_1 = \frac{\pi}{2}$. We can get the result by the Secant method that $x^* = 3.141590603$ and $f(x^*) = 0.000000000$
+		\item $x_0 = 3\pi, x_1 = 4\pi$. We can get the result by the Secant method that $x^* = 15.707963268$ and $f(x^*) = 0.000000000$
+	\end{itemize}
+
+	\item[$f(x) = e^x - \tan x$] $~$
+	\begin{itemize}
+		\item $x_0 = 1.0, x_1 = 1.4$. We can get the result by the Secant method that $x^* = 1.306326940$ and $f(x^*) = 0.000000000$
+		\item $x_0 = -4.0, x_1 = -3.0$. We can get the result by the Secant method that $x^* = -3.096412305$ and $f(x^*) = 0.000000000$
+	\end{itemize}
+
+	\item[$f(x) = x^3 - 12x^2 + 3x + 1$] $~$
+	\begin{itemize}
+		\item $x_0 = 0.0, x_1 = -0.5$. We can get the result by the Secant method that $x^* = -0.188685403$ and $f(x^*) = 0.000000000$
+		\item $x_0 = 10.0, x_1 = 12.0$. We can get the result by the Secant method that $x^* = 11.737142179$ and $f(x^*) = 0.000000000$
+	\end{itemize}
+\end{description}
+
+From above, we can easily get that the result may change depends on the choice of the initial values $x_0, x_1$. That's because the equation may have more than one roots, and the program is more likely to find the root near the two initial values $x_0, x_1$, but not absolutely. 
+
+
+\section*{E. A Real Example Combining Three Methods}
+
+For the function $V = L [0.5\pi r^2 -r^2 \arctan (\frac{h}{r}) - h(r^2-h^2)^{\frac{1}{2}}]$. We need to solve when $L = 10ft, r = 1ft, V=12.4ft^3$, we need to find the depth of the water, which is $H = r - h$. So we just need to calculate $h$ and then $H$ is easy to get.
+
+Define $f(h) = V(h) - 12.4$
+
+For we have set $\delta = 10^{-6}$, and the iteration times is big enough, so we can assure the result error is within $0.01ft$
+
+\begin{itemize}
+	\item Bisection. The result for h is $h = 0.166166035 ft$, so the result $H = 0.833833965 ft$, $f(h) = 0.000000003 ft^3$.
+	\item Newton. The result for h is $h = 0.166166034 ft$, sot the result $H = 0.833833966 ft$, $f(h) = 0.000000005 ft^3$.
+	\item Secant. The result for h is $h = 0.166166035 ft$, so the result $H = 0.833833965 ft$, $f(h) = 0.000000003 ft^3$.
+\end{itemize}
+
+
+\section*{F. A More Complicated Example}
+
+We first observe the function $f(\alpha) = A \sin\alpha \cos\alpha + B \sin^2\alpha - C\cos\alpha - E\sin\alpha$. For the following input is not a radian, we define $M = \frac{\pi}{360}$, then $f(\alpha) = A \sin(M\alpha) \cos(M\alpha) + B \sin^2(M\alpha) - C\cos(M\alpha) - E\sin(M\alpha)$, and $f^\prime (\alpha) = M (A\cos^2(M\alpha) - A\sin^2(M\alpha) + 2B\sin(M\alpha)\cos(M\alpha) + C\sin(M\alpha) - E\cos(M\alpha))$ 
+
+\subsection*{a. Verify the Result}
+\label{subsec::F.a}
+Given $l = 89 in., h = 49 in., D = 55in., \beta_1 = 11.5^\circ$. Use the formula:
+\begin{equation}
+	\begin{aligned}
+		A = l \sin\beta_1, ~~ B = l\cos\beta_1, \\
+		C = (h+0.5D)\sin\beta_1 - 0.5D\tan\beta_1, \\
+		E = (h+0.5D)\cos\beta_1 - 0.5D.
+	\end{aligned}
+\end{equation}
+
+So using them all, and by Newton method, we can get $\alpha \approx 32.972^\circ \approx 33^\circ$
+
+\subsection*{b. Calculate A New Value}
+
+In this part, $l,h,\beta_1$ are the same as in \ref{subsec::F.a}, just $D$ change to $30 in.$. By setting the initial guess $\alpha_0 = 33^\circ$. Using the Newton method, we can get $\alpha = 33.1689^\circ$
+
+
+\subsection*{c. Secant Method}
+
+\begin{itemize}
+	\item $\alpha_0=33^\circ, \alpha_1=0^\circ$, the result $\alpha = 33.1689^\circ$. 
+	\item $\alpha_0=33^\circ, \alpha_1=-1000^\circ$, the result $\alpha = 33.1689^\circ$. 
+	\item $\alpha_0=33^\circ, \alpha_1=1000^\circ$, the result $\alpha = 33.1689^\circ$. 
+\end{itemize}
+
+
+We can see that the result doesn't change when the other changes, the main reason is that $33^\circ$ is too close to $\alpha = 33.1689^\circ$, so the secant line's cross point with the x axis is very close to $33^\circ$, so the result doesn't change.
+% ===============================================
+\section*{ \center{\normalsize {Acknowledgement}} }
+
+\printbibliography
+
+\begin{appendices}
+	\section*{Question B}
+	\label{appendices::QB}
+	\lstinputlisting[language=C++]{ProblemB.cc}
+
+	\section*{Question C}
+	\lstinputlisting[language=C++]{ProblemC.cc}
+
+	\section*{Question D}
+	\lstinputlisting[language=C++]{ProblemD.cc}
+
+	\section*{Question E}
+	\lstinputlisting[language=C++]{ProblemE.cc}
+
+	\section*{Question F}
+	\lstinputlisting[language=C++]{ProblemF.cc}
+\end{appendices}
+
+\end{document}
