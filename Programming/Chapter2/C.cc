@@ -4,6 +4,8 @@
 #include "Lagrange.hpp"
 #include <cmath>
 #include "Polynomial.hpp"
+#include <fstream>
+#include <string>
 
 double PI = M_PI;
 
@@ -42,6 +44,13 @@ int main(void)
                       << " f(" << xData[i] << ") = " << f(xData[i]) << std::endl;
         }
         std::cout << "====================" << n << "====================" << std::endl;
+        std::string filename = "./data/C_Newton" + std::to_string(n) + ".txt";
+        std::ofstream file(filename);
+        for (double j=-1; j<=1; j+=0.01)
+        {
+            file << j << "," << newton(j) << std::endl;
+        }
+        file.close();
     }
-    std::cout << "==================== C ====================\ns" << std::endl;
+    std::cout << "==================== C ====================\n" << std::endl;
 }

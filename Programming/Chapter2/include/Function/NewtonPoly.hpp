@@ -1,3 +1,14 @@
+/**
+ * @file NewtonPoly.hpp
+ * @author WangHao (3220104819@zju.edu.cn)
+ * @brief The class for Newton Polynomial, providing the basic operations of Newton Polynomial.
+ * @version 0.1
+ * @date 2024-10-24
+ * 
+ * @copyright Copyright (c) 2024
+ * 
+ */
+
 #ifndef __NEWTONPOLY_HPP__
 #define __NEWTONPOLY_HPP__
 

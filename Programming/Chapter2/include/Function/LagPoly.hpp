@@ -1,3 +1,14 @@
+/**
+ * @file LagPoly.hpp
+ * @author WangHao (3220104819@zju.edu.cn)
+ * @brief The class for Lagrange Polynomial, which is not used in the homework.
+ * @version 0.1
+ * @date 2024-10-24
+ * 
+ * @copyright Copyright (c) 2024
+ * 
+ */
+
 #ifndef __LAGPOLY_HPP__
 #define __LAGPOLY_HPP__
 

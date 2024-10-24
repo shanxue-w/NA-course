@@ -1,3 +1,14 @@
+/**
+ * @file PolyInterpolation.hpp
+ * @author WangHao (3220104819@zju.edu.cn)
+ * @brief The PolyInterpolation class, providing the basic operations of PolyInterpolation.
+ * @version 0.1
+ * @date 2024-10-24
+ * 
+ * @copyright Copyright (c) 2024
+ * 
+ */
+
 #ifndef __POLYINTERPOLATION_HPP__
 #define __POLYINTERPOLATION_HPP__
 

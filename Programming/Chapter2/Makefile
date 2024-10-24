@@ -18,7 +18,7 @@ MAIN_FILES = $(wildcard *.cc)
 
 TARGETS = $(patsubst %.cc, $(BIN_DIR)/%, $(MAIN_FILES))
 
-all: $(OBJ_FILES) $(TARGETS) run
+all: $(OBJ_FILES) $(TARGETS)
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.cc
 	@mkdir -p $(OBJ_DIRS)
@@ -28,9 +28,14 @@ $(TARGETS): $(BIN_DIR)/%: %.cc $(OBJ_FILES)
 	@mkdir -p $(BIN_DIR)
 	$(CXX) $(CXXFLAGS) $< $(OBJ_FILES) -o $@
 
-report: report.tex
-	pdflatex report.tex
-	pdflatex report.tex
+report: HW2_3220104819_Wanghao.tex 
+	# check the file ./figures/B_Newton2.png exists, then xelatex
+	# if not, run the program to generate the file
+	if [ ! -f ./figures/B_Newton2.png ]; then \
+		make run && make plot; \
+	fi
+	xelatex HW2_3220104819_Wanghao.tex 
+	xelatex HW2_3220104819_Wanghao.tex 
 
 run: $(TARGETS)
 	@for target in $(TARGETS); do \
@@ -39,15 +44,21 @@ run: $(TARGETS)
 		echo "\n";                \
 	done
 
+./data/B_Newton2.txt: $(TARGETS)
+	make run
+plot: ./data/B_Newton2.txt
+	python draw.py
+
 doxygen: 
 	doxygen Doxyfile
 	cd latex && make
 
 clean:
-	rm -f $(TARGETS) *.log *.aux *.bbl *.blg *.out *.pdf *.run.xml
+	rm -f $(TARGETS) *.log *.aux *.bbl *.blg *.out *.pdf *.run.xml *.toc *.bib
+	rm -rf $(OBJ_DIR)/* latex/ html/ data/* 
 
 distclean: clean
-	rm -rf $(OBJ_DIR)/* latex/ html/ 
+	rm -rf figures/*
 
 # Phony targets
 .PHONY: all clean distclean run report doxygen

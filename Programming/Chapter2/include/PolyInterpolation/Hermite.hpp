@@ -1,3 +1,14 @@
+/**
+ * @file Hermite.hpp
+ * @author WangHao (3220104819@zju.edu.cn)
+ * @brief The Hermite class, providing the basic operations of Hermite Interpolation.
+ * @version 0.1
+ * @date 2024-10-24
+ * 
+ * @copyright Copyright (c) 2024
+ * 
+ */
+
 #ifndef __HERMITE_HPP__
 #define __HERMITE_HPP__
 

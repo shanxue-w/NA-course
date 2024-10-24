@@ -1,3 +1,14 @@
+/**
+ * @file NewtonSolver.hpp
+ * @author WangHao (3220104819@zju.edu.cn)
+ * @brief The NewtonSolver class, providing the basic operations of Newton Solver.
+ * @version 0.1
+ * @date 2024-10-24
+ * 
+ * @copyright Copyright (c) 2024
+ * 
+ */
+
 #ifndef __NEWTONSOLVER_HPP__
 #define __NEWTONSOLVER_HPP__
 

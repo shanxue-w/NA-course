@@ -2,6 +2,8 @@
 #include <vector>
 #include "Newton.hpp"
 #include "NewtonPoly.hpp"
+#include <string>
+#include <fstream>
 
 int main(void)
 {
@@ -13,35 +15,47 @@ int main(void)
     Newton newton1(xData, yData1);
     Newton newton2(xData, yData2);
 
-    Polynomial p1 = newton1.Convert_to_Polynomial();
-    Polynomial p2 = newton2.Convert_to_Polynomial();
+    Polynomial p1 = newton1.Convert_to_Polynomial().derivative();
+    Polynomial p2 = newton2.Convert_to_Polynomial().derivative();
 
     std::vector<double> roots1 = p1.Get_all_roots();
     std::vector<double> roots2 = p2.Get_all_roots();
     
-    for (auto i : xData)
-    {
-        std::cout << "Newton1(" << i << ") = " << newton1(i) << std::endl;
-        std::cout << "Newton2(" << i << ") = " << newton2(i) << std::endl;
-    }
+
     
-    std::cout << "Roots of p1: " << std::endl;
+    std::cout << "Roots of p'1: " << std::endl;
     for (auto root : roots1)
     {
         std::cout << root << " ";
-        std::cout << p1(root) << std::endl;
+        std::cout << newton1(root) << std::endl;
     }
 
-    std::cout << "Roots of p2: ";
+    std::cout << "Roots of p'2: " << std::endl;
     for (auto root : roots2)
     {
         std::cout << root << " ";
+        std::cout << newton2(root) << std::endl;
     }
     std::cout << std::endl;
 
 
-
     std::cout << "==================== E ====================\n" << std::endl;
+
+    std::string filename = "./data/E_Newton1.txt";
+    std::ofstream file(filename);
+    for (double j=0; j<=28+15; j+=0.01)
+    {
+        file << j << "," << newton1(j) << std::endl;
+    }
+    file.close();
+
+    filename = "./data/E_Newton2.txt";
+    std::ofstream file2(filename);
+    for (double j=0; j<=28+15; j+=0.01)
+    {
+        file2 << j << "," << newton2(j) << std::endl;
+    }
+    file2.close();
 
     return 0;
 }

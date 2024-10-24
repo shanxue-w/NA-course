@@ -1,3 +1,14 @@
+/**
+ * @file Polynomial.hpp
+ * @author WangHao (3220104819@zju.edu.cn)
+ * @brief The Polynomial class, providing the basic operations of Polynomial.
+ * @version 0.1
+ * @date 2024-10-24
+ * 
+ * @copyright Copyright (c) 2024
+ * 
+ */
+
 #ifndef __POLYNOMIAL_HPP__
 #define __POLYNOMIAL_HPP__
 

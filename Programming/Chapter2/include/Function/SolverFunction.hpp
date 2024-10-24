@@ -1,3 +1,15 @@
+/**
+ * @file SolverFunction.hpp
+ * @author WangHao (3220104819@zju.edu.cn)
+ * @brief Find the root of the function.
+ * @version 0.1
+ * @date 2024-10-24
+ * 
+ * @copyright Copyright (c) 2024
+ * 
+ */
+
+
 #ifndef __SOLVERFUNCTION_HPP__
 #define __SOLVERFUNCTION_HPP__
 
