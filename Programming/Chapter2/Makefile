@@ -38,6 +38,8 @@ report: HW2_3220104819_Wanghao.tex
 	xelatex HW2_3220104819_Wanghao.tex 
 
 run: $(TARGETS)
+	@mkdir -p figures
+	@mkdir -p data
 	@for target in $(TARGETS); do \
 		echo "Running $$target";  \
 		./$$target;               \
@@ -55,10 +57,10 @@ doxygen:
 
 clean:
 	rm -f $(TARGETS) *.log *.aux *.bbl *.blg *.out *.pdf *.run.xml *.toc *.bib
-	rm -rf $(OBJ_DIR)/* latex/ html/ data/* 
+	rm -rf $(OBJ_DIR)/* latex/ html/ data/ 
 
 distclean: clean
-	rm -rf figures/*
+	rm -rf figures/
 
 # Phony targets
 .PHONY: all clean distclean run report doxygen
