@@ -25,6 +25,7 @@ This is for generating the plots using python, matplotlib and numpy.
 make plot
 ```
 
+This is for generating the report using the program.
 ```bash
 make report
 ```
