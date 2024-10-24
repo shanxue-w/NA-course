@@ -6,8 +6,12 @@ This repository contains the homework assignments for the course "Numerical Anal
 
 #### [Project 1](./Programming/Chapter1/)
 
+#### [Project 2](./Programming/Chapter2/)
+
 
 
 ### Theoretical Assignments
 
 #### [Homework 1](./Theoretical/Chapter1/)
+
+#### [Homework 2](./Theoretical/Chapter2/)
