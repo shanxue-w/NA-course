@@ -25,7 +25,10 @@ This is for generating the plots using python, matplotlib and numpy.
 make plot
 ```
 
-This is for generating the report using the program.
+This is for generating the report using the program. Make sure you run `make plot` first or you have the following installed:
+- Python3
+- Numpy
+- Matplotlib
 ```bash
 make report
 ```
