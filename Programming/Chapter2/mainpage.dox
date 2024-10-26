@@ -1,0 +1,56 @@
+/**
+ * @mainpage Numerical Analysis Homework 2
+ * @section intro_sec Introduction
+ * This is the documentation for the second homework of the Numerical Analysis course. All the classes and functions are documented here.
+ *
+ *
+ * @section install_sec How to run the project
+ * 
+ * To build the whole project, you can use the following command:
+ * @code {.bash}
+ * make all 
+ * @endcode
+ *
+ * To plot the pictures, you should first check the following requirements:
+ * - Python 3
+ * - Matplotlib
+ * - Numpy
+ *
+ * Then you can run the following command:
+ *
+ * @code {.bash}
+ * make plot
+ * @endcode
+ *
+ * To clean the project, you can use the following command:
+ * @code {.bash}
+ * make clean
+ * @endcode
+ *
+ * To build the report in pdf format, make sure that you run `make all` first, then you can use the following command:
+ * @code {.bash}
+ * make report
+ * @endcode
+ *
+ *
+ * @section usage_sec More information
+ * Every documented function has its own description and the usage of the function. 
+ * You can check the documentation of the function to see how to use it.
+ *
+ * In this project, the class `LagPoly` and the functions related to it are unnecessary. They are just for the practice of the course.
+ * 
+ * `NewtonPoly` class is the main class of the project. It is used to calculate the Newton polynomial of the given data points and to evaluate the polynomial at a given point.
+ *
+ * `Newton` is the implementation of the Newton interpolation method. It's based on the `NewtonPoly` class.
+ *
+ * `Hermite` is the implementation of the Hermite interpolation method. It's based on the `NewtonPoly` class.
+ *
+ * `Bziver` is the implementation of the Bziver interpolation method. Which is all based on the algorithm in the textbook.
+ *
+ * `Polynomial` is the implementation of the Polynomial class, with the bases \f$1,x,\cdots,x^n\f$, which is used to find the root, 
+ * and tell that there is no big difference in the `Newton` method by using the `NewtonPoly` class. The `NewtonPoly` class can easily
+ * be converted to the `Polynomial` class.
+ *
+ * `NewtonSolver` is the implementation of the Newton solver, which is used to find the root of the given polynomial, based on `Polynomial`
+ * class.
+ */

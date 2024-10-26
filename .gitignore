@@ -14,6 +14,7 @@
 !*/*/figure/*.png
 !Makefile
 !Doxyfile
+!*.dox
 
 python/*
 tmp/*
