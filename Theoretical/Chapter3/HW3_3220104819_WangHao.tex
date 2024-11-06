@@ -1,0 +1,527 @@
+\documentclass[a4paper]{article}
+\usepackage[affil-it]{authblk}
+\usepackage{ctex}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsfonts}
+\usepackage{amsthm}
+\usepackage{physics}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{listings}
+\usepackage{color}
+\usepackage{float}
+\usepackage{subcaption}
+\usepackage{caption}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\hypersetup{colorlinks=true, linkcolor=blue, citecolor=blue, urlcolor=blue}
+
+
+\usepackage{geometry}
+\geometry{margin=1.5cm, vmargin={0pt,1cm}}
+\setlength{\topmargin}{-1cm}
+\setlength{\paperheight}{29.7cm}
+\setlength{\textheight}{25.3cm}
+
+% \addbibresource{citation.bib}
+
+\begin{document}
+% =================================================
+\title{Numerical Analysis homework \# 3}
+
+\author{王昊 Wang Hao 3220104819
+  \thanks{Electronic address: \texttt{3220104819@zju.edu.cn}}}
+\affil{(Mathematics and Applied Mathematics 2201), Zhejiang University }
+
+
+\date{Due time: \today}
+
+\maketitle
+
+\section*{I. Compute Simple Cubic Spline}
+
+In $ [1,2] $, we have $ s(1) = 1 $, and $ s^{\prime}(1) = -3,~s ^{\prime \prime}(1)=6 $. Due to $ s \in \mathbb{S} _{3} ^{2} $, we have $ p(1) = 1, p ^{\prime}(1) = -3, p^{\prime \prime}(1) = 6 $. By the initial condition $ s(0) = 0 $, we have $ p(0) = 0 $, combine these we have
+\begin{equation}
+    p(x) = 7x ^{3} - 18x ^{2} + 12x. 
+\end{equation}
+
+Because $p ^{\prime \prime}(0) = -36 \ne 0$, so $ s(x) $ is not a natural cubic spline.
+
+
+\section*{II. The $ \mathbb{S} _{2} ^{1} $ Interpolation}
+
+\subsection*{a. One additional condition needed by the Interpolation}
+
+To determine the quadratic spline, in each interval $ [x_{i}, x_{i+1}] $, we need 3 conditions. In total, we need $ 3(n-1) $ conditions.
+
+Because $ f_i = f(x _{i})$ is given, so in each interval, we have $ s(x_i) = f_i, s(x _{i+1}) = f _{i+1} $, which gives $ 2(n-1) $ conditions.
+
+By the continuous of the first derivative, we have $ s ^{\prime}(x_{i} + ) = s ^{\prime}(x_{i} -) $, which gives $ n-2 $ conditions.
+
+So in total we have $ 3n-4 $ conditions. So we need one more condition to determine the quadratic spline.
+
+
+\subsection*{b. Give the form of the Interpolation}
+
+In each interval $ [x_{i}, x_{i+1}] $, we define the polynomial as $ p_i(x) $, so we have
+\begin{equation}
+    p_i(x) = f_i + m_i (x-x_i) + K_i(x-x_i)^{2},
+\end{equation}
+where $ K_i $ is unknown. By the continuity of the spline, we have $ p_i(x _{i+1}) = f _{i+1}, p_i ^{\prime}(x _{i+1}) = m _{i+1}$, which gives
+\begin{equation}
+    \begin{aligned}
+        f_{i+1} &= f_i + m_i (x_{i+1}-x_i) + K_i(x_{i+1}-x_i) ^{2},\\
+        m_{i+1} &= m_i + 2K_i(x_{i+1}-x_i).
+    \end{aligned}
+\end{equation}
+
+So we have 
+\begin{equation}
+    m_i + m _{i+1} = 2 f[x _{i}, x _{i+1}], ~~ K_i = \frac{m_{i+1} - m_{i}}{2(x_{i+1}-x_i)}.
+    \label{eq::II.b}
+\end{equation}
+
+Therefore
+\begin{equation}
+    p_i(x) = f_i + m_i (x-x_i) + \frac{m_{i+1} - m_{i}}{2(x_{i+1}-x_i)}(x-x_i)^2, \forall i = 1, \cdots, n-1.
+\end{equation}
+
+\section*{c. Compute the Interpolation}
+
+By \eqref{eq::II.b}, we have the following linear system
+\begin{equation}
+    \begin{pmatrix}
+        1 & 0 & \cdots & 0 & 0\\
+        1 & 1 & 0 & \cdots & 0\\
+        \vdots & \vdots & \vdots & \ddots & \vdots\\
+        0 & 0 & \cdots & 1 & 1\\
+    \end{pmatrix}
+    \begin{pmatrix}
+        m_1\\
+        m_2\\
+        \vdots\\
+        m_{n-1}\\
+    \end{pmatrix}
+    =
+    \begin{pmatrix}
+        f ^{\prime} (a) \\
+        2f[x_1, x_2]\\
+        \vdots\\
+        2f[x_{n-1}, x_n]\\
+    \end{pmatrix}.
+    \label{eq::II.c}
+\end{equation}
+
+Directly solve the linear equation \eqref{eq::II.c}, we have $ m_2, \cdots m_{n-1} $. 
+
+
+\section*{III. Natural Cubic Spline}
+
+For $s_1(x) = 1+c(x+1)^3$, we have $s_1(0) = 1+c, s_1 ^{\prime}(0) = 3c, s_1 ^{\prime \prime}(0) = 6c$. In order to make $s(x)$ a natural cubic spline, we need $s ^{\prime \prime}(1) = 0$, $s(1)=-1$ from the initial condition. So we have
+\begin{equation}
+    s_2(x) = -1 + A (x-1) + 0(x-1)^2 + B(x-1)^3,
+\end{equation}
+which satisfies $s_2(0) = 1+c, s_2^{\prime}(0) = 3c, s_2 ^{\prime \prime}(0) = 6c$, sovle this we have
+\begin{equation}
+        A = - \frac{15}{4}, \quad
+        B = \frac{3}{2}, \quad
+        c = \frac{1}{4}.
+\end{equation}
+
+So $c = \frac{1}{4}$.
+
+\section*{IV. Cubic Spline of $\cos\qty(\frac{\pi}{2}x)$}
+
+\subsection*{a. Interpolation on -1, 0, 1}
+
+We only have three points $x_1,x_2,x_3$. Because we need to construct the natural spline, so $M_1 = M_3 = 0, s(0) = 1$. Therefore, assume $s(x)$ has the following form
+\begin{equation}
+    s(x) = 
+    \begin{cases}
+        1 + mx + Mx^2 + C_1 x^3 & x \in [-1,0],\\
+        1 + mx + Mx^2 + C_2 x^3, & x \in [0,1].
+    \end{cases}
+\end{equation}
+
+We have $s(-1) = s(1) = s^{\prime \prime}(-1) = s^{\prime \prime}(1) = 0$, then we have
+\begin{equation}
+    m = \frac{7}{2}, \quad M = 3, \quad C_1 = \frac{1}{2}, \quad C_2 = -\frac{1}{2}.
+\end{equation}
+
+Simplify this, we have
+\begin{equation}
+    s(x) = 
+    \begin{cases}
+        \frac{1}{2} x^3 + 3x^2 + \frac{7}{2}x + 1, & x \in [-1,0],\\
+        -\frac{1}{2} x^3 + 3x^2 + \frac{7}{2}x + 1, & x \in [0,1].
+    \end{cases}
+    \label{eq::IV.s(x)}
+\end{equation}
+
+\subsection*{b. Minimial energy of Cubic Spline}
+
+For $s(x)$ in \eqref{eq::IV.s(x)}, we have
+\begin{equation}
+    \begin{aligned}
+        \int_{-1}^{1} [s ^{\prime \prime} \qty(x)]^2 \,\mathrm{d}x &= \int_{-1}^{0} \qty(3x+3)^2 \,\mathrm{d}x + \int_{0}^{1} \qty(-3x+3)^2 \,\mathrm{d}x \\
+        &= 6. 
+    \end{aligned}
+\end{equation} 
+
+(i) For the quadratic polynomial.
+
+Using the Newton formulas, we have
+\begin{table}[H]
+    \centering  
+    \begin{tabular}{c|ccc}
+    -1 & 0 &    & \\
+    0  & 1 & 1  & \\
+    1  & 0 & -1 & -1 \\
+    \end{tabular}
+\end{table} 
+
+Therefore, we know the quadratic polynomial is 
+\begin{equation}
+    g(x) = 0 + 1 \qty(x+1) -1 x \qty(x+1) = -x^2 + 1.\\
+\end{equation}
+
+So we have
+\begin{equation}
+    \int_{-1}^{1} [g ^{\prime \prime} \qty(x)]^2 \,\mathrm{d}x = \int_{-1}^{1} 4 \,\mathrm{d}x = 8 > 6.
+\end{equation}
+
+So the energy of natural cubic spline is smaller. 
+
+(ii) For $f(x) = \cos\qty(\frac{\pi}{2}x)$
+
+We have
+\begin{equation}
+    \begin{aligned}
+        \int_{-1}^{1} [f ^{\prime \prime} \qty(x)]^2 \,\mathrm{d}x &= \int_{-1}^{1} \frac{\pi ^4}{16} \cos^2\qty(\frac{\pi}{2} x) \,\mathrm{d}x \\
+        &= \frac{\pi ^4}{16} \approx 6.0881 > 6.
+    \end{aligned}
+\end{equation}
+
+So the energy of natural cubic spline is smaller.
+
+
+% $m_1 = \frac{\pi}{2}$, $f[-1,0] = 1, \quad f[0,1] = -1$. So by \eqref{eq::II.c}, we have
+% \begin{equation}
+%     m_2 = 2 - \frac{\pi}{2}, \quad m_3 = \frac{\pi}{2} - 4. 
+% \end{equation}
+
+% Therefore, we have the quadratic spline
+% \begin{equation}
+%     q(x) = 
+%     \begin{cases}
+%         \frac{\pi}{2} \qty(x+1) + \frac{2- \pi}{2} \qty(x+1)^2, & x \in [-1,0],\\
+%         1 + \qty(2 - \frac{\pi}{2})x + \frac{\pi -6}{2} x^2, & x \in [0,1].
+%     \end{cases}
+%     \label{eq::IV.b.i}
+% \end{equation}  
+
+% Simpilfy \eqref{eq::IV.b.i}, we have
+% \begin{equation}
+%     \begin{aligned}
+%         q(x) = 
+%         \begin{cases}
+%             \frac{2 - \pi}{2} x ^{2} + \qty(2 - \frac{\pi}{2})x + 1, & x \in [-1,0],\\
+%             \frac{\pi -6}{2} x ^{2} + \qty(2 - \frac{\pi}{2})x + 1, & x \in [0,1].
+%         \end{cases}
+%     \end{aligned}
+%     \label{eq::IV.b.ii}
+% \end{equation}
+
+% So we have
+% \begin{equation}
+%     \begin{aligned}
+%         \int_{-1}^{1} [ q^{\prime \prime}(x) ] ^{2} \,\mathrm{d}x &= \int_{-1}^{0} \qty(\frac{2- \pi}{2})^2 \,\mathrm{d}x + \int_{0}^{1} \qty(\frac{\pi -6}{2})^2 \,\mathrm{d}x \\
+%         &= \frac{\pi^2}{2} - 4 \pi + 10. 
+%     \end{aligned}
+% \end{equation}
+
+
+\section*{V. The Quadratic B-Spline $B_{i} ^{1}$}
+
+\subsection*{a. Definition of $B_{i} ^{2}$}
+
+By the definition of B-Splines, we have
+\begin{equation}
+    B_{i} ^{2}(x) = \frac{x - t_{i-1}}{t_{i+1} - t_{i-1}} B_{i} ^{1}(x) + \frac{t_{i+2} - x}{t_{i+2} - t _{i}} B_{i+1} ^{1}(x).
+    \label{eq::IterationOfb2}
+\end{equation}
+
+Because $n=1$ is the hat function with the definition
+\begin{equation}
+    B_{i} ^{1}(x) =
+    \begin{cases}
+        \frac{x - t_{i-1}}{t_{i} - t_{i-1}}, & x \in [t_{i-1}, t_{i}],\\
+        \frac{t_{i+1} - x}{t_{i+1} - t_{i}}, & x \in [t_{i}, t_{i+1}],\\
+        0, & \text{otherwise}.
+    \end{cases}
+    \label{eq::V.a.hatfunction}
+\end{equation}
+
+So we have
+\begin{equation}
+    B_{i} ^{2}(x) =
+    \begin{cases}
+        \frac{\qty(x-t_{i-1})^2}{\qty(t_{i+1} - t_{i-1}) \qty(t_i - t_{i-1})}, & x \in [t_{i-1}, t_{i}],\\
+        \frac{\qty(x-t_{i-1}) \qty(t_{i+1} - x)}{\qty(t_{i+1} - t_{i-1}) \qty(t_{i+1} - t_{i})} + \frac{\qty(t_{i+2} - x) \qty(x - t_i)}{\qty(t_{i+2} - t_{i}) \qty(t_{i+1} - t_{i})}, & x \in [t_{i}, t_{i+1}],\\
+        \frac{\qty(t_{i+2} - x)^2}{\qty(t_{i+2} - t_{i}) \qty(t_{i+2} - t_{i+1})}, & x \in [t_{i+1}, t_{i+2}],\\
+        0, & \text{otherwise}.
+    \end{cases}
+    \label{eq::V.a.B2}
+\end{equation}
+
+
+\subsection*{b. Verify Continuous of $\frac{\mathrm{d}}{\mathrm{d} x} B_i^2(x)$}
+
+Using \eqref{eq::V.a.B2}, we just directly derivative it and check the continuity.
+
+\begin{equation}
+    \frac{\mathrm{d}}{\mathrm{d} x} B_i^2(x) = 
+    \begin{cases}
+        \frac{2\qty(x-t_{i-1})}{\qty(t_{i+1} - t_{i-1}) \qty(t_i - t_{i-1})}, & x \in [t_{i-1}, t_{i}],\\
+        \frac{t_{i+1} + t_{i-1} - 2x}{\qty(t_{i+1} - t_{i-1}) \qty(t_{i+1} - t_{i})} + \frac{t_{i+2}+t_i - 2x}{\qty(t_{i+2} - t_{i}) \qty(t_{i+1} - t_{i})}, & x \in [t_{i}, t_{i+1}],\\
+        \frac{-2\qty(t_{i+2} - x)}{\qty(t_{i+2} - t_{i}) \qty(t_{i+2} - t_{i+1})}, & x \in [t_{i+1}, t_{i+2}],\\
+        0, & \text{otherwise}.
+    \end{cases}
+    \label{eq::derivativeOfB2}
+\end{equation}
+
+By \eqref{eq::derivativeOfB2} we can easily get:
+\begin{equation}
+    \begin{aligned}
+        \frac{\mathrm{d}}{\mathrm{d} x} B_i^2(t_i -) = \frac{2}{t_{i+1} - t_{i-1}},& \quad \frac{\mathrm{d}}{\mathrm{d} x} B_i^2(t_i +) = \frac{2}{t_{i+1} - t_{i-1}} \\
+        \frac{\mathrm{d}}{\mathrm{d} x} B_i^2(t_{i+1} -) = \frac{-2}{t_{i+2} - t_{i}},& \quad \frac{\mathrm{d}}{\mathrm{d} x} B_i^2(t_{i+1} +) = \frac{-2}{t_{i+2} - t_{i}}. 
+    \end{aligned}
+\end{equation}
+
+So $\frac{\mathrm{d}}{\mathrm{d} x} B_i^2(x)$ is continuous at $t_i$ and $t_{i+1}$. 
+
+\subsection*{c. Zeros of $\frac{\mathrm{d}}{\mathrm{d} x} B_i^2(x)$}
+
+(1) when $x \in (t_{i-1}, t_{i})$, we have $x-t_{i-1} > 0$, so $\frac{\mathrm{d}}{\mathrm{d} x} B_i^2(x) > 0$.
+
+(2) when $x \in (t_{i}, t_{i+1})$. Let $\frac{\mathrm{d}}{\mathrm{d} x} B_i^2(x) = 0$, we have
+\begin{equation}
+    x^* = \frac{t_{i+1} t_{i+2} - t_{i} t_{i-1}}{t_{i+2} + t_{i+1} - t_i - t_{i-1}}. 
+\end{equation}
+And we can get
+\begin{equation}
+    \begin{aligned}
+        x^* > t_i \Leftrightarrow t_{i+2} > t_i \\
+        x^* < t_{i+1} \Leftrightarrow t_{i+1} > t_{i-1}. 
+    \end{aligned}
+\end{equation}
+So $x^*$ is in $(t_i, t_{i+1})$. 
+
+In result, only one zero of $\frac{\mathrm{d}}{\mathrm{d} x} B_i^2(x)$ in $(t_{i-1}, t_{i+1})$.
+
+\section*{d. Bound of $B_i^2(x)$}
+
+$B_i^2(x) \geq 0$ is clear. Only need to take \eqref{eq::IterationOfb2} and notice that $B_i^1(x) \geq 0$ and the coefficient of each part is greater than 0. When $x = t_{i-1}, t_{i+2}$, $B_i^2(x) = 0$. 
+
+For the upper bound, we first take the interval $[t_{i+1}, t_{i+2}]$, and we have
+\begin{equation}
+    B_i^2(x) \leq \frac{\qty(t_{i+2} - t_{i+1})^2}{\qty(t_{i+2} - t_{i}) \qty(t_{i+2} - t_{i+1})} < 1, \forall x \in [t_{i+1}, t_{i+2}].
+\end{equation}
+
+The behaviour of $B_i^2(x)$ in $[t_{i-1}, t_i]$ is similar to $[t_{i+1}, t_{i+2}]$. So we have $ 0 \geq B_i^2(x) < 1, x \in [t_{i-1}, t_{i}]$. 
+
+So we only need to consider the interval $[t_i, t_{i+1}]$, where $B_i^2(x)$ is a quadratic function, with a maximum at $x^*$. 
+
+By Cor 3.48, we have 
+\begin{equation}
+    \forall n \in \mathbb{Z}, \sum_{i=- \infty}^{\infty} B_i^n(x) = 1 \Rightarrow \sum_{i=-\infty}^{\infty} B_i^2(x) = 1.
+\end{equation}
+
+So in the interval $[t_i, t_{i+1}]$, we have
+\begin{equation}
+    B_{i-1}^2(x) + B_i^2(x) + B_{i+1}^2(x) = 1. 
+\end{equation}
+Because $B_{i-1}^2(x) \geq 0, B_{i+1}^2(x) \geq 0$, so $ 0 \leq B_i^2(x) \leq 1$. If $B_i^2(x) = 1$, then $B_{i-1}^2(x) = B_{i+1}^2(x) = 0$, which means $x = t_i ~\text{and}~ x =  t_{i+1}$, which is impossible. So $B_i^2(x) < 1$.
+
+In result, we have $0 \leq B_i^2(x) < 1, x \in \mathbb{R}$.
+
+\subsection*{e. Plot the B-Spline}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{Plot_B.png}
+\end{figure}
+
+
+\section*{VI. Verify Theorem 3.32 Algebraically}
+
+Just directly calculate it by the definition. 
+
+(i) $x \in [t_{i-1}, t_{i}]$
+
+We have the following table
+\begin{table}[H]
+    \centering  
+    \begin{tabular}{c|cccc}
+    $t_{i-1}$  & 0 &    & \\
+    $t_{i}$    & $\qty(t_i - x)^2$ & $\frac{\qty(t_i - x)^2}{t_{i} - t_{i-1}}$  & \\
+    $t_{i+1}$  & $\qty(t_{i+1} - x)^2$ & $t_{i+1}+t_i - 2x$  & $\frac{-x^2+2t_{i-1}x+t_{i+1}t_i - t_{i+1}t_{i-1}-t_i t_{i-1}}{\qty(t_i-t_{i-1})\qty(t_{i+1}-t_{i-1})}$& \\
+    $t_{i+2}$  & $\qty(t_{i+2} - x)^2$ & $t_{i+2}+t_{i+1} - 2x$  & 1 & $\frac{\qty(x-t_{i-1})^2}{\qty(t_i - t_{i-1})\qty(t_{i+1} - t_{i-1})\qty(t_{i+2} - t_{i-1})}$\\
+    \end{tabular}
+\end{table} 
+
+So we have
+\begin{equation}
+    \qty(t_{i+2}-t_{i-1}) [t_{i-1}, t_i, t_{i+1}, t_{i+2}] \qty(t-x)_{+}^2 = \frac{\qty(x-t_{i-1})^2}{\qty(t_i - t_{i-1})\qty(t_{i+1} - t_{i-1})} = B_i^2(x).
+\end{equation}
+
+
+(ii) $x \in [t_{i}, t_{i+1}]$
+
+We have the following table
+\begin{table}[H]
+    \centering  
+    \begin{tabular}{c|cccc}
+    $t_{i-1}$  & 0 &    & \\
+    $t_{i}$    & 0 &  0 & \\
+    $t_{i+1}$  & $\qty(t_{i+1} - x)^2$ & $\frac{\qty(t_{i+1} - x)^2}{t_{i+1} - t_{i}}$  & $\frac{\qty(t_{i+1} - x)^2}{\qty(t_{i+1} - t_{i}) \qty(t_{i+1}-t_{i-1})}$ &\\
+    $t_{i+2}$  & $\qty(t_{i+2} - x)^2$ & $t_{i+2}+t_{i+1} - 2x$ & $\frac{-x^2+2t_{i}x+t_{i+2}t_{i+1}-t_{i+2}t_i - t_{i+1}t_{i}}{\qty(t_{i+2}-t_i) \qty(t_{i+1}-t_i)}$ & $\frac{1}{\qty(t_{i+2}-t_{i-1})}\qty(\frac{\qty(x-t_{i-1}) \qty(t_{i+1} - x)}{\qty(t_{i+1} - t_{i-1}) \qty(t_{i+1} - t_{i})} + \frac{\qty(t_{i+2} - x) \qty(x - t_i)}{\qty(t_{i+2} - t_{i}) \qty(t_{i+1} - t_{i})})$ \\
+    \end{tabular}
+\end{table} 
+
+So we have 
+\begin{equation}
+    \qty(t_{i+2}-t_{i-1}) [t_{i-1}, t_i, t_{i+1}, t_{i+2}] \qty(t-x)_{+}^2 = \frac{\qty(x-t_{i-1}) \qty(t_{i+1} - x)}{\qty(t_{i+1} - t_{i-1}) \qty(t_{i+1} - t_{i})} + \frac{\qty(t_{i+2} - x) \qty(x - t_i)}{\qty(t_{i+2} - t_{i}) \qty(t_{i+1} - t_{i})} = B_i^2(x).
+\end{equation}
+
+
+(iii) $x \in [t_{i+1}, t_{i+2}]$
+
+We have the following table
+\begin{table}[H]
+    \centering  
+    \begin{tabular}{c|cccc}
+    $t_{i-1}$  & 0 &    & \\
+    $t_{i}$    & 0 & 0  & \\
+    $t_{i+1}$  & 0 & 0  & 0 \\
+    $t_{i+2}$  & $\qty(t_{i+2} - x)^2$ & $\frac{\qty(t_{i+2} - x)^2}{\qty(t_{i+2}-t_{i+1})}$ & $\frac{\qty(t_{i+2} - x)^2}{\qty(t_{i+2}-t_{i+1}) \qty(t_{i+2}-t_{i})}$ & $\frac{\qty(t_{i+2} - x)^2}{\qty(t_{i+2}-t_{i+1})\qty(t_{i+2}-t_{i})\qty(t_{i+2}-t_{i-1})}$\\
+    \end{tabular}
+\end{table} 
+
+So we have 
+\begin{equation}
+    \qty(t_{i+2}-t_{i-1}) [t_{i-1}, t_i, t_{i+1}, t_{i+2}] \qty(t-x)_{+}^2 = \frac{\qty(t_{i+2} - x)^2}{\qty(t_{i+2}-t_{i+1})\qty(t_{i+2}-t_{i+1})} = B_i^2(x).
+\end{equation}
+
+(iv) $x \in (-\infty, t_{i-1})$ or $x \in (t_{i+2}, +\infty)$
+
+We have $B_i^2(x) = 0$, and $\qty(t-x)_{+}^2 = 0 ~\text{or} 1$, a constant function, so the equality holds.
+
+
+In conclusion, we have verified Theorem 3.32 algebraically. 
+
+
+\section*{VII. Scaled integral of B-Spline}
+
+Prove by induction.
+
+When $n=0$, we have
+\begin{equation}
+    \frac{1}{t_{i} - t_{i-1}} \int_{t_{i-1}}^{t_i} B_i^{0}(x) \,\mathrm{d}x = 1 = \frac{1}{n+1}. 
+\end{equation}
+
+When $n=1$, we have
+\begin{equation}
+    \begin{aligned}
+        \frac{1}{t_{i+1} - t_{i-1}} \int_{t_{i-1}}^{t_i} B_i^{1}(x) \,\mathrm{d}x &= \frac{1}{t_{i+1} - t_{i-1}} \qty(\int_{t_{i-1}}^{t_i} \frac{x-t_{i-1}}{t_i - t_{i-1}} \,\mathrm{d}x + \int_{t_{i}}^{t_{i+1}} \frac{t_{i+1} - x}{t_{i+1} - t_{i}} \,\mathrm{d}x) \\
+        &= \frac{1}{t_{i+1} - t_{i-1}} \qty(\frac{1}{2} \qty(t_i - t_{i-1}) + \frac{1}{2} \qty(t_{i+1} - t_i)) = \frac{1}{2} = \frac{1}{n+1}.
+    \end{aligned}
+\end{equation}
+
+Assume the equality holds for $n \leq k$, then for $n=k+1$, by the derivative formula of B-Spline when $n \geq 2$
+\begin{equation}
+    \frac{\mathrm{d} }{\mathrm{d} x} B_i^{k+1}(x) = \frac{k+1}{t_{i+k} - t_{i-1}} B_i^{k}(x) - \frac{k+1}{t_{i+k+1} - t_{i}} B_{i+1}^{k}(x).  
+\end{equation}
+We have
+\begin{equation}
+    \begin{aligned}
+        \int_{t_{i-1}}^{t_{i+k+1}} B_i^{k+1}(x) \,\mathrm{d}x &= x B_i^{k+1}(x) \vert_{t_{i-1}}^{t_{i+k+1}} - \int_{t_{i-1}}^{t_{i+k+1}} x \frac{\mathrm{d} }{\mathrm{d} x} B_i^{k+1}(x) \,\mathrm{d}x \\ 
+        &= -\qty(k+1) \int_{t_{i-1}}^{t_{i+k+1}} \frac{x B_i^k(x)}{t_{i+k}-t_{i-1}} - \frac{x B_{i+1}^k(x)}{t_{i+k+1}-t_{i}} \,\mathrm{d}x \\ 
+        &= -\qty(k+1) \int_{t_{i-1}}^{t_{i+k+1}} B_{i}^{k+1}(x) + \frac{t_{i-1}}{t_{i+k}-t_{i-1}} B_i^k(x) - \frac{t_{i+k+1}}{t_{i+k+1}-t_{i}} B_{i+1}^k(x) \,\mathrm{d}x ~(\text{By def})\\
+        &= -\qty(k+1) \int_{t_{i-1}}^{t_{i+k+1}} B_{i}^{k+1}(x) \, \mathrm{d}x - \qty(k+1) t_{i-1} \frac{1}{k+1} + \qty(k+1) t_{i+k+1} \frac{1}{k+1} \\
+        \Rightarrow \qty(k+2) \int_{t_{i-1}}^{t_{i+k+1}} B_{i}^{k+1}(x) \, \mathrm{d}x &= t_{i+k+1} - t_{i-1} \\
+        \Rightarrow \int_{t_{i-1}}^{t_{i+k+1}} B_{i}^{k+1}(x) \, \mathrm{d}x &= \frac{t_{i+k+1} - t_{i-1}}{k+2}.
+    \end{aligned}
+\end{equation}
+
+\begin{equation}
+    \Rightarrow \frac{1}{t_{i+k+1} - t_{i-1}} \int_{t_{i-1}}^{t_{i+k+1}} B_{i}^{k+1}(x) \, \mathrm{d}x = \frac{1}{k+2}.
+\end{equation}
+
+By the induction hypothesis, we have proved the equality holds for $n=k+1$. Therefore the equality holds for all $n \in \mathbb{N}$.
+
+
+\section*{VIII. Symmetric Polynomials}
+
+The theorem is 
+\begin{equation}
+    \forall m \in \mathbb{N}^+, \forall i \in \mathbb{N}, \forall n=1,\cdots,n, \quad \tau_{m-n} \qty(x_i,\cdots,x_{i+n}) = [x_i,\cdots,x_{i+n}]x^m.
+\end{equation}
+
+
+\subsection*{a. $m=4,n=2$}
+
+The differenct table is 
+\begin{table}[H]
+    \centering  
+    \begin{tabular}{c|cccc}
+    $x_i$  & $x_i^4$ &    & \\
+    $x_{i+1}$  & $x_{i+1}^4$ & $x_i^3+x_i^2 x_{i+1}+x_i x_{i+1}^2+x_{i+1}^3$  & \\
+    $x_{i+2}$  & $x_{i+2}^4$ & $x_{i+1}^3+x_{i+1}^2 x_{i+2}+x_{i+1} x_{i+2}^2+x_{i+2}^3$ & $x_i^2+x_ix_{i+1}x_ix_{i+2}+x_{i+1}^2+x_{i+1}x_{i+2}+x_{i+2}^2$ \\
+    \end{tabular}
+\end{table} 
+
+So we have 
+\begin{equation}
+    [x_i,x_{i+1},x_{i+2}]x^4 = x_i^2+x_ix_{i+1}x_ix_{i+2}+x_{i+1}^2+x_{i+1}x_{i+2}+x_{i+2}^2.
+\end{equation}
+
+The definition of $\tau_2 \qty(x_i,x_{i+1},x_{i+2})$ is 
+\begin{equation}
+    \tau_2 \qty(x_i,x_{i+1},x_{i+2}) = \sum_{i \leq i_1 \leq i_2 \leq i+2} x_{i_1} x_{i_2} = x_i^2+x_ix_{i+1}x_ix_{i+2}+x_{i+1}^2+x_{i+1}x_{i+2}+x_{i+2}^2.
+\end{equation}
+
+Therefore, the theorem holds for $m=4,n=2$.
+
+\subsection*{b. Proof of the Theorem}
+
+We have the recurrence relation
+\begin{equation}
+    \tau_{k+1} (x_1, \cdots, x_{n+1}) = \tau_{k+1} (x_1, \cdots, x_{n}) + x_{n+1} \tau_k (x_1, \cdots, x_{n+1}).
+\end{equation}
+
+Therefore, we have
+\begin{equation}
+    \begin{aligned}
+        \qty(x_{i+n}-x_i)\tau_{m-n} \qty(x_i,\cdots,x_{i+n}) &= \tau_{m-n+1}  (x_1, \cdots, x_{n}) - \tau_{m-n+1}  (x_1, \cdots, x_{n-1}) - x_i \tau_{m-n} \qty(x_i,\cdots,x_{i+n}) \\
+        &=  \tau_{m-n+1}  (x_1, \cdots, x_{n}) - \tau_{m-n+1}  (x_1, \cdots, x_{n-1}) \\
+        &~~ - \tau_{m-n+1}  (x_1, \cdots, x_{n}) + \tau_{m-n+1}  (x_2, \cdots, x_{n}) \\
+        &= \tau_{m-n+1}  (x_2, \cdots, x_{n}) - \tau_{m-n+1}  (x_1, \cdots, x_{n-1}). 
+    \end{aligned}
+\end{equation}
+Which is in the form of difference. 
+
+When $n=0$, we have $\tau{m}(x_i) = x_i^m$. 
+
+So by induction, assume the theorem holds for $n=k$, then for $n=k+1$ we have
+\begin{equation}
+    \begin{aligned}
+        \tau_{m-k-1} \qty(x_i,\cdots,x_{i+k+1}) &= \frac{\tau_{m-k} (x_{i+1},\cdots,x_{i+k+1}) - \tau_{m-k}(x_{i}, \cdots, x_{i+k})}{x_{i+k+1} - x_i} = [x_i,\cdots,x_{i+k+1}]x^m \\
+        &= \frac{[x_{i+1},\cdots, x_{i+k+1}]x^m - [x_{i}, \cdots, x_{i+k}]x^m}{x_{i+k+1} - x_i} \\
+        &= [x_i,\cdots,x_{i+k+1}]x^m.
+    \end{aligned}
+\end{equation}
+
+Therefore, we have proved the theorem.
+
+\end{document}
