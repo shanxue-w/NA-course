@@ -15,3 +15,5 @@ This repository contains the homework assignments for the course "Numerical Anal
 #### [Homework 1](./Theoretical/Chapter1/)
 
 #### [Homework 2](./Theoretical/Chapter2/)
+
+#### [Homework 3](./Theoretical/Chapter3/)

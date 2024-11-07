@@ -7,3 +7,6 @@ This homework is about solving non-linear equations by using Bisection method, N
 
 #### [Homework 2](./Chapter2/)
 This homework is about interpolation.
+
+#### [Homework 3](./Chapter3/)
+B-Spline Homework. meaningless.

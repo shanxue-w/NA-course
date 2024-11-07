@@ -294,7 +294,7 @@ Using \eqref{eq::V.a.B2}, we just directly derivative it and check the continuit
 By \eqref{eq::derivativeOfB2} we can easily get:
 \begin{equation}
     \begin{aligned}
-        \frac{\mathrm{d}}{\mathrm{d} x} B_i^2(t_i -) = \frac{2}{t_{i+1} - t_{i-1}},& \quad \frac{\mathrm{d}}{\mathrm{d} x} B_i^2(t_i +) = \frac{2}{t_{i+1} - t_{i-1}} \\
+        \frac{\mathrm{d}}{\mathrm{d} x} B_i^2(t_i -) = \frac{2}{t_{i+1} - t_{i-1}},& \quad \frac{\mathrm{d}}{\mathrm{d} x} B_i^2(t_i +) = \frac{2}{t_{i+1} - t_{i-1}}, \\
         \frac{\mathrm{d}}{\mathrm{d} x} B_i^2(t_{i+1} -) = \frac{-2}{t_{i+2} - t_{i}},& \quad \frac{\mathrm{d}}{\mathrm{d} x} B_i^2(t_{i+1} +) = \frac{-2}{t_{i+2} - t_{i}}. 
     \end{aligned}
 \end{equation}
@@ -312,7 +312,7 @@ So $\frac{\mathrm{d}}{\mathrm{d} x} B_i^2(x)$ is continuous at $t_i$ and $t_{i+1
 And we can get
 \begin{equation}
     \begin{aligned}
-        x^* > t_i \Leftrightarrow t_{i+2} > t_i \\
+        x^* > t_i \Leftrightarrow t_{i+2} > t_i, \\
         x^* < t_{i+1} \Leftrightarrow t_{i+1} > t_{i-1}. 
     \end{aligned}
 \end{equation}
@@ -329,7 +329,7 @@ For the upper bound, we first take the interval $[t_{i+1}, t_{i+2}]$, and we hav
     B_i^2(x) \leq \frac{\qty(t_{i+2} - t_{i+1})^2}{\qty(t_{i+2} - t_{i}) \qty(t_{i+2} - t_{i+1})} < 1, \forall x \in [t_{i+1}, t_{i+2}].
 \end{equation}
 
-The behaviour of $B_i^2(x)$ in $[t_{i-1}, t_i]$ is similar to $[t_{i+1}, t_{i+2}]$. So we have $ 0 \geq B_i^2(x) < 1, x \in [t_{i-1}, t_{i}]$. 
+The behaviour of $B_i^2(x)$ in $[t_{i-1}, t_i]$ is similar to $[t_{i+1}, t_{i+2}]$. So we have $ 0 \leq B_i^2(x) < 1, x \in [t_{i-1}, t_{i}]$. 
 
 So we only need to consider the interval $[t_i, t_{i+1}]$, where $B_i^2(x)$ is a quadratic function, with a maximum at $x^*$. 
 
@@ -438,7 +438,7 @@ When $n=1$, we have
     \end{aligned}
 \end{equation}
 
-Assume the equality holds for $n \leq k$, then for $n=k+1$, by the derivative formula of B-Spline when $n \geq 2$
+Assume the equality holds for $n \leq k$, then for $n=k+1$, by the derivative formula of B-Spline when $k+1 \geq 2$
 \begin{equation}
     \frac{\mathrm{d} }{\mathrm{d} x} B_i^{k+1}(x) = \frac{k+1}{t_{i+k} - t_{i-1}} B_i^{k}(x) - \frac{k+1}{t_{i+k+1} - t_{i}} B_{i+1}^{k}(x).  
 \end{equation}
@@ -503,10 +503,10 @@ We have the recurrence relation
 Therefore, we have
 \begin{equation}
     \begin{aligned}
-        \qty(x_{i+n}-x_i)\tau_{m-n} \qty(x_i,\cdots,x_{i+n}) &= \tau_{m-n+1}  (x_1, \cdots, x_{n}) - \tau_{m-n+1}  (x_1, \cdots, x_{n-1}) - x_i \tau_{m-n} \qty(x_i,\cdots,x_{i+n}) \\
-        &=  \tau_{m-n+1}  (x_1, \cdots, x_{n}) - \tau_{m-n+1}  (x_1, \cdots, x_{n-1}) \\
-        &~~ - \tau_{m-n+1}  (x_1, \cdots, x_{n}) + \tau_{m-n+1}  (x_2, \cdots, x_{n}) \\
-        &= \tau_{m-n+1}  (x_2, \cdots, x_{n}) - \tau_{m-n+1}  (x_1, \cdots, x_{n-1}). 
+        \qty(x_{i+n}-x_i)\tau_{m-n} \qty(x_i,\cdots,x_{i+n}) &= \tau_{m-n+1}  (x_{i+1}, \cdots, x_{i+n}) - \tau_{m-n+1}  (x_{i}, \cdots, x_{i+n-1}) - x_i \tau_{m-n} \qty(x_i,\cdots,x_{i+n}) \\
+        &=  \tau_{m-n+1}  (x_{i}, \cdots, x_{i+n}) - \tau_{m-n+1}  (x_{i}, \cdots, x_{i+n-1}) \\
+        &~~~~ - \tau_{m-n+1}  (x_{i}, \cdots, x_{i+n}) + \tau_{m-n+1}  (x_{i+1}, \cdots, x_{i+n}) \\
+        &= \tau_{m-n+1}  (x_{i+1}, \cdots, x_{i+n}) - \tau_{m-n+1}  (x_{i}, \cdots, x_{i+n-1}). 
     \end{aligned}
 \end{equation}
 Which is in the form of difference. 
@@ -516,7 +516,7 @@ When $n=0$, we have $\tau{m}(x_i) = x_i^m$.
 So by induction, assume the theorem holds for $n=k$, then for $n=k+1$ we have
 \begin{equation}
     \begin{aligned}
-        \tau_{m-k-1} \qty(x_i,\cdots,x_{i+k+1}) &= \frac{\tau_{m-k} (x_{i+1},\cdots,x_{i+k+1}) - \tau_{m-k}(x_{i}, \cdots, x_{i+k})}{x_{i+k+1} - x_i} = [x_i,\cdots,x_{i+k+1}]x^m \\
+        \tau_{m-k-1} \qty(x_i,\cdots,x_{i+k+1}) &= \frac{\tau_{m-k} (x_{i+1},\cdots,x_{i+k+1}) - \tau_{m-k}(x_{i}, \cdots, x_{i+k})}{x_{i+k+1} - x_i} \\
         &= \frac{[x_{i+1},\cdots, x_{i+k+1}]x^m - [x_{i}, \cdots, x_{i+k}]x^m}{x_{i+k+1} - x_i} \\
         &= [x_i,\cdots,x_{i+k+1}]x^m.
     \end{aligned}
