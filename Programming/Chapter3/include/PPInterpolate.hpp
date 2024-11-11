@@ -22,6 +22,7 @@
 #include <vector>
 #include <cmath>
 #include <string>
+#include <omp.h>
 #include "PPoly.hpp"
 
 
@@ -78,28 +79,5 @@ public:
     getPoly() const;
 
 };
-
-
-// template <>
-// void PPInterpolate<1>::interpolate(
-//                   const std::vector<double> &t, // nodes
-//                   const std::vector<double> &y, // values
-//                   const int method, // 0 for periodic, 1 for complete, 2 for natural, 3 for not-a-knot.
-//                   const std::vector<double> &boundary_condition); // boundary condition
-
-// template <>
-// void PPInterpolate<2>::interpolate(
-//                   const std::vector<double> &t, // nodes
-//                   const std::vector<double> &y, // values
-//                   const int method, // 0 for periodic, 1 for complete, 2 for natural, 3 for not-a-knot.
-//                   const std::vector<double> &boundary_condition); // boundary condition
-
-
-// template <>
-// void PPInterpolate<3>::interpolate(
-//                   const std::vector<double> &t, // nodes
-//                   const std::vector<double> &y, // values
-//                   const int method, // 0 for periodic, 1 for complete, 2 for natural, 3 for not-a-knot.
-//                   const std::vector<double> &boundary_condition); // boundary condition
 
 #endif // PPINTERPOLATE_HPP

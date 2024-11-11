@@ -32,17 +32,19 @@ PPInterpolate<N>::PPInterpolate(
         if (!std::is_sorted(t.begin(), t.end()))
         {
             std::vector<int> idx(t.size());
-            for (size_t i=0; i<t.size(); ++i)
-                idx[i] = i;
-            std::sort(idx.begin(), idx.end(), [&](int i, int j){return t[i] < t[j];});
-            std::vector<double> t_sorted(t.size()), y_sorted(t.size());
+            #pragma omp parallel for
             for (size_t i=0; i<t.size(); ++i)
             {
-                t_sorted[i] = t[idx[i]];
-                y_sorted[i] = y[idx[i]];
+                idx[i] = i;
+            }    
+            std::sort(idx.begin(), idx.end(), [&](int i, int j){return t[i] < t[j];});
+            // std::vector<double> t_sorted(t.size()), y_sorted(t.size());
+            #pragma omp parallel for
+            for (size_t i=0; i<t.size(); ++i)
+            {
+                _t[i] = t[idx[i]];
+                _y[i] = y[idx[i]];
             }
-            _t = t_sorted;
-            _y = y_sorted;
         }
     }
     interpolate(t, y, method, boundary_condition); // interpolate
@@ -111,12 +113,13 @@ void PPInterpolate<1>::interpolate(
     (void)method;
     (void)boundary_condition;
     std::vector<std::vector<double>> A(t.size()-1, std::vector<double>(2,0));
+    #pragma omp parallel for
     for (size_t i=0; i<t.size()-1; ++i)
     {
         A[i][0] = y[i];
         A[i][1] = (y[i+1]-y[i])/(t[i+1]-t[i]);
     }
-    poly = PPoly(A, t); // interpolate
+    poly = PPoly(A, t, 0); // interpolate
 }
 
 template <>
@@ -126,10 +129,13 @@ void PPInterpolate<2>::interpolate(
                   const int method, // 0 for periodic, 1 for complete, 2 for natural, 3 for not-a-knot.
                   const std::vector<double> &boundary_condition) // boundary condition
 {
-    if (method == 0)
+    switch (method)
+    {
+    case 0:
     {
         int t_size = t.size();
         std::vector<double> K_i(t_size - 1, 0);
+        #pragma omp parallel for
         for (int i = 0; i < t_size - 1; ++i)
         {
             K_i[i] = (y[i + 1] - y[i]) / (t[i + 1] - t[i]);
@@ -139,11 +145,15 @@ void PPInterpolate<2>::interpolate(
         Eigen::VectorXd b = Eigen::VectorXd::Zero(t_size);
 
         std::vector<Eigen::Triplet<double>> triplets; // For batch insertion into the sparse matrix
+        #pragma omp parallel for
         for(int i=0; i<t_size-1; i++)
         {
             b(i) = 2*K_i[i];
-            triplets.push_back(Eigen::Triplet<double>(i, i, 1));
-            triplets.push_back(Eigen::Triplet<double>(i, i+1, 1));
+            #pragma omp critical
+            {
+                triplets.push_back(Eigen::Triplet<double>(i, i, 1));
+                triplets.push_back(Eigen::Triplet<double>(i, i+1, 1));
+            }
         }
         triplets.push_back(Eigen::Triplet<double>(t_size-1, 0, 1));
         triplets.push_back(Eigen::Triplet<double>(t_size-1, t_size-1, -1));
@@ -156,57 +166,53 @@ void PPInterpolate<2>::interpolate(
         Eigen::VectorXd c = solver.solve(b);
 
         std::vector<std::vector<double>> coeffs(t_size-1, std::vector<double>(3, 0));
+        #pragma omp parallel for
         for (int i = 0; i < t_size - 1; ++i)
         {
             coeffs[i][0] = y[i];
             coeffs[i][1] = c(i);
             coeffs[i][2] = (c(i+1) - c(i)) / (2*(t[i+1]-t[i]));
         }
-        poly = PPoly(coeffs, t); // interpolate
+        poly = PPoly(coeffs, t, 0); // interpolate
         return;
     }
-    else if (method == 1)
+    break;
+    
+    case 1:
     {
         int t_size = t.size();
         std::vector<double> K_i(t_size - 1, 0);
+        #pragma omp parallel for
         for (int i = 0; i < t_size - 1; ++i)
         {
             K_i[i] = (y[i + 1] - y[i]) / (t[i + 1] - t[i]);
         }
 
-        Eigen::SparseMatrix<double> A(t_size, t_size);
-        Eigen::VectorXd b = Eigen::VectorXd::Zero(t_size);
-
-        std::vector<Eigen::Triplet<double>> triplets; // For batch insertion into the sparse matrix
-        triplets.push_back(Eigen::Triplet<double>(0, 0, 1));
-        b(0) = boundary_condition[0];
-        for (int i = 1; i <= t_size - 1; ++i)
+        std::vector<double> c(t_size, 0);
+        c[0] = boundary_condition[0];
+        #pragma omp parallel for
+        for (int i = 1; i < t_size; ++i)
         {
-            b(i) = 2*K_i[i-1];
-            triplets.push_back(Eigen::Triplet<double>(i, i-1, 1));
-            triplets.push_back(Eigen::Triplet<double>(i, i, 1));
+            c[i] = 2*K_i[i-1] - c[i-1];
         }
-        A.setFromTriplets(triplets.begin(), triplets.end());
-
-        Eigen::SparseLU<Eigen::SparseMatrix<double>> solver;
-        solver.analyzePattern(A);
-        solver.factorize(A);
-        Eigen::VectorXd c = solver.solve(b);
 
         std::vector<std::vector<double>> coeffs(t_size-1, std::vector<double>(3, 0));
+        #pragma omp parallel for
         for (int i = 0; i < t_size - 1; ++i)
         {
             coeffs[i][0] = y[i];
-            coeffs[i][1] = c(i);
-            coeffs[i][2] = (c(i+1) - c(i)) / (2*(t[i+1]-t[i]));
+            coeffs[i][1] = c[i];
+            coeffs[i][2] = (c[i+1] - c[i]) / (2*(t[i+1]-t[i]));
         }
-        poly = PPoly(coeffs, t); // interpolate
+        poly = PPoly(coeffs, t, 0); // interpolate
         return;
     }
-    else
-    {
-        // method < 2 or method >=0 is accepted, others are not accepted.
+    break;
+
+    default:
         throw std::invalid_argument("method must be 0,1");
+        return;
+        break;
     }
     return;
 }
@@ -220,12 +226,15 @@ PPInterpolate<3>::interpolate(
                   const int method, // 0 for periodic, 1 for complete, 2 for natural, 3 for not-a-knot.
                   const std::vector<double> &boundary_condition) // boundary condition
 {
-    if (method == 0)
+    switch (method)
+    {
+    case 0:
     {
         int t_size = t.size();
         std::vector<double> K_i(t_size - 1, 0);
         
         // Compute K_i = f[x_i, x_{i+1}]
+        #pragma omp parallel for
         for (int i = 0; i < t_size - 1; ++i) 
         {
             K_i[i] = (y[i + 1] - y[i]) / (t[i + 1] - t[i]);
@@ -235,8 +244,10 @@ PPInterpolate<3>::interpolate(
         Eigen::VectorXd b = Eigen::VectorXd::Zero(t_size);
 
         std::vector<Eigen::Triplet<double>> triplets; // For batch insertion into the sparse matrix
+        triplets.reserve(4*(t_size-2));
 
         // Precompute mu_i and lambda_i to avoid redundant calculations
+        #pragma omp parallel for
         for (int i = 0; i < t_size - 2; ++i)
         {
             double dt_i = t[i + 2] - t[i + 1];
@@ -247,9 +258,13 @@ PPInterpolate<3>::interpolate(
             b(i) = 3 * (mu_i * K_i[i + 1] + lambda_i * K_i[i]);
 
             // Store the triplets for A matrix in batch
-            triplets.push_back(Eigen::Triplet<double>(i, i, lambda_i));
-            triplets.push_back(Eigen::Triplet<double>(i, i + 1, 2.0));
-            triplets.push_back(Eigen::Triplet<double>(i, i + 2, mu_i));
+            // Using thread-safe data structure (e.g., critical section or atomic operations) may be required here
+            #pragma omp critical
+            {
+                triplets.push_back(Eigen::Triplet<double>(i, i, lambda_i));
+                triplets.push_back(Eigen::Triplet<double>(i, i + 1, 2.0));
+                triplets.push_back(Eigen::Triplet<double>(i, i + 2, mu_i));
+            }
         }
 
         // Boundary condition handling for the last row
@@ -277,6 +292,7 @@ PPInterpolate<3>::interpolate(
 
         // Prepare the cubic spline coefficients
         std::vector<std::vector<double>> coeffs(t_size - 1, std::vector<double>(4, 0));
+        #pragma omp parallel for
         for (int i = 0; i < t_size - 1; ++i)
         {
             double tmp = t[i + 1] - t[i];
@@ -286,15 +302,18 @@ PPInterpolate<3>::interpolate(
             coeffs[i][3] = (c(i) - 2.0 * K_i[i] + c(i + 1)) / (tmp * tmp);
         }
 
-        poly = PPoly(coeffs, t); // Interpolate
+        poly = PPoly(coeffs, t, 0); // Interpolate
         return;
     }
-    else if (method == 1) 
+    break;
+
+    case 1:
     {
         int t_size = t.size();
         std::vector<double> K_i(t_size - 1, 0);
         
         // compute K_i = f[x_i, x_{i+1}]
+        #pragma omp parallel for
         for (int i = 0; i < t_size - 1; ++i) 
         {
             K_i[i] = (y[i + 1] - y[i]) / (t[i + 1] - t[i]);
@@ -307,27 +326,32 @@ PPInterpolate<3>::interpolate(
         triplets.reserve(3 * (t_size - 2));
 
         // 填充矩阵 A 和向量 b
+        #pragma omp parallel for
         for (int i = 0; i < t_size - 2; ++i) 
         {
             double mu_i = (t[i + 1] - t[i]) / (t[i + 2] - t[i]);
             double lambda_i = (t[i + 2] - t[i + 1]) / (t[i + 2] - t[i]);
             b(i) = 3 * (mu_i * K_i[i + 1] + lambda_i * K_i[i]);
 
-            triplets.emplace_back(i, i, 2.0);
-            if (i == 0)
+            #pragma omp critical
             {
-                triplets.emplace_back(i, i + 1, mu_i);
-            }
-            else if (i < t_size - 3)
-            {
-                triplets.emplace_back(i, i - 1, mu_i);
-                triplets.emplace_back(i, i + 1, lambda_i);
-            }
-            else
-            {
-                triplets.emplace_back(i, i - 1, lambda_i);
+                triplets.emplace_back(i, i, 2.0);
+                if (i == 0)
+                {
+                    triplets.emplace_back(i, i + 1, mu_i);
+                }
+                else if (i < t_size - 3)
+                {
+                    triplets.emplace_back(i, i - 1, mu_i);
+                    triplets.emplace_back(i, i + 1, lambda_i);
+                }
+                else
+                {
+                    triplets.emplace_back(i, i - 1, lambda_i);
+                }
             }
         }
+
         A.setFromTriplets(triplets.begin(), triplets.end());
 
         // 使用稀疏矩阵求解器
@@ -338,6 +362,7 @@ PPInterpolate<3>::interpolate(
 
         // 构建多项式系数
         std::vector<std::vector<double>> coeffs(t_size - 1, std::vector<double>(4, 0));
+        #pragma omp parallel for
         for (int i = 0; i < t_size - 1; ++i) 
         {
             double tmp = t[i + 1] - t[i];
@@ -364,21 +389,25 @@ PPInterpolate<3>::interpolate(
         }
 
         // 创建 PPoly 对象
-        poly = PPoly(coeffs, t);
+        poly = PPoly(coeffs, t, 0);
         return;
     }
-    else if (method == 2)
+    break;
+
+    case 2:
     {
         /**
          * Natural Cubic Spline
          */
         int t_size = t.size();
         std::vector<double> K_i(t_size-1, 0);
+        #pragma omp parallel for
         for (int i=0; i<t_size-1; ++i)
         {
             K_i[i] = (y[i+1]-y[i])/(t[i+1]-t[i]);
         }
         std::vector<double> J_i(t_size-2, 0);
+        #pragma omp parallel for
         for (int i=0; i<t_size-2; ++i)
         {
             J_i[i] = (K_i[i+1]-K_i[i])/(t[i+2]-t[i]);
@@ -389,6 +418,7 @@ PPInterpolate<3>::interpolate(
         Eigen::SparseMatrix<double> A(t_size - 2, t_size - 2);
         std::vector<Eigen::Triplet<double>> triplets;
         triplets.reserve(3 * (t_size - 2));
+        #pragma omp parallel for
         for (int i = 0; i < t_size - 2; ++i)
         {
             b(i) = 6*J_i[i];
@@ -396,23 +426,26 @@ PPInterpolate<3>::interpolate(
             double mu_i = (t[i+1] - t[i]) / (t[i+2] - t[i]);
             double lambda_i = (t[i+2] - t[i+1]) / (t[i+2] - t[i]);
             // A(i,i) = 2;
-            triplets.emplace_back(i, i, 2.0);
-            if (i == 0)
+            #pragma omp critical
             {
-                // A(i, i+1) = lambda_i;
-                triplets.emplace_back(i, i+1, lambda_i);
-            }
-            else if (i < t_size - 3)
-            {
-                // A(i, i-1) = mu_i;
-                // A(i, i+1) = lambda_i;
-                triplets.emplace_back(i, i-1, mu_i);
-                triplets.emplace_back(i, i+1, lambda_i);
-            }
-            else
-            {
-                // A(i, i-1) = mu_i;
-                triplets.emplace_back(i, i-1, mu_i);
+                triplets.emplace_back(i, i, 2.0);
+                if (i == 0)
+                {
+                    // A(i, i+1) = lambda_i;
+                    triplets.emplace_back(i, i+1, lambda_i);
+                }
+                else if (i < t_size - 3)
+                {
+                    // A(i, i-1) = mu_i;
+                    // A(i, i+1) = lambda_i;
+                    triplets.emplace_back(i, i-1, mu_i);
+                    triplets.emplace_back(i, i+1, lambda_i);
+                }
+                else
+                {
+                    // A(i, i-1) = mu_i;
+                    triplets.emplace_back(i, i-1, mu_i);
+                }
             }
         }
 
@@ -425,6 +458,7 @@ PPInterpolate<3>::interpolate(
         // Eigen::VectorXd c = A.colPivHouseholderQr().solve(b);
 
         std::vector<std::vector<double>> coeffs(t.size()-1, std::vector<double>(4,0));
+        #pragma omp parallel for
         for (int i=0; i<t_size-1; ++i)
         {
             coeffs[i][0] = y[i];
@@ -451,14 +485,15 @@ PPInterpolate<3>::interpolate(
                 coeffs[i][3] = -c(i-1) / (6.0*tmp);
             }
         }
-
-        poly = PPoly(coeffs, t); // interpolate
+        poly = PPoly(coeffs, t, 0); // interpolate
         return;
     }
-    else
-    {
-        // method < 2 or method >=0 is accepted, others are not accepted.
+    break;
+    
+    default:
         throw std::invalid_argument("method must be 0,1,2");
+        return;
+        break;
     }
     return;
 }
