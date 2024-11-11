@@ -58,6 +58,12 @@ PPoly::PPoly(const std::vector<std::vector<double>> &coeffs,
     }
 }
 
+PPoly::PPoly(const PPoly &other)
+{
+    this->_t = other._t;
+    this->_coeffs = other._coeffs;
+}
+
 int
 PPoly::findInterval(double x) const 
 {
@@ -72,13 +78,21 @@ PPoly::findInterval(double x) const
         return -1;
     else
     {
-        for (size_t i = 0; i < _t.size()-1; i++)
+        // middle search
+        int left = 0;
+        int right = _t.size()-1;
+        int mid = (left + right) / 2;
+        while (right-left > 1)
         {
-            if (x >= _t[i] && x <= _t[i+1])
-            {
-                return i;
-            }
+            if (x <= _t[mid])
+                right = mid;
+            else if (x >= _t[mid])
+                left = mid;
+            else
+                return mid;
+            mid = (left + right) / 2;
         }
+        return mid;
     }
     return -1;
 }

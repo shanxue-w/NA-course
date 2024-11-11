@@ -52,6 +52,13 @@ public:
     PPoly(const std::vector<std::vector<double>> &coeffs, /** The coefficients of pp-form */ 
           const std::vector<double> &t, /** The knots of pp-form */
           const int check = 1); 
+
+    /**
+     * @brief Construct a new PPoly object
+     * 
+     * @param poly 
+     */
+    PPoly(const PPoly &poly);
     
     /**
      * @brief The function return the value of the polynomial at a given point.

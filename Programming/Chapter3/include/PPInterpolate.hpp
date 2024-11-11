@@ -14,6 +14,11 @@
 
 #include <iostream>
 #include <Eigen/Dense>
+#include <Eigen/Sparse>
+#include <Eigen/SparseLU>
+#include <Eigen/SparseCholesky>
+#include <Eigen/SparseQR>
+#include <Eigen/IterativeLinearSolvers>
 #include <vector>
 #include <cmath>
 #include <string>
@@ -56,7 +61,8 @@ public:
     PPInterpolate(const std::vector<double> &t, // nodes
                   const std::vector<double> &y, // values
                   const int method = 0, // 0 for periodic, 1 for complete, 2 for natural, 3 for not-a-knot.
-                  const std::vector<double> &boundary_condition = std::vector<double>(N, 0.0));
+                  const std::vector<double> &boundary_condition = std::vector<double>(N, 0.0),
+                  const int check=1);
 
 
     void
@@ -74,26 +80,26 @@ public:
 };
 
 
-template <>
-void PPInterpolate<1>::interpolate(
-                  const std::vector<double> &t, // nodes
-                  const std::vector<double> &y, // values
-                  const int method, // 0 for periodic, 1 for complete, 2 for natural, 3 for not-a-knot.
-                  const std::vector<double> &boundary_condition); // boundary condition
+// template <>
+// void PPInterpolate<1>::interpolate(
+//                   const std::vector<double> &t, // nodes
+//                   const std::vector<double> &y, // values
+//                   const int method, // 0 for periodic, 1 for complete, 2 for natural, 3 for not-a-knot.
+//                   const std::vector<double> &boundary_condition); // boundary condition
 
-template <>
-void PPInterpolate<2>::interpolate(
-                  const std::vector<double> &t, // nodes
-                  const std::vector<double> &y, // values
-                  const int method, // 0 for periodic, 1 for complete, 2 for natural, 3 for not-a-knot.
-                  const std::vector<double> &boundary_condition); // boundary condition
+// template <>
+// void PPInterpolate<2>::interpolate(
+//                   const std::vector<double> &t, // nodes
+//                   const std::vector<double> &y, // values
+//                   const int method, // 0 for periodic, 1 for complete, 2 for natural, 3 for not-a-knot.
+//                   const std::vector<double> &boundary_condition); // boundary condition
 
 
-template <>
-void PPInterpolate<3>::interpolate(
-                  const std::vector<double> &t, // nodes
-                  const std::vector<double> &y, // values
-                  const int method, // 0 for periodic, 1 for complete, 2 for natural, 3 for not-a-knot.
-                  const std::vector<double> &boundary_condition); // boundary condition
+// template <>
+// void PPInterpolate<3>::interpolate(
+//                   const std::vector<double> &t, // nodes
+//                   const std::vector<double> &y, // values
+//                   const int method, // 0 for periodic, 1 for complete, 2 for natural, 3 for not-a-knot.
+//                   const std::vector<double> &boundary_condition); // boundary condition
 
 #endif // PPINTERPOLATE_HPP
