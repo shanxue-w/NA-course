@@ -29,11 +29,17 @@
 
 int main(void)
 {
-    std::vector<double> t = {0.0, 1.0, 2.0, 3.0, 4.0};
-    std::vector<double> coeffs = {0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0};
-    BSpline bspline(coeffs, t, 3);
-    for (double i=0.0; i<=4.0; i+=0.01)
+    int MAX = 1000;
+    std::vector<double> x(MAX);
+    std::vector<double> coeffs(MAX+9, 0.0);
+    for (int i=0; i<MAX; i++)
     {
-        std::cout << "f(" << i << ") = " << bspline(i) << std::endl;
+        x[i] = i;
+    }
+    coeffs[20] = 1.0;
+    BSpline bspline(coeffs, x, 10);
+    for (double i=9; i<21.0; i+=0.01)
+    {
+        std::cout << i << "," << bspline(i) << std::endl;
     }
 }
