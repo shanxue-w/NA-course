@@ -103,7 +103,8 @@ PPInterpolate<N>::getPoly() const
 
 
 template <>
-void PPInterpolate<1>::interpolate(
+void 
+PPInterpolate<1>::interpolate(
                   const std::vector<double> &t, // nodes
                   const std::vector<double> &y, // values
                   const int method, // 0 for periodic, 1 for complete, 2 for natural, 3 for not-a-knot.
@@ -123,7 +124,8 @@ void PPInterpolate<1>::interpolate(
 }
 
 template <>
-void PPInterpolate<2>::interpolate(
+void 
+PPInterpolate<2>::interpolate(
                   const std::vector<double> &t, // nodes
                   const std::vector<double> &y, // values
                   const int method, // 0 for periodic, 1 for complete, 2 for natural, 3 for not-a-knot.
@@ -159,6 +161,7 @@ void PPInterpolate<2>::interpolate(
         triplets.push_back(Eigen::Triplet<double>(t_size-1, t_size-1, -1));
         b(t_size-1) = 0;
         A.setFromTriplets(triplets.begin(), triplets.end());
+
 
         Eigen::SparseLU<Eigen::SparseMatrix<double>> solver;
         solver.analyzePattern(A);
@@ -451,11 +454,11 @@ PPInterpolate<3>::interpolate(
 
         A.setFromTriplets(triplets.begin(), triplets.end());
         // solve Ax = b
+
         Eigen::SparseLU<Eigen::SparseMatrix<double>> solver;
         solver.analyzePattern(A);
         solver.factorize(A);
         Eigen::VectorXd c = solver.solve(b);
-        // Eigen::VectorXd c = A.colPivHouseholderQr().solve(b);
 
         std::vector<std::vector<double>> coeffs(t.size()-1, std::vector<double>(4,0));
         

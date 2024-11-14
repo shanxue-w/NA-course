@@ -63,7 +63,7 @@ public:
                   const std::vector<double> &y, // values
                   const int method = 0, // 0 for periodic, 1 for complete, 2 for natural, 3 for not-a-knot.
                   const std::vector<double> &boundary_condition = std::vector<double>(N, 0.0),
-                  const int check=1);
+                  const int check=0);
 
 
     void

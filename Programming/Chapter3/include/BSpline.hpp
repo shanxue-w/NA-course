@@ -30,6 +30,9 @@ class BSpline
 private:
     std::vector<double> _coeffs;
     std::vector<double> _t;
+    std::vector<double> _basis;
+    std::vector<std::vector<double>> _total_basis;
+    std::vector<double> _derivative_basis;
     int _n;
 
 public:
@@ -37,8 +40,8 @@ public:
 
     BSpline(const std::vector<double> coeffs, 
             const std::vector<double> t, 
-            const int n,
-            const int check=1);
+            const int                 n,
+            const int                 check=0);
     
     BSpline(const BSpline& other);
 
@@ -57,7 +60,28 @@ public:
     std::vector<double> 
     get_t() const;
 
-    int get_n() const;
+    int 
+    get_n() const;
+
+    std::vector<double>
+    get_basis(const double x);
+
+    void
+    get_total_basis(const double x);
+
+    double
+    cal_derivative_basis(const int interval,
+                         const int j,
+                         const int degree,
+                         const int n);
+
+    std::vector<double>
+    basis_derivative(const double x, 
+                     const int    n);
+
+    double
+    derivative(const double x, 
+               const int    n);
 
 };
 

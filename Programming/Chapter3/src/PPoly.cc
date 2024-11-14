@@ -45,15 +45,11 @@ PPoly::PPoly(const std::vector<std::vector<double>> &coeffs,
 
             std::sort(idx.begin(), idx.end(), [&](size_t i, size_t j) { return t[i] < t[j]; });
 
-            std::vector<double> new_t(t.size());
-            std::vector<std::vector<double>> new_coeffs(t.size());
             for (size_t i = 0; i < t.size(); i++)
             {
-                new_t[i] = t[idx[i]];
-                new_coeffs[i] = coeffs[idx[i]];
+                _t[i] = t[idx[i]];
+                _coeffs[i] = coeffs[idx[i]];
             }
-            _t = new_t;
-            _coeffs = new_coeffs;
         }
     }
 }
@@ -112,7 +108,8 @@ PPoly::operator()(double x) const
     else
     {
         double xt = x - _t[interval];
-        const std::vector<double> &interval_coeffs = _coeffs[interval];
+        // const std::vector<double> &interval_coeffs = _coeffs[interval];
+        Eigen::VectorXd interval_coeffs = Eigen::Map<const Eigen::VectorXd>(_coeffs[interval].data(), _coeffs[interval].size());
         double result = 0.;
         for (int i=interval_coeffs.size()-1; i>=0; i--)
         {
@@ -123,50 +120,47 @@ PPoly::operator()(double x) const
     return 0.;
 }
 
-double _factorial(int n)
-{
-    if (n == 0)
-        return 1.0;
-    double result = 1.0;
-    for (int i=1; i<=n; i++)
-    {
-        result *= i;
-    }
-    return result;
-}
-
 
 double 
 PPoly::derivative(double x, int n) const
 {
+    // Find the interval that contains x
     int idx = findInterval(x);
-    int N = _coeffs[idx].size()-1;
+    if (idx == -1)
+        return 0.0; // If x is out of bounds, return 0
+
+    int N = _coeffs[idx].size() - 1; // Degree of the polynomial in this interval
     if (n > N)
-        return 0.;
-    else
+        return 0.0; // If the derivative order n is greater than the degree, return 0
+
+    // The number of coefficients after taking the n-th derivative
+    int m = N - n;
+
+    double xt = x - _t[idx]; // Calculate (x - t[idx]) for Horner's method
+    double result = 0.0;
+
+    // Initialize factorial multiplier for the n-th derivative
+    double init = 1.0;
+    for (int i = m+1; i <= N; ++i) 
     {
-        int m = N-n;
-        if (idx == -1)
-            return 0.;
-        else
-        {
-            std::vector<double> new_t({_t[idx], _t[idx+1]});
-            std::vector<std::vector<double>> new_coeffs;
-            std::vector<double> new_coeff(m+1);
-            double init = _factorial(n); // n!
-            for (int i=0; i<m+1; i++)
-            {
-                new_coeff[i] = _coeffs[idx][i+n] * init;
-                init /= (i+1);
-                init *= (n+i+1); // init = (i+2)*...*(n+i+1)
-            }
-            new_coeffs.push_back(new_coeff);
-            PPoly new_poly(new_coeffs, new_t);
-            return new_poly(x);
-        }
+        init *= i; // Compute (N-n+1) * (N-n+2) * ... * N
     }
-    return 0.;
+
+    Eigen::VectorXd tmp = Eigen::Map<const Eigen::VectorXd>(&_coeffs[idx][n], m+1);
+
+    // Use Horner's method to evaluate the n-th derivative at x
+    for (int i = m; i >= 0; --i)
+    {
+        // Evaluate polynomial derivative using Horner's method
+        result = result * xt + tmp(i) * init;
+
+        // Update the factorial part for the next coefficient
+        init /= (n+i);
+        init *= i; // Update the factorial part for the next coefficient
+    }
+    return result;
 }
+
 
 
 double

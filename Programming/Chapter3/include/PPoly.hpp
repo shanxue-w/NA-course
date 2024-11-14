@@ -15,6 +15,7 @@
 #include <iostream>
 #include <vector>
 #include <cmath>
+#include <Eigen/Dense>
 
 /**
  * @brief The definition of the class PPoly, which is a polynomial class.
@@ -33,6 +34,7 @@ private:
      * The coefficients of pp-form
      */
     std::vector<std::vector<double>> _coeffs;
+    // Eigen::MatrixXd _coeffs;
 
     /**
      * The knots of pp-form
@@ -51,7 +53,8 @@ public:
      */
     PPoly(const std::vector<std::vector<double>> &coeffs, /** The coefficients of pp-form */ 
           const std::vector<double> &t, /** The knots of pp-form */
-          const int check = 1); 
+          const int check = 0); 
+
 
     /**
      * @brief Construct a new PPoly object
