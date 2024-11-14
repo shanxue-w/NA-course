@@ -25,6 +25,11 @@
 #include <cmath>
 #include <string>
 #include <omp.h>
+#include <lapacke.h>
+#include <lapack.h>
+
+#define EIGEN_USE_LAPACKE
+#define EIGEN_USE_LAPACKE_STRICT
 
 template <int N>
 class BInterpolate
@@ -80,7 +85,7 @@ public:
     derivative(const double x, const int n);
 };
 
-
+#include "BInterpolate.tpp"
 
 
 #endif // BINTERPOLATE_HPP

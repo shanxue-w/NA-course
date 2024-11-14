@@ -16,6 +16,12 @@
 #include <vector>
 #include <cmath>
 #include <Eigen/Dense>
+#include <lapacke.h>
+#include <lapack.h>
+
+#define EIGEN_USE_LAPACKE
+#define EIGEN_USE_LAPACKE_STRICT
+
 
 /**
  * @brief The definition of the class PPoly, which is a polynomial class.

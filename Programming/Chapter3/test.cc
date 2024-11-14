@@ -31,12 +31,22 @@
 //     {
 //         x[i] = i;
 //     }
+//     for (int i=0; i<MAX+2; i+=1)
+//     {
+//         coeffs[i] = i;
+//     }
 //     coeffs[5] = 1.0;
 //     BSpline bspline(coeffs, x, 3, 0);
-//     for (double i=2; i<7.0; i+=0.01)
+//     for (double i=0; i<7.0; i+=1)
 //     {
-//         std::cout << i << "," << bspline.derivative(i, 4) << std::endl;
+//         // std::vector<double> basis = bspline.get_basis(i);
+//         // for (auto j: basis)
+//         // {
+//         //     std::cout << j << ",";
+//         // }
+//         // std::cout << std::endl;
 //         // std::cout << i << "," << bspline(i) << std::endl;
+//         bspline(i);
 //     }
 // }
 
@@ -46,16 +56,22 @@
 
 int main(void)
 {
-    int MAX = 10;
+    int MAX = 100;
     std::vector<double> x(MAX);
     std::vector<double> y(MAX);
-    for (int i=0; i<MAX; i++)
+    for (int i=1; i<MAX; i++)
     {
         x[i] = i;
-        y[i] = std::sin(i);
+        y[i] = std::log(i);
     }
-    BInterpolate<3> inter(x, y, 2);
-    std::cout << inter.derivative(x[0], 1) << ", " << inter.derivative(x[MAX-1], 1) << std::endl;
-    std::cout << inter.derivative(x[0], 2) << ", " << inter.derivative(x[MAX-1], 2) << std::endl;
+    std::vector<double> boundary = {1.0, 1.0/static_cast<double> (MAX), 1.0/2.0, -1.0/6.0, 1.0/24.0};
+    BInterpolate<3> inter(x, y, 1, boundary);
+    for (int i=0; i<MAX; i++)
+    {
+        std::cout << i << "," << inter(i) << "," << y[i] << std::endl;
+    }
+    std::cout << inter.derivative(x[0], 1) << std::endl;
+    std::cout << inter.derivative(x[MAX-1], 1) << std::endl;
+
     return 0;
 }

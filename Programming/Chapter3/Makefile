@@ -2,6 +2,7 @@
 EIGEN_FLAX = -I /usr/include/eigen3
 # use jsoncpp library
 JSONCPP_FLAX = -I /usr/include/jsoncpp
+LAPACK_FLAX = -llapacke -llapack
 
 CXX = g++
 
@@ -13,7 +14,7 @@ INCLUDE_DIRS = $(shell find $(INCLUDE_DIR) -type d)
 INCLUDE_FLAGS = $(patsubst %,-I%,$(INCLUDE_DIRS))
 ADDRESS_FLAG = -fsanitize=address
 
-CXXFLAGS = $(INCLUDE_FLAGS) $(EIGEN_FLAX) $(JSONCPP_FLAX) -std=c++17 -Wall -Wextra -Werror -pedantic -O2 -flto=auto -fuse-linker-plugin -mavx -mfma -march=native -fopenmp -fPIC $(ADDRESS_FLAG)
+CXXFLAGS = $(INCLUDE_FLAGS) $(EIGEN_FLAX) $(JSONCPP_FLAX) $(LAPACK_FLAX) -std=c++17 -Wall -Wextra -Werror -pedantic -O3 -flto=auto -fuse-linker-plugin -mavx -mfma -march=native -fopenmp -fPIC
 
 SRC_FILES = $(shell find $(SRC_DIR) -name '*.cc')
 

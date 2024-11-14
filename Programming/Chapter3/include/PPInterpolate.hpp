@@ -24,6 +24,11 @@
 #include <string>
 #include <omp.h>
 #include "PPoly.hpp"
+#include <lapacke.h>
+#include <lapack.h>
+
+#define EIGEN_USE_LAPACKE
+#define EIGEN_USE_LAPACKE_STRICT
 
 
 template <int N>
@@ -79,5 +84,6 @@ public:
     getPoly() const;
 
 };
+
 
 #endif // PPINTERPOLATE_HPP

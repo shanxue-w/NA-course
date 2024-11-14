@@ -19,6 +19,11 @@
 #include <algorithm>
 #include <Eigen/Dense>
 #include <omp.h>
+#include <lapacke.h>
+#include <lapack.h>
+
+#define EIGEN_USE_LAPACKE
+#define EIGEN_USE_LAPACKE_STRICT
 
 class BSpline
 {

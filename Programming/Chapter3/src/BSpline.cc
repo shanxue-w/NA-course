@@ -108,7 +108,6 @@ BSpline::operator()(const double x)
     {
         return 0.0;
     }
-    
     // ignore the return value of get_basis
     get_basis(x);
 

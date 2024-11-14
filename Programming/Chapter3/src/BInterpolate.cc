@@ -1,65 +1,5 @@
 #include "BInterpolate.hpp"
 
-
-template <int N>
-BInterpolate<N>::BInterpolate(const std::vector<double> &t, 
-                              const std::vector<double> &y, 
-                              const int &method, 
-                              const std::vector<double> &boundary_condition,
-                              const int check)
-    : _t(t)
-    , _y(y)
-    , _method(method)
-    , _boundary_condition(boundary_condition)
-{
-    _bspline = BSpline();
-    if (check == 1)
-    {
-        if (!std::is_sorted(_t.begin(), _t.end()))
-        {
-            int t_size = _t.size();
-            std::vector<int> idx(t_size);
-
-            for (int i=0; i<t_size; ++i)
-            {
-                idx[i] = i;
-            }
-            std::sort(idx.begin(), idx.end(), [&](int i, int j){return t[i] < t[j];});
-
-            for (int i=0; i<t_size; ++i)
-            {
-                _t[i] = t[idx[i]];
-                _y[i] = y[idx[i]];
-            }
-        }
-    }
-    interpolate(t, y, method, boundary_condition);
-}
-
-
-template <int N>
-double
-BInterpolate<N>::operator()(const double x)
-{
-    return _bspline(x);
-}
-
-template <int N>
-BSpline
-BInterpolate<N>::getBSpline() const
-{
-    return _bspline;
-}
-
-template <int N>
-double
-BInterpolate<N>::derivative(const double x, 
-                            const int n)
-{
-    return _bspline.derivative(x, n);
-}
-
-
 template <>
 void
 BInterpolate<1>::interpolate(const std::vector<double> &t,
@@ -238,9 +178,13 @@ BInterpolate<3>::interpolate(const std::vector<double> &t,
         _bspline = BSpline(coeff, t, 3);
         return;
     }
+    else if (method == 4)
+    {
+        // to be done
+    }
     else
     {
-
+        throw std::invalid_argument("method must be 0, 1, 2");
     }
 }
 
