@@ -15,12 +15,8 @@
 #include <Eigen/Dense>
 #include <cmath>
 #include <iostream>
-#include <lapack.h>
-#include <lapacke.h>
 #include <vector>
 
-#define EIGEN_USE_LAPACKE
-#define EIGEN_USE_LAPACKE_STRICT
 #define EIGEN_USE_THREADS
 
 /**
@@ -34,18 +30,19 @@
  *
  *
  */
+template <typename Real = double> // the type of the coefficients
 class PPoly {
 private:
   /**
    * The coefficients of pp-form
    */
-  std::vector<std::vector<double>> _coeffs;
+  std::vector<std::vector<Real>> _coeffs;
   // Eigen::MatrixXd _coeffs;
 
   /**
    * The knots of pp-form
    */
-  std::vector<double> _t;
+  std::vector<Real> _t;
 
 public:
   /**
@@ -58,9 +55,9 @@ public:
    * object.
    */
   PPoly(
-      const std::vector<std::vector<double>> &coeffs, /** The coefficients of pp-form */
-      const std::vector<double>              &t,      /** The knots of pp-form */
-      const int                               check = 0);
+      const std::vector<std::vector<Real>> &coeffs, /** The coefficients of pp-form */
+      const std::vector<Real>              &t,      /** The knots of pp-form */
+      const int                             check = 0);
 
   /**
    * @brief Construct a new PPoly object
@@ -73,9 +70,9 @@ public:
    * @brief The function return the value of the polynomial at a given point.
    *
    * @param x the x value
-   * @return double \f$ p(x) \f$
+   * @return Real \f$ p(x) \f$
    */
-  double operator()(double x) const;
+  Real operator()(Real x) const;
 
   /**
    * @brief The function return the value of the derivative of the polynomial at
@@ -83,9 +80,9 @@ public:
    *
    * @param x the x value
    * @param n the order of derivative
-   * @return double \f$ p^{(n)}(x) \f$
+   * @return Real \f$ p^{(n)}(x) \f$
    */
-  double derivative(double x, int n = 1) const;
+  Real derivative(Real x, int n = 1) const;
 
   /**
    * @brief The function return the value of the integral of the polynomial at a
@@ -93,9 +90,9 @@ public:
    *
    * @param a The left boundary of the integral
    * @param b The right boundary of the integral
-   * @return double \f$ \int_{a}^{b} p(x) dx \f$
+   * @return Real \f$ \int_{a}^{b} p(x) dx \f$
    */
-  double integral(double a, double b) const;
+  Real integral(Real a, Real b) const;
 
   // /**
   //  * @brief The function use the coefficients and knots to construct a new
@@ -117,10 +114,12 @@ public:
    * @param x The point
    * @return int
    */
-  int findInterval(double x) const;
+  int findInterval(Real x) const;
 
   // overload =
   PPoly &operator=(const PPoly &other);
 };
+
+#include "PPoly.tpp"
 
 #endif // PPOLY_HPP

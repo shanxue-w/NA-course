@@ -8,7 +8,7 @@ void BInterpolate<1, double>::interpolate(
     const std::vector<double> &boundary_condition) {
   (void)method;
   (void)boundary_condition;
-  _bspline = BSpline(y, t, 1); // default method is 1
+  _bspline = BSpline<double>(y, t, 1); // default method is 1
   // std::cout << "Interpolation finished." << std::endl;
 }
 
@@ -16,8 +16,8 @@ template <>
 void BInterpolate<3, double>::interpolate(
     const std::vector<double> &t,
     const std::vector<double> &y,
-    const int &method, // 0 for periodic, 1 for complete, 2 for natural, 3 for
-                       // not-a-knot.
+    const int                 &method, // 0 for periodic, 1 for complete, 2 for natural,
+                                       // 3 for not-a-knot.
     const std::vector<double> &boundary_condition) {
   if (method == 0) {
     int                         t_size = t.size();
@@ -27,7 +27,7 @@ void BInterpolate<3, double>::interpolate(
     std::vector<Eigen::Triplet<double>>      triplets;
     triplets.reserve(4 * (t_size + 2));
     std::vector<double> tmp_coeff(t_size + 2, 1.0);
-    BSpline             tmp_spline(tmp_coeff, t, 3);
+    BSpline<double>     tmp_spline(tmp_coeff, t, 3);
     for (int i = 0; i < t_size; ++i) {
       std::vector<double> basis = tmp_spline.get_basis(t[i]);
       if (i == 0) {
@@ -69,7 +69,7 @@ void BInterpolate<3, double>::interpolate(
     Eigen::Matrix<double, Eigen::Dynamic, 1> x = solver.solve(b);
 
     std::vector<double> coeff(x.data(), x.data() + x.size());
-    _bspline = BSpline(coeff, t, 3);
+    _bspline = BSpline<double>(coeff, t, 3);
     return;
   } else if (method == 1) {
     int                         t_size = t.size();
@@ -79,7 +79,7 @@ void BInterpolate<3, double>::interpolate(
     std::vector<Eigen::Triplet<double>>      triplets;
     triplets.reserve(4 * (t_size + 2));
     std::vector<double> tmp_coeff(t_size + 2, 1.0);
-    BSpline             tmp_spline(tmp_coeff, t, 3);
+    BSpline<double>     tmp_spline(tmp_coeff, t, 3);
     for (int i = 0; i < t_size; ++i) {
       std::vector<double> basis = tmp_spline.get_basis(t[i]);
       if (i == 0) {
@@ -118,7 +118,7 @@ void BInterpolate<3, double>::interpolate(
     // tmp_coeff = std::vector<double>(x.data(), x.data() + x.size());
 
     // _bspline = BSpline(tmp_coeff, t, 3);
-    _bspline = BSpline(coeffs, t, 3);
+    _bspline = BSpline<double>(coeffs, t, 3);
     return;
 
   } else if (method == 2) {
@@ -128,7 +128,7 @@ void BInterpolate<3, double>::interpolate(
     std::vector<Eigen::Triplet<double>>      triplets;
     triplets.reserve(4 * (t_size + 2));
     std::vector<double> tmp_coeff(t_size + 2, 1.0);
-    BSpline             tmp_spline(tmp_coeff, t, 3);
+    BSpline<double>     tmp_spline(tmp_coeff, t, 3);
     for (int i = 0; i < t_size; ++i) {
       std::vector<double> basis = tmp_spline.get_basis(t[i]);
       if (i == 0) {
@@ -162,9 +162,9 @@ void BInterpolate<3, double>::interpolate(
     Eigen::Matrix<double, Eigen::Dynamic, 1> x = solver.solve(b);
 
     std::vector<double> coeff(x.data(), x.data() + x.size());
-    _bspline = BSpline(coeff, t, 3);
+    _bspline = BSpline<double>(coeff, t, 3);
     return;
-  } else if (method == 4) {
+  } else if (method == 3) {
     // to be done
   } else {
     throw std::invalid_argument("method must be 0, 1, 2");

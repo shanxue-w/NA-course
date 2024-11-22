@@ -10,22 +10,19 @@
  */
 
 #include "PPInterpolate.hpp"
-#include <algorithm>
-#include <iostream>
 
-//
-template <int N>
-PPInterpolate<N>::PPInterpolate(
-    const std::vector<double> &t,      // nodes
-    const std::vector<double> &y,      // values
-    const int                  method, // 0 for periodic, 1 for complete, 2 for natural, 3 for
-                                       // not-a-knot.
+template <>
+PPInterpolate<1, double>::PPInterpolate(
+    const std::vector<double> &t, // nodes
+    const std::vector<double> &y, // values
+    const int method,             // 0 for periodic, 1 for complete, 2 for natural, 3 for
+                                  // not-a-knot.
     const std::vector<double> &boundary_condition,
     const int                  check) // whether to check the order of t
     :
     _t(t),
     _y(y), _method(method), _boundary_condition(boundary_condition) {
-  poly = PPoly();
+  poly = PPoly<double>();
   if (check) {
     if (!std::is_sorted(t.begin(), t.end())) {
       std::vector<int> idx(t.size());
@@ -34,7 +31,7 @@ PPInterpolate<N>::PPInterpolate(
         idx[i] = i;
       }
       std::sort(idx.begin(), idx.end(), [&](int i, int j) { return t[i] < t[j]; });
-      // std::vector<double> t_sorted(t.size()), y_sorted(t.size());
+      // std::vector<Real> t_sorted(t.size()), y_sorted(t.size());
 
       for (size_t i = 0; i < t.size(); ++i) {
         _t[i] = t[idx[i]];
@@ -45,45 +42,12 @@ PPInterpolate<N>::PPInterpolate(
   interpolate(t, y, method, boundary_condition); // interpolate
 }
 
-template <int N>
-void PPInterpolate<N>::interpolate(
-    const std::vector<double> &t,                  // nodes
-    const std::vector<double> &y,                  // values
-    const int                  method,             // 0 for periodic, 1 for complete, 2 for natural, 3 for
-                                                   // not-a-knot.
-    const std::vector<double> &boundary_condition) // boundary condition
-{
-  (void)t;
-  (void)y;
-  (void)boundary_condition; // to be done
-  if (method == 0) {
-    // To be done
-  } else if (method == 1) {
-    Eigen::MatrixXd A = Eigen::MatrixXd::Zero(N, N);
-
-    for (int i = 0; i < N; ++i) {
-      A(i, i) = 1.0;
-      A(0, i) = i + 1.0;
-    }
-
-    for (int i = 1; i < N; ++i) {
-      for (int j = i + 1; j < N; ++j) {
-        A(i, j) = A(i, j - 1) + A(i - 1, j - 1);
-      }
-    }
-  }
-}
-
-template <int N> double PPInterpolate<N>::operator()(double x) const { return poly(x); }
-
-template <int N> PPoly PPInterpolate<N>::getPoly() const { return poly; }
-
 template <>
-void PPInterpolate<1>::interpolate(
-    const std::vector<double> &t,                  // nodes
-    const std::vector<double> &y,                  // values
-    const int                  method,             // 0 for periodic, 1 for complete, 2 for natural, 3 for
-                                                   // not-a-knot.
+void PPInterpolate<1, double>::interpolate(
+    const std::vector<double> &t, // nodes
+    const std::vector<double> &y, // values
+    const int method,             // 0 for periodic, 1 for complete, 2 for natural, 3 for
+                                  // not-a-knot.
     const std::vector<double> &boundary_condition) // boundary condition
 {
   // unused variable, how to solve it.
@@ -95,15 +59,46 @@ void PPInterpolate<1>::interpolate(
     A[i][0] = y[i];
     A[i][1] = (y[i + 1] - y[i]) / (t[i + 1] - t[i]);
   }
-  poly = PPoly(A, t, 0); // interpolate
+  poly = PPoly<double>(A, t, 0); // interpolate
 }
 
 template <>
-void PPInterpolate<2>::interpolate(
-    const std::vector<double> &t,                  // nodes
-    const std::vector<double> &y,                  // values
-    const int                  method,             // 0 for periodic, 1 for complete, 2 for natural, 3 for
-                                                   // not-a-knot.
+PPInterpolate<2, double>::PPInterpolate(
+    const std::vector<double> &t, // nodes
+    const std::vector<double> &y, // values
+    const int method,             // 0 for periodic, 1 for complete, 2 for natural, 3 for
+                                  // not-a-knot.
+    const std::vector<double> &boundary_condition,
+    const int                  check) // whether to check the order of t
+    :
+    _t(t),
+    _y(y), _method(method), _boundary_condition(boundary_condition) {
+  poly = PPoly<double>();
+  if (check) {
+    if (!std::is_sorted(t.begin(), t.end())) {
+      std::vector<int> idx(t.size());
+
+      for (size_t i = 0; i < t.size(); ++i) {
+        idx[i] = i;
+      }
+      std::sort(idx.begin(), idx.end(), [&](int i, int j) { return t[i] < t[j]; });
+      // std::vector<Real> t_sorted(t.size()), y_sorted(t.size());
+
+      for (size_t i = 0; i < t.size(); ++i) {
+        _t[i] = t[idx[i]];
+        _y[i] = y[idx[i]];
+      }
+    }
+  }
+  interpolate(t, y, method, boundary_condition); // interpolate
+}
+
+template <>
+void PPInterpolate<2, double>::interpolate(
+    const std::vector<double> &t, // nodes
+    const std::vector<double> &y, // values
+    const int method,             // 0 for periodic, 1 for complete, 2 for natural, 3 for
+                                  // not-a-knot.
     const std::vector<double> &boundary_condition) // boundary condition
 {
   switch (method) {
@@ -118,7 +113,8 @@ void PPInterpolate<2>::interpolate(
     Eigen::SparseMatrix<double> A(t_size, t_size);
     Eigen::VectorXd             b = Eigen::VectorXd::Zero(t_size);
 
-    std::vector<Eigen::Triplet<double>> triplets; // For batch insertion into the sparse matrix
+    std::vector<Eigen::Triplet<double>>
+        triplets; // For batch insertion into the sparse matrix
 
     for (int i = 0; i < t_size - 1; i++) {
       b(i) = 2 * K_i[i];
@@ -145,7 +141,7 @@ void PPInterpolate<2>::interpolate(
       coeffs[i][1] = c(i);
       coeffs[i][2] = (c(i + 1) - c(i)) / (2 * (t[i + 1] - t[i]));
     }
-    poly = PPoly(coeffs, t, 0); // interpolate
+    poly = PPoly<double>(coeffs, t, 0); // interpolate
     return;
   } break;
 
@@ -171,7 +167,7 @@ void PPInterpolate<2>::interpolate(
       coeffs[i][1] = c[i];
       coeffs[i][2] = (c[i + 1] - c[i]) / (2 * (t[i + 1] - t[i]));
     }
-    poly = PPoly(coeffs, t, 0); // interpolate
+    poly = PPoly<double>(coeffs, t, 0); // interpolate
     return;
   } break;
 
@@ -184,11 +180,42 @@ void PPInterpolate<2>::interpolate(
 }
 
 template <>
-void PPInterpolate<3>::interpolate(
-    const std::vector<double> &t,                  // nodes
-    const std::vector<double> &y,                  // values
-    const int                  method,             // 0 for periodic, 1 for complete, 2 for natural, 3 for
-                                                   // not-a-knot.
+PPInterpolate<3, double>::PPInterpolate(
+    const std::vector<double> &t, // nodes
+    const std::vector<double> &y, // values
+    const int method,             // 0 for periodic, 1 for complete, 2 for natural, 3 for
+                                  // not-a-knot.
+    const std::vector<double> &boundary_condition,
+    const int                  check) // whether to check the order of t
+    :
+    _t(t),
+    _y(y), _method(method), _boundary_condition(boundary_condition) {
+  poly = PPoly<double>();
+  if (check) {
+    if (!std::is_sorted(t.begin(), t.end())) {
+      std::vector<int> idx(t.size());
+
+      for (size_t i = 0; i < t.size(); ++i) {
+        idx[i] = i;
+      }
+      std::sort(idx.begin(), idx.end(), [&](int i, int j) { return t[i] < t[j]; });
+      // std::vector<Real> t_sorted(t.size()), y_sorted(t.size());
+
+      for (size_t i = 0; i < t.size(); ++i) {
+        _t[i] = t[idx[i]];
+        _y[i] = y[idx[i]];
+      }
+    }
+  }
+  interpolate(t, y, method, boundary_condition); // interpolate
+}
+
+template <>
+void PPInterpolate<3, double>::interpolate(
+    const std::vector<double> &t, // nodes
+    const std::vector<double> &y, // values
+    const int method,             // 0 for periodic, 1 for complete, 2 for natural, 3 for
+                                  // not-a-knot.
     const std::vector<double> &boundary_condition) // boundary condition
 {
   switch (method) {
@@ -205,7 +232,8 @@ void PPInterpolate<3>::interpolate(
     Eigen::SparseMatrix<double> A(t_size, t_size);
     Eigen::VectorXd             b = Eigen::VectorXd::Zero(t_size);
 
-    std::vector<Eigen::Triplet<double>> triplets; // For batch insertion into the sparse matrix
+    std::vector<Eigen::Triplet<double>>
+        triplets; // For batch insertion into the sparse matrix
     triplets.reserve(4 * (t_size - 2));
 
     // Precompute mu_i and lambda_i to avoid redundant calculations
@@ -262,8 +290,7 @@ void PPInterpolate<3>::interpolate(
       coeffs[i][2] = (3.0 * K_i[i] - 2.0 * c(i) - c(i + 1)) / tmp;
       coeffs[i][3] = (c(i) - 2.0 * K_i[i] + c(i + 1)) / (tmp * tmp);
     }
-
-    poly = PPoly(coeffs, t, 0); // Interpolate
+    poly = PPoly<double>(coeffs, t, 0); // Interpolate
     return;
   } break;
 
@@ -334,7 +361,7 @@ void PPInterpolate<3>::interpolate(
     }
 
     // 创建 PPoly 对象
-    poly = PPoly(coeffs, t, 0);
+    poly = PPoly<double>(coeffs, t, 0);
     return;
   } break;
 
@@ -414,7 +441,7 @@ void PPInterpolate<3>::interpolate(
         coeffs[i][3] = -c(i - 1) / (6.0 * tmp);
       }
     }
-    poly = PPoly(coeffs, t, 0); // interpolate
+    poly = PPoly<double>(coeffs, t, 0); // interpolate
     return;
   } break;
 
@@ -426,6 +453,6 @@ void PPInterpolate<3>::interpolate(
   return;
 }
 
-template class PPInterpolate<1>;
-template class PPInterpolate<2>;
-template class PPInterpolate<3>;
+template class PPInterpolate<1, double>;
+template class PPInterpolate<2, double>;
+template class PPInterpolate<3, double>;

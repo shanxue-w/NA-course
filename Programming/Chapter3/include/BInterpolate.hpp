@@ -22,14 +22,10 @@
 #include <cmath>
 #include <gmpxx.h>
 #include <iostream>
-#include <lapack.h>
-#include <lapacke.h>
 #include <omp.h>
 #include <string>
 #include <vector>
 
-#define EIGEN_USE_LAPACKE
-#define EIGEN_USE_LAPACKE_STRICT
 #define EIGEN_USE_THREADS
 
 template <int N, typename Real = double> class BInterpolate {
