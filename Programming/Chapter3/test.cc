@@ -2,7 +2,6 @@
 // #include "PPoly.hpp"
 // #include <cmath>
 
-
 // int main(void)
 // {
 //     double MAX = 10000.0;
@@ -20,7 +19,6 @@
 // }
 
 // #include "BSpline.hpp"
-
 
 // int main(void)
 // {
@@ -52,26 +50,25 @@
 
 #include "BInterpolate.hpp"
 #include "BSpline.hpp"
+#include <gmpxx.h>
 
-
-int main(void)
-{
-    int MAX = 100;
-    std::vector<double> x(MAX);
-    std::vector<double> y(MAX);
-    for (int i=1; i<MAX; i++)
-    {
-        x[i] = i;
-        y[i] = std::log(i);
-    }
-    std::vector<double> boundary = {1.0, 1.0/static_cast<double> (MAX), 1.0/2.0, -1.0/6.0, 1.0/24.0};
-    BInterpolate<3> inter(x, y, 1, boundary);
-    for (int i=0; i<MAX; i++)
-    {
-        std::cout << i << "," << inter(i) << "," << y[i] << std::endl;
-    }
-    std::cout << inter.derivative(x[0], 1) << std::endl;
-    std::cout << inter.derivative(x[MAX-1], 1) << std::endl;
-
-    return 0;
+int main(void) {
+  // mpf_set_default_prec(50);
+  // Eigen::initParallel();
+  // Eigen::setNbThreads(8);
+  int                 MAX = 3000;
+  std::vector<double> x(MAX);
+  std::vector<double> y(MAX);
+  for (double i = 0; i < MAX; i++) {
+    x[i] = i;
+    y[i] = i;
+  }
+  std::vector<double>      boundary = {1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
+                                       0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
+                                       0.0, 0.0, 0.0, 6.0, 0.0, 0.0, 0.0, 0.0};
+  BInterpolate<10, double> inter(x, y, 1, boundary);
+  for (int i = 0; i < MAX; i++) {
+    std::cout << i << "," << inter(i) << "," << y[i] << std::endl;
+  }
+  return 0;
 }

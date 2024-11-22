@@ -4,88 +4,84 @@
  * @brief Use B-spline to interpolate the data
  * @version 0.1
  * @date 2024-11-14
- * 
+ *
  * @copyright Copyright (c) 2024
- * 
+ *
  */
-
 
 #ifndef BINTERPOLATE_HPP
 #define BINTERPOLATE_HPP
 
 #include "BSpline.hpp"
-#include <iostream>
 #include <Eigen/Dense>
-#include <Eigen/Sparse>
-#include <Eigen/SparseLU>
-#include <Eigen/SparseCholesky>
-#include <Eigen/SparseQR>
 #include <Eigen/IterativeLinearSolvers>
-#include <vector>
+#include <Eigen/Sparse>
+#include <Eigen/SparseCholesky>
+#include <Eigen/SparseLU>
+#include <Eigen/SparseQR>
 #include <cmath>
-#include <string>
-#include <omp.h>
-#include <lapacke.h>
+#include <gmpxx.h>
+#include <iostream>
 #include <lapack.h>
+#include <lapacke.h>
+#include <omp.h>
+#include <string>
+#include <vector>
 
 #define EIGEN_USE_LAPACKE
 #define EIGEN_USE_LAPACKE_STRICT
+#define EIGEN_USE_THREADS
 
-template <int N>
-class BInterpolate
-{
+template <int N, typename Real = double> class BInterpolate {
 private:
-    /**
-     * nodes of the interpolation
-     */
-    std::vector<double> _t;
+  /**
+   * nodes of the interpolation
+   */
+  std::vector<Real> _t;
 
-    /**
-     * interpolation data
-     */
-    std::vector<double> _y;
+  /**
+   * interpolation data
+   */
+  std::vector<Real> _y;
 
-    /** 
-     * The method of the interpolation
-     */
-    int _method;
+  /**
+   * The method of the interpolation
+   */
+  int _method;
 
-    /**
-     * Boundary condition for the interpolation, if needed. 
-     */
-    std::vector<double> _boundary_condition;
+  /**
+   * Boundary condition for the interpolation, if needed.
+   */
+  std::vector<Real> _boundary_condition;
 
-    /**
-     * The result of the interpolation
-     */
-    BSpline _bspline;
+  /**
+   * The result of the interpolation
+   */
+  BSpline<Real> _bspline;
 
 public:
-    BInterpolate() = default;
+  BInterpolate() = default;
 
-    BInterpolate(const std::vector<double> &t, 
-                 const std::vector<double> &y, 
-                 const int &method=0, 
-                 const std::vector<double> &boundary_condition = std::vector<double>(N, 0.0),
-                 const int check=0);
+  BInterpolate(
+      const std::vector<Real> &t,
+      const std::vector<Real> &y,
+      const int               &method = 0,
+      const std::vector<Real> &boundary_condition = std::vector<Real>(N, 0.0),
+      const int                check = 0);
 
-    void
-    interpolate(const std::vector<double> &t, 
-                 const std::vector<double> &y, 
-                 const int &method, 
-                 const std::vector<double> &boundary_condition = std::vector<double>(N, 0.0));
-    
-    BSpline
-    getBSpline() const;
+  void interpolate(
+      const std::vector<Real> &t,
+      const std::vector<Real> &y,
+      const int               &method,
+      const std::vector<Real> &boundary_condition = std::vector<Real>(N, 0.0));
 
-    double
-    operator()(const double x);
+  BSpline<Real> getBSpline() const;
 
-    double 
-    derivative(const double x, const int n);
+  Real operator()(const Real x);
+
+  Real derivative(const Real x, const int n);
 };
 
 #include "BInterpolate.tpp"
-
 
 #endif // BINTERPOLATE_HPP

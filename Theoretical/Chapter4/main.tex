@@ -1,0 +1,163 @@
+\documentclass[a4paper]{article}
+\usepackage[affil-it]{authblk}
+\usepackage{ctex}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsfonts}
+\usepackage{amsthm}
+\usepackage{physics}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{listings}
+\usepackage{color}
+\usepackage{float}
+\usepackage{subcaption}
+\usepackage{caption}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\hypersetup{colorlinks=true, linkcolor=blue, citecolor=blue, urlcolor=blue}
+
+
+\usepackage{geometry}
+\geometry{margin=1.5cm, vmargin={0pt,1cm}}
+\setlength{\topmargin}{-1cm}
+\setlength{\paperheight}{29.7cm}
+\setlength{\textheight}{25.3cm}
+
+\begin{document}
+
+\section*{I. Convert 477 to FPN}
+
+We have $477 = (111011101)_2 = (1.11011101)_2 * 2^8$
+
+\section*{II. Convert 0.6 to FPN}
+
+We have $0.6 = (0.100110011001...)_2 * 2^0 = (1.001100110011...)_2 * 2^{-1}$
+
+\section*{III. Prove $x_R - x = \beta \qty(x-x_L)$}
+
+Because $x = \beta^e, ~ L<e<U$, we can have $x_L = x - \beta^{e-1} \beta^{1-p}$, $x_R = x + \beta^e \beta^{1-p}$. 
+
+Then we have $x_R - x = \beta^e \beta^{1-p} = \beta \qty(x-x_L)$
+
+\section*{IV. Convert 0.6 to IEEE 754}
+
+For $0.6 = (1.001100110011...)_2 * 2^{-1}$, we have
+\begin{equation}
+    \begin{aligned}
+        x_L &= (1.00110011001100110011001)_2 \times 2^{-1} \\
+        x_R &= (1.00110011001100110011010)_2 \times 2^{-1} \\
+        x_R - x &= (0.01100110...)_2 * 2^{-24} = \frac{2}{5} * 2^{-24} \\
+        x - x_L &= (0.10011001...)_2 * 2^{-24} = \frac{3}{5} * 2^{-24} \\
+    \end{aligned}
+\end{equation}
+
+So $f(x) = 00111111000110011001100110011010$ in IEEE 754, and $\frac{\abs{f(x) - x}}{x} = \frac{2}{3} * 2^{-24}$
+
+\section*{V. New unit roundoff}
+
+If just simply dropped excess bits, the new unit roundoff would be $\epsilon_u = \epsilon_M = 2^{-23}$, for all numbers in $[1.0, 1.0+\epsilon_M)$ would be rounded to $1.0$, which gives the result. 
+
+\section*{VI. Loss of Precision}
+
+We have $\cos\qty(\frac{1}{4}) = 0.9689124217106447$, so we have
+\begin{equation}
+   2^{-6} \leq 1 - \frac{\cos\qty(\frac{1}{4})}{1} \leq 2^{-5}
+\end{equation}
+
+Therefore, at least 5 bits of precision are lost and at most 6 bits of precision are lost. For $beta=2$ and both inequalities can not be equalities, we have $6$ bits of precision are lost.
+
+\section*{VII. Ways to compute $1-\cos\qty(x)$}
+
+First, we have $1-\cos\qty(x) = 2\sin^2\qty(\frac{x}{2})$, which avoids the subtraction of two nearly equal numbers.
+
+Second, we can use the taylor series, when $x$ is small, we have $1-\cos\qty(x) = \frac{x^2}{x} - \frac{x^4}{4!} + \frac{x^6}{6!} - \cdots$, and when $x$ is not small, we can directly use $1-\cos\qty(x)$.
+
+
+\section*{VIII. Condition number of function}
+
+\begin{itemize}
+    \item $f(x) = (x-1)^{\alpha}$, we have $\mathrm{cond}(f) = \abs{\frac{x f^\prime(x)}{f(x)}} = \abs{\frac{\alpha x}{x-1}}$, when $x$ is close to $1$, the condition number is large.
+    \item $f(x) = \ln\qty(x)$, we have $\mathrm{cond}(f) = \abs{\frac{x f^\prime(x)}{f(x)}} = \abs{\frac{1}{\ln\qty(x)}}$, when $x$ is close to $1$, the condition number is large.
+    \item $f(x) = e^x$, we have $\mathrm{cond}(f) = \abs{\frac{x f^\prime(x)}{f(x)}} = \abs{x}$, when $\abs{x}$ is large, the condition number is large.
+    \item $f(x) = \arccos\qty(x)$, we have $\mathrm{cond}(f) = \abs{\frac{x f^\prime(x)}{f(x)}} = \abs{\frac{x}{\sqrt{1-x^2} \arccos\qty(x)}}$, when $x$ is close to $1$ or $-1$, the condition number is large.
+\end{itemize}
+
+
+\section*{IX. Condition number of particular function}
+\subsection*{a. Calculate condition number}
+For $f(x) = 1 - e^{-x}$, we have
+\begin{equation}
+    \text{cond}_f(x) = \abs{\frac{x f^\prime(x)}{f(x)}} = \frac{xe^{-x}}{1-e^{-x}}, \forall x \in [0, 1]. 
+\end{equation}
+
+We have $\text{cond}_f^ \prime (x) = \frac{e^{-x}(1-x-e^{-x})}{(1-e^{-x})^2} < 0$, so the condition number is decreasing in $[0, 1]$.
+
+So $\text{cond}_f(x) \leq \text{cond}_f(0) = 1$.
+
+\subsection*{b. Condition number of algorithm}
+
+For the exponential is computed with relative error within machine epsilon, we have
+\begin{equation}
+    f_A(x) = 1 - (1+\delta) e^{-x} = 1 - e^{x_A} \Rightarrow x_A = x - \ln\qty(1+\delta), \abs{\delta} \leq \epsilon_M.
+\end{equation}
+
+Therefore, we have
+\begin{equation}
+    \text{cond}_A(x) = \frac{1}{\epsilon_M} \frac{\abs{x_A-x}}{\abs{x}} \leq \frac{1}{\abs{x}}.
+\end{equation}
+
+\subsection*{c. Plot the condition function}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.6\textwidth]{./plot.png}
+\end{figure}
+
+$\text{cond}_A(x)$ tends to infinity as $x$ tends to $0$.
+
+
+\subsection*{X. Proof of Lemma 4.68}
+
+\begin{equation}
+    \begin{aligned}
+        \norm{A^{-1}}_2 &= \sup_{x} \frac{\norm{A^{-1}x}_2}{\norm{x}_2} \\
+        &= \sup_{y} \frac{\norm{A^{-1}A y}_2}{\norm{Ay}_2} \\
+        &= \sup_{y} \frac{\norm{y}_2}{\norm{Ay}_2} \\
+        &= \frac{1}{\inf_{\norm{y}_2=1} \norm{Ay}_2} \\
+        &= \frac{1}{\sigma_{\min}}.
+    \end{aligned}
+\end{equation}
+
+Therefore, we have
+\begin{equation}
+    \text{cond}_2(A) = \norm{A}_2 \norm{A^{-1}}_2 = \frac{\sigma_{\max}}{\sigma_{\min}}.
+\end{equation}
+
+\subsection*{XI. Condition number of root finding}
+
+We have
+\begin{equation}
+    \begin{aligned}
+        \frac{\partial f(a_0, \cdots, a_{n-1})}{\partial a_j} &= \lim_{\epsilon \to 0} \frac{f(a_0, \cdots, a_{j-1}, a_j+\epsilon, a_{j+1}, \cdots, a_{n-1}) - f(a_0, \cdots, a_{n-1})}{\epsilon} \\
+        &= -\frac{r^j}{p^\prime(r)}~~(\text{root of }p(a_0, \cdots, a_{j-1}, a_j+\epsilon, a_{j+1}, \cdots, a_{n-1}) \text{ is } r-\frac{\epsilon r^j}{p^\prime(r)}).
+    \end{aligned}
+\end{equation}
+
+So the condition number with 1-norm is 
+\begin{equation}
+    C = \sum_{i=0}^{n-1} \abs{a_i \frac{r^i}{p^\prime(r) * f}} = \sum_{i=0}^{n-1} \abs{a_i \frac{r^{i-1}}{p^\prime(r)}} = \abs{\frac{r^n}{r p^\prime(r)}} = \abs{\frac{r^{n-1}}{p^\prime(r)}}.
+\end{equation}
+
+
+For Wilkinson example, we have $f(x) = \prod_{i=1}^{p}(x-i)$, for the root $p$, we have 
+\begin{equation}
+    C = \frac{p^{p-1}}{(p-1)!}
+\end{equation}
+
+
+\section*{XII. }
+
+
+
+
+\end{document}
