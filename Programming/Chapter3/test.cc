@@ -3,27 +3,31 @@
 #include <cmath>
 #include <gmpxx.h>
 
-int main(void) {
-  double MAX = 100.0;
-  // 设置精度为1000
-  mpf_set_default_prec(10000);
-  std::vector<mpf_class> x((int)MAX);
-  std::vector<mpf_class> y((int)MAX);
-  for (double i = 1.0; i <= MAX; i += 1.0) {
-    x[i - 1] = i;
-    y[i - 1] = i * i * i * i;
-    // gmp log i
-    // y[i-1] =
-  }
-  std::vector<mpf_class>      boundary = {4.0, 12.0, 24.0, 24.0};
-  PPInterpolate<4, mpf_class> inter(x, y, 0, boundary, 0);
-  PPoly<mpf_class>            poly = inter.getPoly();
-  for (double i = 1.0; i <= MAX; i += 1) {
-    std::cout << i << ", " << inter(i) << ", " << poly.derivative(i, 1) << ", "
-              << poly.derivative(i, 2) << ", " << poly.derivative(i, 3)
-              << std::endl;
-  }
-  return 0;
+int
+main(void)
+{
+    double MAX = 100.0;
+    // 设置精度为1000
+    mpf_set_default_prec(10000);
+    std::vector<mpf_class> x((int)MAX);
+    std::vector<mpf_class> y((int)MAX);
+    for (double i = 1.0; i <= MAX; i += 1.0)
+    {
+        x[i - 1] = i;
+        y[i - 1] = i * i * i * i;
+        // gmp log i
+        // y[i-1] =
+    }
+    std::vector<mpf_class>      boundary = {4.0, 12.0, 24.0, 24.0};
+    PPInterpolate<4, mpf_class> inter(x, y, 0, boundary, 0);
+    PPoly<mpf_class>            poly = inter.getPoly();
+    for (double i = 1.0; i <= MAX; i += 1)
+    {
+        std::cout << i << ", " << inter(i) << ", " << poly.derivative(i, 1)
+                  << ", " << poly.derivative(i, 2) << ", "
+                  << poly.derivative(i, 3) << std::endl;
+    }
+    return 0;
 }
 
 // #include "BSpline.hpp"

@@ -1,8 +1,8 @@
 
-EIGEN_FLAX = -I /usr/include/eigen3
+EIGEN_FLAX = -I/usr/include/eigen3
 # use jsoncpp library
-JSONCPP_FLAX = -I /usr/include/jsoncpp
-LAPACK_FLAX = -llapacke -llapack -I /usr/include/lapacke
+JSONCPP_FLAX = -I/usr/include/jsoncpp
+LAPACK_FLAX = -llapacke -llapack -I/usr/include/lapacke
 GMP_FLAX = -lgmpxx -lgmp -L/usr/local/lib -I/usr/local/include
 
 CXX = g++
@@ -15,7 +15,7 @@ INCLUDE_DIRS = $(shell find $(INCLUDE_DIR) -type d)
 INCLUDE_FLAGS = $(patsubst %,-I%,$(INCLUDE_DIRS))
 ADDRESS_FLAG = -fsanitize=address
 
-CXXFLAGS = $(INCLUDE_FLAGS) $(GMP_FLAX) $(EIGEN_FLAX) $(JSONCPP_FLAX) -std=c++17 -Wall -Wextra -Werror -pedantic -O3 -fuse-linker-plugin -mavx -mfma -march=native -fPIC
+CXXFLAGS = $(INCLUDE_FLAGS) $(GMP_FLAX) $(EIGEN_FLAX) $(JSONCPP_FLAX) -std=c++17 -Wall -Wextra -Werror -pedantic -O3 -fuse-linker-plugin -mavx -mfma -march=native -fPIC -funroll-loops -fprefetch-loop-arrays -fomit-frame-pointer -fopenmp
 
 SRC_FILES = $(shell find $(SRC_DIR) -name '*.cc')
 

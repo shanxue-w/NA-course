@@ -26,13 +26,25 @@
 
 \begin{document}
 
+\title{Numerical Analysis homework \# 4}
+
+\author{王昊 Wang Hao 3220104819
+  \thanks{Electronic address: \texttt{3220104819@zju.edu.cn}}}
+\affil{(Mathematics and Applied Mathematics 2201), Zhejiang University }
+
+
+\date{Due time: \today}
+
+\maketitle
+
+
 \section*{I. Convert 477 to FPN}
 
-We have $477 = (111011101)_2 = (1.11011101)_2 * 2^8$
+We have $477 = (111011101)_2 = (1.11011101)_2 \times 2^8$
 
 \section*{II. Convert 0.6 to FPN}
 
-We have $0.6 = (0.100110011001...)_2 * 2^0 = (1.001100110011...)_2 * 2^{-1}$
+We have $0.6 = (0.100110011001...)_2 \times 2^0 = (1.001100110011...)_2 \times 2^{-1}$
 
 \section*{III. Prove $x_R - x = \beta \qty(x-x_L)$}
 
@@ -42,17 +54,17 @@ Then we have $x_R - x = \beta^e \beta^{1-p} = \beta \qty(x-x_L)$
 
 \section*{IV. Convert 0.6 to IEEE 754}
 
-For $0.6 = (1.001100110011...)_2 * 2^{-1}$, we have
+For $0.6 = (1.001100110011...)_2 \times 2^{-1}$, we have
 \begin{equation}
     \begin{aligned}
         x_L &= (1.00110011001100110011001)_2 \times 2^{-1} \\
         x_R &= (1.00110011001100110011010)_2 \times 2^{-1} \\
-        x_R - x &= (0.01100110...)_2 * 2^{-24} = \frac{2}{5} * 2^{-24} \\
-        x - x_L &= (0.10011001...)_2 * 2^{-24} = \frac{3}{5} * 2^{-24} \\
+        x_R - x &= (0.01100110...)_2 \times 2^{-24} = \frac{2}{5} \times 2^{-24} \\
+        x - x_L &= (0.10011001...)_2 \times 2^{-24} = \frac{3}{5} \times 2^{-24} \\
     \end{aligned}
 \end{equation}
 
-So $f(x) = 00111111000110011001100110011010$ in IEEE 754, and $\frac{\abs{f(x) - x}}{x} = \frac{2}{3} * 2^{-24}$
+So $f(x) = 00111111000110011001100110011010$ in IEEE 754, and $\frac{\abs{f(x) - x}}{x} = \frac{2}{3} \times 2^{-24}$
 
 \section*{V. New unit roundoff}
 
@@ -99,12 +111,12 @@ So $\text{cond}_f(x) \leq \text{cond}_f(0) = 1$.
 
 For the exponential is computed with relative error within machine epsilon, we have
 \begin{equation}
-    f_A(x) = 1 - (1+\delta) e^{-x} = 1 - e^{x_A} \Rightarrow x_A = x - \ln\qty(1+\delta), \abs{\delta} \leq \epsilon_M.
+    f_A(x) = (1 - (1+\delta_1) e^{-x})(1+\delta_2) = 1 - e^{-x_A} \Rightarrow x_A = -\ln\qty(\qty(1+\delta_1)\qty(1+\delta_2)e^{-x}-\delta_2), \abs{\delta_1}, \abs{\delta_2} \leq \epsilon_u.
 \end{equation}
 
 Therefore, we have
 \begin{equation}
-    \text{cond}_A(x) = \frac{1}{\epsilon_M} \frac{\abs{x_A-x}}{\abs{x}} \leq \frac{1}{\abs{x}}.
+    \text{cond}_A(x) = \frac{1}{\epsilon_u} \frac{\abs{x_A-x}}{\abs{x}} = \frac{1}{\epsilon_u} \abs{\frac{\ln\qty(\qty(1+\delta_1)\qty(1+\delta_2)-\delta_2 e^x)}{x}} \leq \frac{1}{\epsilon_u} \abs{\frac{\delta_1 + \delta_2 + \delta_1 \delta_2 - \delta_2 e^x}{x}} \leq \frac{e^x}{x}, x\in[0,1].
 \end{equation}
 
 \subsection*{c. Plot the condition function}
@@ -145,19 +157,141 @@ We have
 
 So the condition number with 1-norm is 
 \begin{equation}
-    C = \sum_{i=0}^{n-1} \abs{a_i \frac{r^i}{p^\prime(r) * f}} = \sum_{i=0}^{n-1} \abs{a_i \frac{r^{i-1}}{p^\prime(r)}} = \abs{\frac{r^n}{r p^\prime(r)}} = \abs{\frac{r^{n-1}}{p^\prime(r)}}.
+    \mathrm{cond}_f(a) = \sum_{i=0}^{n-1} \abs{a_i \frac{r^i}{p^\prime(r) f(a)}} = \sum_{i=0}^{n-1} \abs{a_i \frac{r^{i-1}}{p^\prime(r)}} = \sum_{i=0}^{n-1} \abs{\frac{a_i r^{i}}{r p^\prime(r)}}
 \end{equation}
 
 
 For Wilkinson example, we have $f(x) = \prod_{i=1}^{p}(x-i)$, for the root $p$, we have 
 \begin{equation}
-    C = \frac{p^{p-1}}{(p-1)!}
+    \sum_{i=0}^{p-1} \abs{a_i p^i} = \sum_{i=0}^{p-1} \abs{a_i} p^i = \prod_{i=1}^{p}(p+i) - p^p.
+\end{equation}
+
+Therefore, we have
+\begin{equation}
+    \mathrm{cond}_f(a) = \frac{\prod_{i=1}^{p}(p+i) - p^p}{p (p-1)!} = \frac{\prod_{i=1}^{p}(p+i) - p^p}{p!}.
+\end{equation}
+
+Similiarly, when $p=10, 20, 40$, we have the value of condition number is $1.82 \times 10^5$, $1.38 \times 10^{11}$, $1.08 \times 10^{23}$, which means finding the root of high order polynomial is very difficult, corresponding to the answer of Wilkinson's example.
+
+
+\section*{XII. Division of two FPNS}
+
+If the division is in a register of precision $2p$. For the binary FPN, we have $\epsilon_M = 2^{1-p}$. Take $p=3, a=(1.00)_2, b=(1.11)_2$, then we have
+\begin{equation}
+    M_c = \frac{(1.00)_2}{(1.11)_2} = (0.10010)_2, ~~ \beta_c = 0, \Rightarrow c = (1.00)_2 \times 2^{-1} (\text{roundoff}) = 0.5.
+\end{equation}
+
+So we have 
+\begin{equation}
+    \delta = \frac{c}{a/b} - 1 = \frac{1}{8} = \epsilon_u, 
+\end{equation}
+which contradicts the conclusion that $\abs{\delta} < \epsilon_u$.
+
+\section*{XIII. Bisection accuracy}
+
+First we have $128 = 2^7$, so the step size of FPN is $\delta = \epsilon_M \times 2^7 = 1.52587890625 \times 10^{-5}$, $\frac{1}{2} \delta > 10^{-6}$, so we can't. 
+
+\section*{XIV. Use condition number to explain phenomenon}
+
+For complete cubic spline, we have the following linear system
+\begin{equation}
+    \begin{pmatrix}
+        2 & \mu_2 & & & & \\
+        \lambda_3 & 2 & \mu_3 & & & \\
+        0 & \lambda_4 & 2 & \mu_4 & &\\
+        \vdots & \ddots & \ddots & \ddots & \ddots & \\
+        & & & \lambda_{N-2} & 2 & \mu_{N-2} \\
+        & & & & \lambda_{N-1} & 2 \\
+    \end{pmatrix}
+    m = b. 
+\end{equation}
+
+In order to explain the phenomenon, we may assume all points are of the same distance, so we have $\lambda_i = \mu_i = \frac{1}{2}$, then we have $\mathrm{cond}_2 A \approx 2.844$, then we assume $x_3 \approx x_4$, then $\mu_3 \approx 1, \lambda_3 \approx 0, \mu_4 \approx 0, \lambda 4 \approx 1$, others doesn't change, then we have $\mathrm{cond}_2 A \approx 3.25$, bigger, so one may get inaccurate results when the distance between two points is much smaller than other adjacent points.
+
+% 非等距节点英文： unequally spaced nodes
+For unequally spaced nodes, if the distance between two points is much smaller than other adjacent points, we can get similiar results. 
+
+
+\section*{Ex4.33}
+
+\subsection*{$b=8.769 \times 10^4$}
+
+(i) $e_c \leftarrow 4$. 
+(ii) $m_c = 10.003000$. 
+(iii) $m_c = 1.0003000$, $e_c = 5$. 
+(iv) do nothing. 
+(v) $m_c = 1.000$. 
+(vi) $c = 1.000 \times 10^5$. 
+
+\subsection*{$b = -5.678 \times 10^0$}
+
+(i) $m_b = -0.0005678$, $e_c = 4$. 
+(ii) $m_c = 1.2334322$. 
+(iii) do nothing. 
+(iv) do nothing. 
+(v) $m_c = 1.233$. 
+(vi) $c = 1.233 \times 10^4$. 
+
+\subsection*{$b = -5.678 \times 10^3$}
+
+(i) $m_b = -0.5678$, $e_c = 4$. 
+(ii) $m_c = 0.6662000$. 
+(iii) $m_c = 6.6620000$, $e_c = 3$. 
+(iv) do nothing. 
+(v) $m_c = 6.662$. 
+(vi) $c = 6.662 \times 10^3$.
+
+
+\section*{Ex4.42}
+Let $a=10^{-10}, c=1$, then we have
+\begin{equation}
+    \begin{aligned}
+        \mathrm{fl} (\sum_{i=0}^{10000} a + c) = 1.00001001358032226562, \\
+        \mathrm{fl} (c + \sum_{i=0}^{10000} a) = 1.00000000000000000000.
+    \end{aligned}
 \end{equation}
 
 
-\section*{XII. }
+\section*{Ex4.43}
+
+We have
+\begin{equation}
+    \begin{aligned}
+        \mathrm{fl} (a_1b_1 + a_2b_2 + a_3b_3) = (1+\delta_4) \qty(a_1b_1 \qty(1+\delta_1) + a_2b_2 \qty(1+\delta_2) + a_3b_3 \qty(1+\delta_3)), \\
+        \mathrm{where} \abs{\delta_1}, \abs{\delta_2}, \abs{\delta_3} < \epsilon_u, \abs{\delta_4} < (1+\epsilon_u)^2 \approx 2 \epsilon_u.
+    \end{aligned}
+\end{equation}
+
+For $\mathrm{fl}\qty( \sum_{i=0}^{m} \prod_{j=0}^{n} a_{i,j} )$, we have
+\begin{equation}
+    \mathrm{fl}\qty( \sum_{i=0}^{m} \prod_{j=0}^{n} a_{i,j} ) = (1+\delta) \sum_{i=0}^{m} \qty(\prod_{j=0}^{n} a_{i,j} \prod_{j=0}^{n-1}(1+\delta_{i,j})),
+\end{equation}
+where $\abs{\delta} < (1+\epsilon_u)^m \approx m \epsilon_u,~ \abs{\delta_{i,j}} < \epsilon_u$.
 
 
+\section*{Ex4.80}
 
+It's easy to compute 
+\begin{equation}
+    \mathrm{cond}_f(x) = \frac{x}{\sin\qty(x)}. 
+\end{equation}
+
+We have 
+\begin{equation}
+    \begin{aligned}
+        f_A(x) &= \frac{\sin\qty(x) (1+\delta_1)}{\qty(1+ \cos\qty(x) \qty(1+\delta_2)) \qty(1+\delta_3)} \qty(1+\delta_4) \\
+        &= \frac{\sin\qty(x)}{1+\cos\qty(x)}\qty(\qty(1+\delta_1+\delta_4-\delta_3) \qty(1- \frac{\delta_2 \cos\qty(x)}{1+\cos\qty(x)})). ~ (\text{ignore all quadratic terms})
+    \end{aligned}
+\end{equation}
+
+So we have 
+\begin{equation}
+    \varphi(x) = 3 + \frac{\cos\qty(x)}{1+\cos\qty(x)}. 
+\end{equation}
+
+So by theorem we have 
+\begin{equation}
+    \mathrm{cond}_A(x) \leq \frac{x}{\sin\qty(x)} \qty(3 + \frac{\cos\qty(x)}{1+\cos\qty(x)}) \leq 2 \pi.
+\end{equation}
 
 \end{document}

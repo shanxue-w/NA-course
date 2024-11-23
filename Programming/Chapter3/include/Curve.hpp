@@ -20,32 +20,35 @@
 
 template <int N, typename Real = double> // N is the order of the curve and Real
                                          // is the type of the coefficients
-class Curve {
+class Curve
+{
 private:
-  std::vector<Real> _t; // the knots of the curve
-  std::vector<Real> _x; // the x values of the curve
-  std::vector<Real> _y; // the y values of the curve
-  std::vector<Real> _z; // the z values of the curve, for N=3
-
+    std::vector<Real>              _t;      // the knots of the curve
+    std::vector<std::vector<Real>> _xy;     // the values of the curve
+    int                            _method; // the method of the curve
+    std::vector<std::vector<Real>>
+        _boundary_condition; // the boundary condition
 public:
-  Curve() = default;
-  Curve(
-      const std::vector<Real> &t,
-      const std::vector<Real> &x,
-      const std::vector<Real> &y,
-      const std::vector<Real> &z = {}) :
-      _t(t),
-      _x(x), _y(y), _z(z) {}
+    Curve() = default;
+    Curve(const std::vector<Real>              &t,
+          const std::vector<std::vector<Real>> &xy,
+          const int                             method = 0,
+          const std::vector<std::vector<Real>> &boundary_condition =
+              std::vector<std::vector<Real>>());
 
-  std::vector<BSpline<Real>> BSpline2d() const; // Use BSpline to interpolate
-                                                // the curve in 2D
-  std::vector<BSpline<Real>> BSpline3d() const; // Use BSpline to interpolate
-                                                // the curve in 3D
+    std::vector<BSpline<Real>>
+    BSpline2d() const; // Use BSpline to interpolate
+                       // the curve in 2D
+    std::vector<BSpline<Real>>
+    BSpline3d() const; // Use BSpline to interpolate
+                       // the curve in 3D
 
-  std::vector<PPoly<Real>> PPoly2d() const; // Use PPoly to interpolate
-                                            // the curve in 2D
-  std::vector<PPoly<Real>> PPoly3d() const; // Use PPoly to interpolate
-                                            // the curve in 3D
+    std::vector<PPoly<Real>>
+    PPoly2d() const; // Use PPoly to interpolate
+                     // the curve in 2D
+    std::vector<PPoly<Real>>
+    PPoly3d() const; // Use PPoly to interpolate
+                     // the curve in 3D
 };
 
 #endif // CURVE_HPP

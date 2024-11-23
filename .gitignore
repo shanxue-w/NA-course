@@ -15,6 +15,7 @@
 !Makefile
 !Doxyfile
 !*.dox
+!*.tpp
 
 python/*
 tmp/*

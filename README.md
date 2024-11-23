@@ -8,6 +8,8 @@ This repository contains the homework assignments for the course "Numerical Anal
 
 #### [Project 2](./Programming/Chapter2/)
 
+#### [Project 3](./Programming/Chapter3/)
+
 
 
 ### Theoretical Assignments
@@ -17,3 +19,5 @@ This repository contains the homework assignments for the course "Numerical Anal
 #### [Homework 2](./Theoretical/Chapter2/)
 
 #### [Homework 3](./Theoretical/Chapter3/)
+
+#### [Homework 4](./Theoretical/Chapter4/)

@@ -10,3 +10,6 @@ This homework is about interpolation.
 
 #### [Homework 3](./Chapter3/)
 B-Spline Homework. meaningless.
+
+#### [Homework 4](./Chapter4/)
+FPNS Homework.
