@@ -20,6 +20,7 @@
 #include <Eigen/SparseLU>
 #include <Eigen/SparseQR>
 #include <cmath>
+#include <gmpxx.h>
 #include <iostream>
 #include <omp.h>
 #include <string>
@@ -77,6 +78,20 @@ public:
   Real operator()(Real x) const;
 
   PPoly<Real> getPoly() const;
+
+protected:
+  static constexpr Eigen::Matrix<Real, N, N> Generate_Cmatrix() {
+    Eigen::Matrix<Real, N, N> C = Eigen::Matrix<Real, N, N>::Identity();
+    for (int i = 1; i < N; i++) {
+      C(0, i) = Real(i + 1);
+    }
+    for (int i = 1; i < N - 1; i++) {
+      for (int j = i + 1; j < N; j++) {
+        C(i, j) = C(i - 1, j - 1) + C(i, j - 1);
+      }
+    }
+    return C;
+  }
 };
 
 template <>
@@ -102,6 +117,30 @@ void PPInterpolate<3, double>::interpolate(
     const int method,             // 0 for periodic, 1 for complete, 2 for natural, 3 for
                                   // not-a-knot
     const std::vector<double> &boundary_condition); // boundary condition
+
+template <>
+void PPInterpolate<1, mpf_class>::interpolate(
+    const std::vector<mpf_class> &t, // nodes
+    const std::vector<mpf_class> &y, // values
+    const int method, // 0 for periodic, 1 for complete, 2 for natural, 3 for
+                      // not-a-knot
+    const std::vector<mpf_class> &boundary_condition); // boundary condition
+
+template <>
+void PPInterpolate<2, mpf_class>::interpolate(
+    const std::vector<mpf_class> &t, // nodes
+    const std::vector<mpf_class> &y, // values
+    const int method, // 0 for periodic, 1 for complete, 2 for natural, 3 for
+                      // not-a-knot
+    const std::vector<mpf_class> &boundary_condition); // boundary condition
+
+template <>
+void PPInterpolate<3, mpf_class>::interpolate(
+    const std::vector<mpf_class> &t, // nodes
+    const std::vector<mpf_class> &y, // values
+    const int method, // 0 for periodic, 1 for complete, 2 for natural, 3 for
+                      // not-a-knot
+    const std::vector<mpf_class> &boundary_condition); // boundary condition
 
 #include "PPInterpolate.tpp"
 

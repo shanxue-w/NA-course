@@ -4,5 +4,6 @@
 
 template <int N, typename Real>
 std::vector<BSpline<Real>> Curve<N, Real>::BSpline2d() const {
-  BInterpolate<N, Real> 
+  // to be done
+  return std::vector<BSpline<Real>>();
 }

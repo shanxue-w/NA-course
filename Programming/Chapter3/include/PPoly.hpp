@@ -14,6 +14,7 @@
 
 #include <Eigen/Dense>
 #include <cmath>
+#include <gmpxx.h>
 #include <iostream>
 #include <vector>
 
