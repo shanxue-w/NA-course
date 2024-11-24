@@ -13,18 +13,6 @@
 #define PPINTERPOLATE_HPP
 
 #include "PPoly.hpp"
-#include <Eigen/Dense>
-#include <Eigen/IterativeLinearSolvers>
-#include <Eigen/Sparse>
-#include <Eigen/SparseCholesky>
-#include <Eigen/SparseLU>
-#include <Eigen/SparseQR>
-#include <cmath>
-#include <gmpxx.h>
-#include <iostream>
-#include <omp.h>
-#include <string>
-#include <vector>
 
 #define EIGEN_USE_THREADS
 
@@ -158,6 +146,7 @@ PPInterpolate<3, mpf_class>::interpolate(
                       // not-a-knot
     const std::vector<mpf_class> &boundary_condition); // boundary condition
 
+#pragma once
 #include "PPInterpolate.tpp"
 
 #endif // PPINTERPOLATE_HPP

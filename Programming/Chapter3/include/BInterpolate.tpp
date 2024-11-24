@@ -1,3 +1,14 @@
+/**
+ * @file BInterpolate.tpp
+ * @author WangHao (3220104819@zju.edu.cn)
+ * @brief This is the implementation of BInterpolate
+ * @version 0.1
+ * @date 2024-11-24
+ *
+ * @copyright Copyright (c) 2024
+ *
+ */
+
 #include "BInterpolate.hpp"
 
 template <int N, typename Real>

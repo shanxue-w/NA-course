@@ -13,9 +13,11 @@
 #define PPOLY_HPP
 
 #include <Eigen/Dense>
+#include <Eigen/Sparse>
 #include <cmath>
 #include <gmpxx.h>
 #include <iostream>
+#include <omp.h>
 #include <vector>
 
 #define EIGEN_USE_THREADS

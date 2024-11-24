@@ -96,11 +96,90 @@ BInterpolate<2, double>::interpolate(
 {
     if (method == 0)
     {
+        int                                 t_size = t.size();
+        Eigen::SparseMatrix<double>         A(t_size + 1, t_size + 1);
+        Eigen::VectorXd                     b(t_size + 1);
+        std::vector<Eigen::Triplet<double>> triplets;
+        std::vector<double>                 tmp_coeffs(t_size + 1, 1.0);
+        BSpline<double>                     tmp_spline(tmp_coeffs, t, 2);
+        triplets.reserve(3 * (t_size + 1));
+        for (int i = 0; i < t_size; i++)
+        {
+            std::vector<double> basis = tmp_spline.get_basis(t[i]);
+            if (i == 0)
+            {
+                triplets.push_back(Eigen::Triplet<double>(i, i, basis[0]));
+                triplets.push_back(Eigen::Triplet<double>(i, i + 1, basis[1]));
+            }
+            else
+            {
+                triplets.push_back(Eigen::Triplet<double>(i, i, basis[1]));
+                triplets.push_back(Eigen::Triplet<double>(i, i + 1, basis[2]));
+            }
+            b(i) = y[i];
+        }
+
+        std::vector<double> diff_basis1 = tmp_spline.basis_derivative(t[0], 1);
+        std::vector<double> diff_basis2 =
+            tmp_spline.basis_derivative(t[t_size - 1], 1);
+
+        triplets.push_back(Eigen::Triplet<double>(t_size, 0, diff_basis1[0]));
+        triplets.push_back(Eigen::Triplet<double>(t_size, 1, diff_basis1[1]));
+        triplets.push_back(
+            Eigen::Triplet<double>(t_size, t_size - 1, -diff_basis2[1]));
+        triplets.push_back(
+            Eigen::Triplet<double>(t_size, t_size, -diff_basis2[2]));
+        b(t_size) = 0;
+        A.setFromTriplets(triplets.begin(), triplets.end());
+
+        Eigen::SparseLU<Eigen::SparseMatrix<double>> solver;
+        solver.compute(A);
+        Eigen::VectorXd     x = solver.solve(b);
+        std::vector<double> coeffs(x.data(), x.data() + x.size());
+        _bspline = BSpline<double>(coeffs, t, 2);
+        return;
+
         // periodic, to be done.
     }
     else if (method == 1)
     {
         // given one at the beginning point.
+        int                                 t_size = t.size();
+        Eigen::SparseMatrix<double>         A(t_size + 1, t_size + 1);
+        Eigen::VectorXd                     b(t_size + 1);
+        std::vector<Eigen::Triplet<double>> triplets;
+        std::vector<double>                 tmp_coeffs(t_size + 1, 1.0);
+        BSpline<double>                     tmp_spline(tmp_coeffs, t, 2);
+        triplets.reserve(3 * (t_size + 1));
+        for (int i = 0; i < t_size; i++)
+        {
+            std::vector<double> basis = tmp_spline.get_basis(t[i]);
+            if (i == 0)
+            {
+                triplets.push_back(Eigen::Triplet<double>(i, i, basis[0]));
+                triplets.push_back(Eigen::Triplet<double>(i, i + 1, basis[1]));
+            }
+            else
+            {
+                triplets.push_back(Eigen::Triplet<double>(i, i, basis[1]));
+                triplets.push_back(Eigen::Triplet<double>(i, i + 1, basis[2]));
+            }
+            b(i) = y[i];
+        }
+
+        std::vector<double> diff_basis1 = tmp_spline.basis_derivative(t[0], 1);
+
+        triplets.push_back(Eigen::Triplet<double>(t_size, 0, diff_basis1[0]));
+        triplets.push_back(Eigen::Triplet<double>(t_size, 1, diff_basis1[1]));
+        b(t_size) = boundary_condition[0]; // given one at the end point.
+        A.setFromTriplets(triplets.begin(), triplets.end());
+
+        Eigen::SparseLU<Eigen::SparseMatrix<double>> solver;
+        solver.compute(A);
+        Eigen::VectorXd     x = solver.solve(b);
+        std::vector<double> coeffs(x.data(), x.data() + x.size());
+        _bspline = BSpline<double>(coeffs, t, 2);
+        return;
     }
     else if (method == 2)
     {
@@ -142,11 +221,11 @@ BInterpolate<2, double>::interpolate(
         _bspline = BSpline<double>(coeffs, new_t, 2);
         return;
     }
+    else
+    {
+        throw std::invalid_argument("method must be 0, 1, 2");
+    }
     return;
-    // (void)method;
-    // (void)boundary_condition;
-    // _bspline = BSpline<double>(y, t, 1); // default method is 1
-    // // std::cout << "Interpolation finished." << std::endl;
 }
 
 template <>
@@ -429,6 +508,197 @@ BInterpolate<1, mpf_class>::interpolate(
     (void)boundary_condition;
     _bspline = BSpline<mpf_class>(y, t, 1); // default method is 1
     // std::cout << "Interpolation finished." << std::endl;
+}
+
+template <>
+BInterpolate<2, mpf_class>::BInterpolate(
+    const std::vector<mpf_class> &t,
+    const std::vector<mpf_class> &y,
+    const int                    &method,
+    const std::vector<mpf_class> &boundary_condition,
+    const int                     check)
+    : _t(t), _y(y), _method(method), _boundary_condition(boundary_condition)
+{
+    _bspline = BSpline<mpf_class>();
+    if (check == 1)
+    {
+        if (!std::is_sorted(_t.begin(), _t.end()))
+        {
+            int              t_size = _t.size();
+            std::vector<int> idx(t_size);
+
+            for (int i = 0; i < t_size; ++i)
+            {
+                idx[i] = i;
+            }
+            std::sort(idx.begin(),
+                      idx.end(),
+                      [&](int i, int j) { return t[i] < t[j]; });
+
+            for (int i = 0; i < t_size; ++i)
+            {
+                _t[i] = t[idx[i]];
+                _y[i] = y[idx[i]];
+            }
+        }
+    }
+    interpolate(t, y, method, boundary_condition);
+}
+
+template <>
+void
+BInterpolate<2, mpf_class>::interpolate(
+    const std::vector<mpf_class> &t,
+    const std::vector<mpf_class> &y,
+    const int                    &method,
+    const std::vector<mpf_class> &boundary_condition)
+{
+    if (method == 0)
+    {
+        int                                         t_size = t.size();
+        Eigen::SparseMatrix<mpf_class>              A(t_size + 1, t_size + 1);
+        Eigen::Matrix<mpf_class, Eigen::Dynamic, 1> b(t_size + 1);
+        std::vector<Eigen::Triplet<mpf_class>>      triplets;
+        std::vector<mpf_class>                      tmp_coeffs(t_size + 1, 1.0);
+        BSpline<mpf_class> tmp_spline(tmp_coeffs, t, 2);
+        triplets.reserve(3 * (t_size + 1));
+        for (int i = 0; i < t_size; i++)
+        {
+            std::vector<mpf_class> basis = tmp_spline.get_basis(t[i]);
+            if (i == 0)
+            {
+                triplets.push_back(Eigen::Triplet<mpf_class>(i, i, basis[0]));
+                triplets.push_back(
+                    Eigen::Triplet<mpf_class>(i, i + 1, basis[1]));
+            }
+            else
+            {
+                triplets.push_back(Eigen::Triplet<mpf_class>(i, i, basis[1]));
+                triplets.push_back(
+                    Eigen::Triplet<mpf_class>(i, i + 1, basis[2]));
+            }
+            b(i) = y[i];
+        }
+
+        std::vector<mpf_class> diff_basis1 =
+            tmp_spline.basis_derivative(t[0], 1);
+        std::vector<mpf_class> diff_basis2 =
+            tmp_spline.basis_derivative(t[t_size - 1], 1);
+
+        triplets.push_back(
+            Eigen::Triplet<mpf_class>(t_size, 0, diff_basis1[0]));
+        triplets.push_back(
+            Eigen::Triplet<mpf_class>(t_size, 1, diff_basis1[1]));
+        triplets.push_back(
+            Eigen::Triplet<mpf_class>(t_size, t_size - 1, -diff_basis2[1]));
+        triplets.push_back(
+            Eigen::Triplet<mpf_class>(t_size, t_size, -diff_basis2[2]));
+        b(t_size) = 0;
+        A.setFromTriplets(triplets.begin(), triplets.end());
+
+        Eigen::SparseLU<Eigen::SparseMatrix<mpf_class>> solver;
+        solver.compute(A);
+        // Eigen::VectorXd     x = solver.solve(b);
+        Eigen::Matrix<mpf_class, Eigen::Dynamic, 1> x = solver.solve(b);
+        std::vector<mpf_class> coeffs(x.data(), x.data() + x.size());
+        _bspline = BSpline<mpf_class>(coeffs, t, 2);
+        return;
+
+        // periodic, to be done.
+    }
+    else if (method == 1)
+    {
+        // given one at the beginning point.
+        int                                         t_size = t.size();
+        Eigen::SparseMatrix<mpf_class>              A(t_size + 1, t_size + 1);
+        Eigen::Matrix<mpf_class, Eigen::Dynamic, 1> b(t_size + 1);
+        std::vector<Eigen::Triplet<mpf_class>>      triplets;
+        std::vector<mpf_class>                      tmp_coeffs(t_size + 1, 1.0);
+        BSpline<mpf_class> tmp_spline(tmp_coeffs, t, 2);
+        triplets.reserve(3 * (t_size + 1));
+        for (int i = 0; i < t_size; i++)
+        {
+            std::vector<mpf_class> basis = tmp_spline.get_basis(t[i]);
+            if (i == 0)
+            {
+                triplets.push_back(Eigen::Triplet<mpf_class>(i, i, basis[0]));
+                triplets.push_back(
+                    Eigen::Triplet<mpf_class>(i, i + 1, basis[1]));
+            }
+            else
+            {
+                triplets.push_back(Eigen::Triplet<mpf_class>(i, i, basis[1]));
+                triplets.push_back(
+                    Eigen::Triplet<mpf_class>(i, i + 1, basis[2]));
+            }
+            b(i) = y[i];
+        }
+
+        std::vector<mpf_class> diff_basis1 =
+            tmp_spline.basis_derivative(t[0], 1);
+
+        triplets.push_back(
+            Eigen::Triplet<mpf_class>(t_size, 0, diff_basis1[0]));
+        triplets.push_back(
+            Eigen::Triplet<mpf_class>(t_size, 1, diff_basis1[1]));
+        b(t_size) = boundary_condition[0]; // given one at the end point.
+        A.setFromTriplets(triplets.begin(), triplets.end());
+
+        Eigen::SparseLU<Eigen::SparseMatrix<mpf_class>> solver;
+        solver.compute(A);
+        // Eigen::VectorXd     x = solver.solve(b);
+        Eigen::Matrix<mpf_class, Eigen::Dynamic, 1> x = solver.solve(b);
+        std::vector<mpf_class> coeffs(x.data(), x.data() + x.size());
+        _bspline = BSpline<mpf_class>(coeffs, t, 2);
+        return;
+    }
+    else if (method == 2)
+    {
+        // the example in text book.
+        int                    t_size = t.size();
+        std::vector<mpf_class> new_t(t_size + 1);
+        new_t[0] = t[0] - 0.5;
+        for (int i = 0; i < t_size; ++i)
+        {
+            new_t[i + 1] = t[i] + 0.5;
+        }
+        Eigen::SparseMatrix<mpf_class>              A(t_size, t_size);
+        Eigen::Matrix<mpf_class, Eigen::Dynamic, 1> b(t_size);
+        std::vector<Eigen::Triplet<mpf_class>>      triplets;
+        triplets.reserve(3 * t_size);
+        triplets.push_back(Eigen::Triplet<mpf_class>(0, 0, 5.0));
+        triplets.push_back(Eigen::Triplet<mpf_class>(0, 1, 1.0));
+        b(0) = 8.0 * y[0] - 2.0 * boundary_condition[0];
+        for (int i = 1; i < t_size - 1; ++i)
+        {
+            triplets.push_back(Eigen::Triplet<mpf_class>(i, i - 1, 1.0));
+            triplets.push_back(Eigen::Triplet<mpf_class>(i, i, 6.0));
+            triplets.push_back(Eigen::Triplet<mpf_class>(i, i + 1, 1.0));
+            b(i) = 8.0 * y[i];
+        }
+        triplets.push_back(
+            Eigen::Triplet<mpf_class>(t_size - 1, t_size - 2, 1.0));
+        triplets.push_back(
+            Eigen::Triplet<mpf_class>(t_size - 1, t_size - 1, 5.0));
+        b(t_size - 1) = 8.0 * y[t_size - 1] - 2.0 * boundary_condition[1];
+        A.setFromTriplets(triplets.begin(), triplets.end());
+        Eigen::SparseLU<Eigen::SparseMatrix<mpf_class>> solver;
+        solver.compute(A);
+        // Eigen::VectorXd     c = solver.solve(b);
+        Eigen::Matrix<mpf_class, Eigen::Dynamic, 1> c = solver.solve(b);
+        std::vector<mpf_class> coeffs(c.data(), c.data() + c.size());
+        mpf_class              tmp1 = 2.0 * boundary_condition[0] - coeffs[0];
+        mpf_class tmp2 = 2.0 * boundary_condition[1] - coeffs[t_size - 1];
+        coeffs.insert(coeffs.begin(), tmp1);
+        coeffs.push_back(tmp2);
+        _bspline = BSpline<mpf_class>(coeffs, new_t, 2);
+        return;
+    }
+    else
+    {
+        throw std::invalid_argument("method must be 0, 1, 2");
+    }
+    return;
 }
 
 template <>

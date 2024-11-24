@@ -15,8 +15,6 @@
 #include "BInterpolate.hpp"
 #include "BSpline.hpp"
 #include "PPInterpolate.hpp"
-#include <iostream>
-#include <vector>
 
 template <int N, typename Real = double> // N is the order of the curve and Real
                                          // is the type of the coefficients
@@ -50,5 +48,7 @@ public:
     PPoly3d() const; // Use PPoly to interpolate
                      // the curve in 3D
 };
+
+#include "Curve.tpp"
 
 #endif // CURVE_HPP

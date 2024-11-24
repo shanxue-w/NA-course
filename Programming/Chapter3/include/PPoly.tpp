@@ -1,3 +1,14 @@
+/**
+ * @file PPoly.tpp
+ * @author WangHao (3220104819@zju.edu.cn)
+ * @brief Implementation of the class PPoly
+ * @version 0.1
+ * @date 2024-11-24
+ *
+ * @copyright Copyright (c) 2024
+ *
+ */
+
 #include "PPoly.hpp"
 #include <algorithm>
 #include <stdexcept>

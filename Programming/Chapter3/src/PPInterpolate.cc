@@ -276,10 +276,8 @@ PPInterpolate<3, double>::interpolate(
 
         for (int i = 0; i < t_size - 2; ++i)
         {
-            double dt_i     = t[i + 2] - t[i + 1];
-            double dt_im1   = t[i + 1] - t[i];
-            double mu_i     = dt_im1 / dt_i;
-            double lambda_i = dt_i / dt_im1;
+            double mu_i     = (t[i + 1] - t[i]) / (t[i + 2] - t[i]);
+            double lambda_i = (t[i + 2] - t[i + 1]) / (t[i + 2] - t[i]);
 
             b(i) = 3 * (mu_i * K_i[i + 1] + lambda_i * K_i[i]);
 

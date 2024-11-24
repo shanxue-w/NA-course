@@ -1,3 +1,14 @@
+/**
+ * @file PPInterpolate.tpp
+ * @author WangHao (3220104819@zju.edu.cn)
+ * @brief Implmentation of PP-form interpolation
+ * @version 0.1
+ * @date 2024-11-24
+ *
+ * @copyright Copyright (c) 2024
+ *
+ */
+
 #include "PPInterpolate.hpp"
 #include <algorithm>
 #include <iostream>
@@ -49,15 +60,16 @@ PPInterpolate<N, Real>::interpolate(
     const std::vector<Real> &boundary_condition) // boundary condition
 {
     /**
-     * @details
+     * @details Here are the details of the interpolation:
      * Let the polynomial for the interval [x_i, x_{i+1}] be defined as:
      * \f[
      * p_i(x) = y_i + C_{i,1}(x-x_i) + \cdots + C_{i,N}(x-x_i)^N
      * \f]
-     * and for the next interval [x_{i+1}, x_{i+2}] as:
+     * and for the next interval \f$[x_{i+1}, x_{i+2}]\f$ as:
      * \f[
      * p_{i+1}(x) = y_{i+1} + C_{i+1,1}(x-x_{i+1}) + \cdots +
-     * C_{i+1,N}(x-x_{i+1})^N \f]
+     * C_{i+1,N}(x-x_{i+1})^N
+     * \f]
      *
      * By requiring continuity at the boundary \f$x_{i+1}\f$, i.e.,
      * \f$p_i(x_{i+1}) = p_{i+1}(x_{i+1})\f$, define: \f[ \Delta x_i = x_{i+1} -
@@ -71,18 +83,18 @@ PPInterpolate<N, Real>::interpolate(
      * By matching the \f$j\f$-th derivatives at \f$x_{i+1}\f$, i.e.,
      * \f$p_i^{(j)}(x_{i+1}) = p_{i+1}^{(j)}(x_{i+1})\f$, we derive:
      * \f[
-     * C_{i+1,j} = \sum_{k=0}^{N-j} \binom{j+k}{k} C_{i,j+k} (\Delta x_i)^k
+     * C_{i+1,j} = \sum_{k=0}^{N-j} C_{j+k}^{k} C_{i,j+k} (\Delta x_i)^k
      * \f]
      *
      * Replacing \f$C_{i,N}\f$ in the above equation, we get:
      * \f[
-     * C_{i+1,j} = \sum_{k=0}^{N-j-1} \binom{j+k}{k} C_{i,j+k} (\Delta x_i)^k
+     * C_{i+1,j} = \sum_{k=0}^{N-j-1} C_{j+k}^{k} C_{i,j+k} (\Delta x_i)^k
      * + C_{N}^{N-j} \frac{\Delta y_i - C_{i,1}\Delta x_i - \cdots -
      * C_{i,N-1}\Delta x_i^{N-1}}{\Delta x_i^j}
      * \f]
      *
      * The matrix equation is then:
-     * b + A C_i = C_{i+1}
+     * \f$ b + A C_i = C_{i+1} \f$
      */
     Eigen::Matrix<Real, N, N> CMatrix = Generate_Cmatrix();
     // std::cout << "CMatrix: " << CMatrix << std::endl;

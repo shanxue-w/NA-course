@@ -13,6 +13,7 @@
 #define BSPLINE_HPP
 
 #include <Eigen/Dense>
+#include <Eigen/Sparse>
 #include <algorithm>
 #include <cmath>
 #include <gmpxx.h>

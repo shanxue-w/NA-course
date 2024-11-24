@@ -1,3 +1,14 @@
+/**
+ * @file BSpline.tpp
+ * @author WangHao (3220104819@zju.edu.cn)
+ * @brief This is the implementation of BSpline
+ * @version 0.1
+ * @date 2024-11-24
+ *
+ * @copyright Copyright (c) 2024
+ *
+ */
+
 #include "BSpline.hpp"
 #include <algorithm>
 #include <cmath>
@@ -8,8 +19,8 @@
  *
  * @param coeffs
  * @param t \f$[t_0,\cdots,t_{n-2}, t_{n-1},\cdots,t_{len-1}]\f$, the first n-1
- * elements are added, we actually interpolate at f(t_{n-1}), \cdots,
- * f(t_{len-1})
+ * elements are added, we actually interpolate at \f$f(t_{n-1}), \cdots,
+ * f(t_{len-1})\f$
  * @param n
  * @param check
  */

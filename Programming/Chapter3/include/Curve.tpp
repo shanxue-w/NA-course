@@ -1,3 +1,14 @@
+/**
+ * @file Curve.tpp
+ * @author WangHao (3220104819@zju.edu.cn)
+ * @brief This is the implementation of Curve
+ * @version 0.1
+ * @date 2024-11-24
+ *
+ * @copyright Copyright (c) 2024
+ *
+ */
+
 #include "BInterpolate.hpp"
 #include "BSpline.hpp"
 #include "Curve.hpp"
@@ -7,8 +18,13 @@ Curve<N, Real>::Curve(const std::vector<Real>              &t,
                       const std::vector<std::vector<Real>> &xy,
                       const int                             method,
                       const std::vector<std::vector<Real>> &boundary_condition)
-    : _t(t), _xy(xy), _method(method), _boundary_condition(boundary_condition)
+    : _t(t), _xy(xy), _method(method)
 {
+    // if boundary_condition is not given, three dimensions are all set to 0
+    if (boundary_condition.empty())
+    {
+        _boundary_condition = {{0}, {0}, {0}};
+    }
 }
 
 template <int N, typename Real>
