@@ -12,6 +12,9 @@ BInterpolate<1, double>::BInterpolate(
     : _t(t), _y(y), _method(method), _boundary_condition(boundary_condition)
 {
     _bspline = BSpline<double>();
+    /**
+     *@brief Make sure the input data is sorted.
+     */
     if (check == 1)
     {
         if (!std::is_sorted(_t.begin(), _t.end()))
@@ -96,6 +99,18 @@ BInterpolate<2, double>::interpolate(
 {
     if (method == 0)
     {
+
+        /**
+         *@brief Periodic boundary condition.
+         *
+         *@details \f$ B(x_i) = y_i \f$ is needed, which gives the first
+         * t_size equations.
+         * For periodic boundary condition, we need to add one additional equation
+         * \f$ B^{\prime} (x_0) = B^{\prime} (x_{t_size - 1}) \f$.
+         *
+         * Finally we have t_size + 1 equations. Then use Eigen to solve the
+         * linear system.
+         */
         int                                 t_size = t.size();
         Eigen::SparseMatrix<double>         A(t_size + 1, t_size + 1);
         Eigen::VectorXd                     b(t_size + 1);
@@ -103,6 +118,7 @@ BInterpolate<2, double>::interpolate(
         std::vector<double>                 tmp_coeffs(t_size + 1, 1.0);
         BSpline<double>                     tmp_spline(tmp_coeffs, t, 2);
         triplets.reserve(3 * (t_size + 1));
+        // begin to add B(x_i) = y_i
         for (int i = 0; i < t_size; i++)
         {
             std::vector<double> basis = tmp_spline.get_basis(t[i]);
@@ -118,7 +134,9 @@ BInterpolate<2, double>::interpolate(
             }
             b(i) = y[i];
         }
+        // end of B(x_i) = y_i
 
+        // Begin to add the boundary condition.
         std::vector<double> diff_basis1 = tmp_spline.basis_derivative(t[0], 1);
         std::vector<double> diff_basis2 =
             tmp_spline.basis_derivative(t[t_size - 1], 1);
@@ -130,20 +148,25 @@ BInterpolate<2, double>::interpolate(
         triplets.push_back(
             Eigen::Triplet<double>(t_size, t_size, -diff_basis2[2]));
         b(t_size) = 0;
+        // End of adding boundary condition.
+
         A.setFromTriplets(triplets.begin(), triplets.end());
 
         Eigen::SparseLU<Eigen::SparseMatrix<double>> solver;
         solver.compute(A);
         Eigen::VectorXd     x = solver.solve(b);
         std::vector<double> coeffs(x.data(), x.data() + x.size());
+        //< Construct the BSpline object. >/
         _bspline = BSpline<double>(coeffs, t, 2);
         return;
-
-        // periodic, to be done.
     }
     else if (method == 1)
     {
-        // given one at the beginning point.
+        /**
+         *@brief The complete boundary condition, give one derivative at the
+         * beginning point.
+         *
+         */
         int                                 t_size = t.size();
         Eigen::SparseMatrix<double>         A(t_size + 1, t_size + 1);
         Eigen::VectorXd                     b(t_size + 1);
@@ -151,6 +174,7 @@ BInterpolate<2, double>::interpolate(
         std::vector<double>                 tmp_coeffs(t_size + 1, 1.0);
         BSpline<double>                     tmp_spline(tmp_coeffs, t, 2);
         triplets.reserve(3 * (t_size + 1));
+        // begin to add B(x_i) = y_i
         for (int i = 0; i < t_size; i++)
         {
             std::vector<double> basis = tmp_spline.get_basis(t[i]);
@@ -166,12 +190,15 @@ BInterpolate<2, double>::interpolate(
             }
             b(i) = y[i];
         }
+        // end of B(x_i) = y_i
 
+        // Begin to add the boundary condition.
         std::vector<double> diff_basis1 = tmp_spline.basis_derivative(t[0], 1);
-
         triplets.push_back(Eigen::Triplet<double>(t_size, 0, diff_basis1[0]));
         triplets.push_back(Eigen::Triplet<double>(t_size, 1, diff_basis1[1]));
         b(t_size) = boundary_condition[0]; // given one at the end point.
+        // End of adding boundary condition.
+
         A.setFromTriplets(triplets.begin(), triplets.end());
 
         Eigen::SparseLU<Eigen::SparseMatrix<double>> solver;
@@ -183,7 +210,9 @@ BInterpolate<2, double>::interpolate(
     }
     else if (method == 2)
     {
-        // the example in text book.
+        /**
+         *@brief The theorem in the text book, special case, for problem C and D.
+         */
         int                 t_size = t.size();
         std::vector<double> new_t(t_size + 1);
         new_t[0] = t[0] - 0.5;
@@ -191,7 +220,6 @@ BInterpolate<2, double>::interpolate(
         {
             new_t[i + 1] = t[i] + 0.5;
         }
-        // Eigen::MatrixXd                     A(t_size, t_size);
         Eigen::SparseMatrix<double>         A(t_size, t_size);
         Eigen::VectorXd                     b(t_size);
         std::vector<Eigen::Triplet<double>> triplets;
@@ -959,5 +987,5 @@ template class BInterpolate<1, double>;
 template class BInterpolate<2, double>;
 template class BInterpolate<3, double>;
 template class BInterpolate<1, mpf_class>;
-// template class BInterpolate<2, mpf_class>;
+template class BInterpolate<2, mpf_class>;
 template class BInterpolate<3, mpf_class>;

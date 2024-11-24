@@ -83,16 +83,16 @@ Therefore, at least 5 bits of precision are lost and at most 6 bits of precision
 
 First, we have $1-\cos\qty(x) = 2\sin^2\qty(\frac{x}{2})$, which avoids the subtraction of two nearly equal numbers.
 
-Second, we can use the taylor series, when $x$ is small, we have $1-\cos\qty(x) = \frac{x^2}{x} - \frac{x^4}{4!} + \frac{x^6}{6!} - \cdots$, and when $x$ is not small, we can directly use $1-\cos\qty(x)$.
+Second, we can use the taylor series, when $x$ is small, we have $1-\cos\qty(x) = \frac{x^2}{2!} - \frac{x^4}{4!} + \frac{x^6}{6!} - \cdots$, and when $x$ is not small, we can directly use $1-\cos\qty(x)$.
 
 
 \section*{VIII. Condition number of function}
 
 \begin{itemize}
-    \item $f(x) = (x-1)^{\alpha}$, we have $\mathrm{cond}(f) = \abs{\frac{x f^\prime(x)}{f(x)}} = \abs{\frac{\alpha x}{x-1}}$, when $x$ is close to $1$, the condition number is large.
-    \item $f(x) = \ln\qty(x)$, we have $\mathrm{cond}(f) = \abs{\frac{x f^\prime(x)}{f(x)}} = \abs{\frac{1}{\ln\qty(x)}}$, when $x$ is close to $1$, the condition number is large.
-    \item $f(x) = e^x$, we have $\mathrm{cond}(f) = \abs{\frac{x f^\prime(x)}{f(x)}} = \abs{x}$, when $\abs{x}$ is large, the condition number is large.
-    \item $f(x) = \arccos\qty(x)$, we have $\mathrm{cond}(f) = \abs{\frac{x f^\prime(x)}{f(x)}} = \abs{\frac{x}{\sqrt{1-x^2} \arccos\qty(x)}}$, when $x$ is close to $1$ or $-1$, the condition number is large.
+    \item $f(x) = (x-1)^{\alpha}$, we have $\mathrm{cond}_f(x) = \abs{\frac{x f^\prime(x)}{f(x)}} = \abs{\frac{\alpha x}{x-1}}$, when $x$ is close to $1$, the condition number is large.
+    \item $f(x) = \ln\qty(x)$, we have $\mathrm{cond}_f(x) = \abs{\frac{x f^\prime(x)}{f(x)}} = \abs{\frac{1}{\ln\qty(x)}}$, when $x$ is close to $1$, the condition number is large.
+    \item $f(x) = e^x$, we have $\mathrm{cond}_f(x) = \abs{\frac{x f^\prime(x)}{f(x)}} = \abs{x}$, when $\abs{x}$ is large, the condition number is large.
+    \item $f(x) = \arccos\qty(x)$, we have $\mathrm{cond}_f(x) = \abs{\frac{x f^\prime(x)}{f(x)}} = \abs{\frac{x}{\sqrt{1-x^2} \arccos\qty(x)}}$, when $x$ is close to $1$ or $-1$, the condition number is large.
 \end{itemize}
 
 
@@ -264,7 +264,7 @@ We have
 
 For $\mathrm{fl}\qty( \sum_{i=0}^{m} \prod_{j=0}^{n} a_{i,j} )$, we have
 \begin{equation}
-    \mathrm{fl}\qty( \sum_{i=0}^{m} \prod_{j=0}^{n} a_{i,j} ) = (1+\delta) \sum_{i=0}^{m} \qty(\prod_{j=0}^{n} a_{i,j} \prod_{j=0}^{n-1}(1+\delta_{i,j})),
+    \mathrm{fl}\qty( \sum_{i=0}^{m} \prod_{j=0}^{n} a_{i,j} ) = (1+\delta) \sum_{i=0}^{m} \qty(\prod_{j=0}^{n} a_{i,j} \times \prod_{j=0}^{n-1}(1+\delta_{i,j})),
 \end{equation}
 where $\abs{\delta} < (1+\epsilon_u)^m \approx m \epsilon_u,~ \abs{\delta_{i,j}} < \epsilon_u$.
 
@@ -291,7 +291,7 @@ So we have
 
 So by theorem we have 
 \begin{equation}
-    \mathrm{cond}_A(x) \leq \frac{x}{\sin\qty(x)} \qty(3 + \frac{\cos\qty(x)}{1+\cos\qty(x)}) \leq 2 \pi.
+    \mathrm{cond}_A(x) \leq \frac{\sin\qty(x)}{x} \qty(3 + \frac{\cos\qty(x)}{1+\cos\qty(x)}) \leq 2 \pi.
 \end{equation}
 
 \end{document}

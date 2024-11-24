@@ -1,8 +1,8 @@
-OBJ = main.tex
+OBJ = HW4_3220104819_WangHao.tex
 
-all: main.pdf
+all: HW4_3220104819_WangHao.pdf
 
-main.pdf: ${OBJ}
+HW4_3220104819_WangHao.pdf: ${OBJ}
 	@xelatex $^
 	@xelatex $^
 

@@ -255,6 +255,52 @@ PPInterpolate<3, double>::interpolate(
     {
     case 0:
     {
+        /**
+         *
+         * @details **Periodic Cubic Spline**. method = 0.
+         *
+         * We let
+         * \f[
+         * A = \begin{bmatrix}
+         * m_1 \\
+         * m_2 \\
+         * \vdots \\
+         * m_n \\
+         * \end{bmatrix}
+         * \f]
+         *
+         * We have:
+         * \f[
+         * \lambda_i m_{i-1} + 2m_i + \mu_i m_{i+1} =
+         * 3\mu_i f[x_i, x_{i+1}] + 3\lambda_i f[x_{i-1}, x_i]
+         * \f]
+         * which gives the first n-2 equations.
+         *
+         * For periodic boundary condition, we have:
+         * \f$m_1 = m_n\f$ and \f$M_1 = M_n\f$.
+         * The first one is easy to add in the matrix,
+         * we only need to represent \f$M_i\f$ by \f$m_i\f$.
+         *
+         * By simply compute we can have
+         * \f$M_1 = 2\frac{3K_1-2m_1-m_2}{x_2-x_1}\f$, \f$K_1=f[x_1,x_2]\f$.
+         * \f$M_2 = 2\frac{3K_{n-1}-2m_{n-1}-m_n}{x_n-x_{n-1}} + 6\frac{m_{n-1}+m_n-2K_{n-1}}{x_n-x_{n-1}}\f$.
+         *
+         * So we have the last boundary condition as
+         * \f$\frac{4}{x_2-x_1}m_1 + \frac{2}{x_2-x_1}m_2 +
+         * \frac{2}{x_n-x_{n-1}}m_{n-1} + \frac{4}{x_n-x_{n-1}}m_n =
+         * 6\frac{K_1}{x_2-x_1} + 6\frac{K_{n-1}}{x_n-x_{n-1}}\f$.
+         *
+         * Then we can solve the system of linear equations.
+         *
+         * Finally compute the coefficients of the cubic spline by
+         * \f[
+         * c_{i,0} = y_i \\
+         * c_{i,1} = m_i \\
+         * c_{i,2} = \frac{3K_i - 2m_{i+1} - m_i}{x_{i+1} - x_i} \\
+         * c_{i,3} = \frac{m_i - 2K_i + m_{i+1}}{(x_{i+1} - x_i)^2} \\
+         * \f]
+         */
+
         int                 t_size = t.size();
         std::vector<double> K_i(t_size - 1, 0);
 
@@ -337,6 +383,10 @@ PPInterpolate<3, double>::interpolate(
 
     case 1:
     {
+        /**
+         *@brief **Complete Cubic Spline**. method = 1.
+         *
+         */
         int                 t_size = t.size();
         std::vector<double> K_i(t_size - 1, 0);
 

@@ -1,0 +1,95 @@
+\hypertarget{classBSpline}{}\doxysection{BSpline$<$ Real $>$ Class Template Reference}
+\label{classBSpline}\index{BSpline$<$ Real $>$@{BSpline$<$ Real $>$}}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classBSpline_ab736e75c372fd703f3fa398dd7c131aa}{BSpline}} (const std\+::vector$<$ Real $>$ coeffs, const std\+::vector$<$ Real $>$ t, const int n, const int check=0)
+\begin{DoxyCompactList}\small\item\em Construct a new BSpline\+::\+BSpline object. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classBSpline_a6a44ef13cb242c6c03d13557fcea9919}\label{classBSpline_a6a44ef13cb242c6c03d13557fcea9919}} 
+{\bfseries BSpline} (const \mbox{\hyperlink{classBSpline}{BSpline}} \&other)
+\item 
+int \mbox{\hyperlink{classBSpline_aac12368ffbbe23929b7d830fd61cba0b}{get\+\_\+interval}} (const Real x) const
+\begin{DoxyCompactList}\small\item\em The minimum idx of the interval that contains x. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classBSpline_a605a51b62d2579680c2589f6e493897d}\label{classBSpline_a605a51b62d2579680c2589f6e493897d}} 
+\mbox{\hyperlink{classBSpline}{BSpline}} \& {\bfseries operator=} (const \mbox{\hyperlink{classBSpline}{BSpline}} \&other)
+\item 
+\mbox{\Hypertarget{classBSpline_ab921fd6be1cdc8e97d0ac21df154bf58}\label{classBSpline_ab921fd6be1cdc8e97d0ac21df154bf58}} 
+Real {\bfseries operator()} (const Real x)
+\item 
+\mbox{\Hypertarget{classBSpline_a779bcd2fad1018686f8c39e7e65bad40}\label{classBSpline_a779bcd2fad1018686f8c39e7e65bad40}} 
+std\+::vector$<$ Real $>$ {\bfseries get\+\_\+coeffs} () const
+\item 
+\mbox{\Hypertarget{classBSpline_a802397903e1af96440d0c9c987fe4ef0}\label{classBSpline_a802397903e1af96440d0c9c987fe4ef0}} 
+std\+::vector$<$ Real $>$ {\bfseries get\+\_\+t} () const
+\item 
+\mbox{\Hypertarget{classBSpline_afda230aa13d0d58901ce5c7b9911aadb}\label{classBSpline_afda230aa13d0d58901ce5c7b9911aadb}} 
+int {\bfseries get\+\_\+n} () const
+\item 
+\mbox{\Hypertarget{classBSpline_ac171ea9dfcebdb791a3dcf23416c45c6}\label{classBSpline_ac171ea9dfcebdb791a3dcf23416c45c6}} 
+std\+::vector$<$ Real $>$ {\bfseries get\+\_\+basis} (const Real x)
+\item 
+\mbox{\Hypertarget{classBSpline_aab7b7a1eca0f73c06789085f9fca85e9}\label{classBSpline_aab7b7a1eca0f73c06789085f9fca85e9}} 
+void {\bfseries get\+\_\+total\+\_\+basis} (const Real x)
+\item 
+\mbox{\Hypertarget{classBSpline_a8993803a1cad1edfaf1c48aa9dc3447e}\label{classBSpline_a8993803a1cad1edfaf1c48aa9dc3447e}} 
+Real {\bfseries cal\+\_\+derivative\+\_\+basis} (const int interval, const int j, const int degree, const int n)
+\item 
+\mbox{\Hypertarget{classBSpline_ae1e906dc63297a02f6d1e588687a89e2}\label{classBSpline_ae1e906dc63297a02f6d1e588687a89e2}} 
+std\+::vector$<$ Real $>$ {\bfseries basis\+\_\+derivative} (const Real x, const int n)
+\item 
+\mbox{\Hypertarget{classBSpline_a1a0965db85aded6995d09dd08d6f26c7}\label{classBSpline_a1a0965db85aded6995d09dd08d6f26c7}} 
+Real {\bfseries derivative} (const Real x, const int n)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classBSpline_ab736e75c372fd703f3fa398dd7c131aa}\label{classBSpline_ab736e75c372fd703f3fa398dd7c131aa}} 
+\index{BSpline$<$ Real $>$@{BSpline$<$ Real $>$}!BSpline@{BSpline}}
+\index{BSpline@{BSpline}!BSpline$<$ Real $>$@{BSpline$<$ Real $>$}}
+\doxysubsubsection{\texorpdfstring{BSpline()}{BSpline()}}
+{\footnotesize\ttfamily template$<$typename Real $>$ \\
+\mbox{\hyperlink{classBSpline}{BSpline}}$<$ Real $>$\+::\mbox{\hyperlink{classBSpline}{BSpline}} (\begin{DoxyParamCaption}\item[{const std\+::vector$<$ Real $>$}]{coeffs,  }\item[{const std\+::vector$<$ Real $>$}]{t,  }\item[{const int}]{n,  }\item[{const int}]{check = {\ttfamily 0} }\end{DoxyParamCaption})}
+
+
+
+Construct a new BSpline\+::\+BSpline object. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em coeffs} & \\
+\hline
+{\em t} & $[t_0,\cdots,t_{n-2}, t_{n-1},\cdots,t_{len-1}]$, the first n-\/1 elements are added, we actually interpolate at $f(t_{n-1}), \cdots, f(t_{len-1})$ \\
+\hline
+{\em n} & \\
+\hline
+{\em check} & \\
+\hline
+\end{DoxyParams}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classBSpline_aac12368ffbbe23929b7d830fd61cba0b}\label{classBSpline_aac12368ffbbe23929b7d830fd61cba0b}} 
+\index{BSpline$<$ Real $>$@{BSpline$<$ Real $>$}!get\_interval@{get\_interval}}
+\index{get\_interval@{get\_interval}!BSpline$<$ Real $>$@{BSpline$<$ Real $>$}}
+\doxysubsubsection{\texorpdfstring{get\_interval()}{get\_interval()}}
+{\footnotesize\ttfamily template$<$typename Real $>$ \\
+int \mbox{\hyperlink{classBSpline}{BSpline}}$<$ Real $>$\+::get\+\_\+interval (\begin{DoxyParamCaption}\item[{const Real}]{x }\end{DoxyParamCaption}) const}
+
+
+
+The minimum idx of the interval that contains x. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em x} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+int 
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+include/\mbox{\hyperlink{BSpline_8hpp}{BSpline.\+hpp}}\item 
+include/\mbox{\hyperlink{BSpline_8tpp}{BSpline.\+tpp}}\end{DoxyCompactItemize}

@@ -1,0 +1,177 @@
+\hypertarget{classPPoly}{}\doxysection{PPoly$<$ Real $>$ Class Template Reference}
+\label{classPPoly}\index{PPoly$<$ Real $>$@{PPoly$<$ Real $>$}}
+
+
+The definition of the class \mbox{\hyperlink{classPPoly}{PPoly}}, which is a polynomial class.  
+
+
+
+
+{\ttfamily \#include $<$PPoly.\+hpp$>$}
+
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classPPoly_aa087b096c90c32889234bb9a6fc11d09}{PPoly}} ()
+\item 
+\mbox{\hyperlink{classPPoly_a532872eba7401e32ea0fe0785a3f86b8}{PPoly}} (const std\+::vector$<$ std\+::vector$<$ Real $>$$>$ \&coeffs, const std\+::vector$<$ Real $>$ \&t, const int check=0)
+\item 
+\mbox{\hyperlink{classPPoly_a1eb1a0eb52f3d7477226dd7b73f84df5}{PPoly}} (const \mbox{\hyperlink{classPPoly}{PPoly}} \&poly)
+\begin{DoxyCompactList}\small\item\em Construct a new \mbox{\hyperlink{classPPoly}{PPoly}} object. \end{DoxyCompactList}\item 
+Real \mbox{\hyperlink{classPPoly_ae4627065c21a263112bb0f5fd8cdc458}{operator()}} (Real x) const
+\begin{DoxyCompactList}\small\item\em The function return the value of the polynomial at a given point. \end{DoxyCompactList}\item 
+Real \mbox{\hyperlink{classPPoly_ab79e8713347b2f62ef67cc41551ecb14}{derivative}} (Real x, int n=1) const
+\begin{DoxyCompactList}\small\item\em The function return the value of the derivative of the polynomial at a given point. \end{DoxyCompactList}\item 
+Real \mbox{\hyperlink{classPPoly_abdb8b089e5f8a22afc2036f633d7434f}{integral}} (Real a, Real b) const
+\begin{DoxyCompactList}\small\item\em The function return the value of the integral of the polynomial at a given interval. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{classPPoly_a11d686c856d9073cbac0cc9744b52555}{find\+Interval}} (Real x) const
+\begin{DoxyCompactList}\small\item\em The function return the index of the interval that contains the given point. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classPPoly_a73caebcd9f3753b2ff5473cc1904577b}\label{classPPoly_a73caebcd9f3753b2ff5473cc1904577b}} 
+\mbox{\hyperlink{classPPoly}{PPoly}} \& {\bfseries operator=} (const \mbox{\hyperlink{classPPoly}{PPoly}} \&other)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\subsubsection*{template$<$typename Real = double$>$\newline
+class PPoly$<$ Real $>$}
+
+The definition of the class \mbox{\hyperlink{classPPoly}{PPoly}}, which is a polynomial class. 
+
+
+\begin{DoxyTemplParams}{Template Parameters}
+{\em N} & The order of the polynomial, $ \mathbb{S}_{N}^{N-1} $\\
+\hline
+\end{DoxyTemplParams}
+The class \mbox{\hyperlink{classPPoly}{PPoly}} is a polynomial class, which is used to represent a piecewise polynomial function. In each interval $ [t_{i}, t_{i+1}] $, the polynomial is represented as 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classPPoly_aa087b096c90c32889234bb9a6fc11d09}\label{classPPoly_aa087b096c90c32889234bb9a6fc11d09}} 
+\index{PPoly$<$ Real $>$@{PPoly$<$ Real $>$}!PPoly@{PPoly}}
+\index{PPoly@{PPoly}!PPoly$<$ Real $>$@{PPoly$<$ Real $>$}}
+\doxysubsubsection{\texorpdfstring{PPoly()}{PPoly()}\hspace{0.1cm}{\footnotesize\ttfamily [1/3]}}
+{\footnotesize\ttfamily template$<$typename Real $>$ \\
+\mbox{\hyperlink{classPPoly}{PPoly}}$<$ Real $>$\+::\mbox{\hyperlink{classPPoly}{PPoly}}}
+
+Construct a new \mbox{\hyperlink{classPPoly}{PPoly}} object \mbox{\Hypertarget{classPPoly_a532872eba7401e32ea0fe0785a3f86b8}\label{classPPoly_a532872eba7401e32ea0fe0785a3f86b8}} 
+\index{PPoly$<$ Real $>$@{PPoly$<$ Real $>$}!PPoly@{PPoly}}
+\index{PPoly@{PPoly}!PPoly$<$ Real $>$@{PPoly$<$ Real $>$}}
+\doxysubsubsection{\texorpdfstring{PPoly()}{PPoly()}\hspace{0.1cm}{\footnotesize\ttfamily [2/3]}}
+{\footnotesize\ttfamily template$<$typename Real $>$ \\
+\mbox{\hyperlink{classPPoly}{PPoly}}$<$ Real $>$\+::\mbox{\hyperlink{classPPoly}{PPoly}} (\begin{DoxyParamCaption}\item[{const std\+::vector$<$ std\+::vector$<$ Real $>$$>$ \&}]{coeffs,  }\item[{const std\+::vector$<$ Real $>$ \&}]{t,  }\item[{const int}]{check = {\ttfamily 0} }\end{DoxyParamCaption})}
+
+The function use the coefficients and knots to construct a new \mbox{\hyperlink{classPPoly}{PPoly}} object. make sure the t is sorted, and the size of t is equal to the size of coeffs. coeffs is corresponding to the interval \mbox{[}t\mbox{[}i\mbox{]}, t\mbox{[}i+1\mbox{]}\mbox{]}, so when sorting t, the coeffs should be sorted too.
+\begin{DoxyParams}{Parameters}
+{\em t} & The coefficients of pp-\/form \\
+\hline
+{\em check} & The knots of pp-\/form \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classPPoly_a1eb1a0eb52f3d7477226dd7b73f84df5}\label{classPPoly_a1eb1a0eb52f3d7477226dd7b73f84df5}} 
+\index{PPoly$<$ Real $>$@{PPoly$<$ Real $>$}!PPoly@{PPoly}}
+\index{PPoly@{PPoly}!PPoly$<$ Real $>$@{PPoly$<$ Real $>$}}
+\doxysubsubsection{\texorpdfstring{PPoly()}{PPoly()}\hspace{0.1cm}{\footnotesize\ttfamily [3/3]}}
+{\footnotesize\ttfamily template$<$typename Real $>$ \\
+\mbox{\hyperlink{classPPoly}{PPoly}}$<$ Real $>$\+::\mbox{\hyperlink{classPPoly}{PPoly}} (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classPPoly}{PPoly}}$<$ Real $>$ \&}]{poly }\end{DoxyParamCaption})}
+
+
+
+Construct a new \mbox{\hyperlink{classPPoly}{PPoly}} object. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em poly} & \\
+\hline
+\end{DoxyParams}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classPPoly_ab79e8713347b2f62ef67cc41551ecb14}\label{classPPoly_ab79e8713347b2f62ef67cc41551ecb14}} 
+\index{PPoly$<$ Real $>$@{PPoly$<$ Real $>$}!derivative@{derivative}}
+\index{derivative@{derivative}!PPoly$<$ Real $>$@{PPoly$<$ Real $>$}}
+\doxysubsubsection{\texorpdfstring{derivative()}{derivative()}}
+{\footnotesize\ttfamily template$<$typename Real $>$ \\
+Real \mbox{\hyperlink{classPPoly}{PPoly}}$<$ Real $>$\+::derivative (\begin{DoxyParamCaption}\item[{Real}]{x,  }\item[{int}]{n = {\ttfamily 1} }\end{DoxyParamCaption}) const}
+
+
+
+The function return the value of the derivative of the polynomial at a given point. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em x} & the x value \\
+\hline
+{\em n} & the order of derivative \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Real $ p^{(n)}(x) $ 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classPPoly_a11d686c856d9073cbac0cc9744b52555}\label{classPPoly_a11d686c856d9073cbac0cc9744b52555}} 
+\index{PPoly$<$ Real $>$@{PPoly$<$ Real $>$}!findInterval@{findInterval}}
+\index{findInterval@{findInterval}!PPoly$<$ Real $>$@{PPoly$<$ Real $>$}}
+\doxysubsubsection{\texorpdfstring{findInterval()}{findInterval()}}
+{\footnotesize\ttfamily template$<$typename Real $>$ \\
+int \mbox{\hyperlink{classPPoly}{PPoly}}$<$ Real $>$\+::find\+Interval (\begin{DoxyParamCaption}\item[{Real}]{x }\end{DoxyParamCaption}) const}
+
+
+
+The function return the index of the interval that contains the given point. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em x} & The point \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+int 
+\end{DoxyReturn}
+find the interval that x belongs to.
+
+if x is out of the range of t, return -\/1.\mbox{\Hypertarget{classPPoly_abdb8b089e5f8a22afc2036f633d7434f}\label{classPPoly_abdb8b089e5f8a22afc2036f633d7434f}} 
+\index{PPoly$<$ Real $>$@{PPoly$<$ Real $>$}!integral@{integral}}
+\index{integral@{integral}!PPoly$<$ Real $>$@{PPoly$<$ Real $>$}}
+\doxysubsubsection{\texorpdfstring{integral()}{integral()}}
+{\footnotesize\ttfamily template$<$typename Real $>$ \\
+Real \mbox{\hyperlink{classPPoly}{PPoly}}$<$ Real $>$\+::integral (\begin{DoxyParamCaption}\item[{Real}]{a,  }\item[{Real}]{b }\end{DoxyParamCaption}) const}
+
+
+
+The function return the value of the integral of the polynomial at a given interval. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em a} & The left boundary of the integral \\
+\hline
+{\em b} & The right boundary of the integral \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Real $ \int_{a}^{b} p(x) dx $ 
+\end{DoxyReturn}
+integrate the polynomial from a to b.
+
+Not implemented yet.\mbox{\Hypertarget{classPPoly_ae4627065c21a263112bb0f5fd8cdc458}\label{classPPoly_ae4627065c21a263112bb0f5fd8cdc458}} 
+\index{PPoly$<$ Real $>$@{PPoly$<$ Real $>$}!operator()@{operator()}}
+\index{operator()@{operator()}!PPoly$<$ Real $>$@{PPoly$<$ Real $>$}}
+\doxysubsubsection{\texorpdfstring{operator()()}{operator()()}}
+{\footnotesize\ttfamily template$<$typename Real $>$ \\
+Real \mbox{\hyperlink{classPPoly}{PPoly}}$<$ Real $>$\+::operator() (\begin{DoxyParamCaption}\item[{Real}]{x }\end{DoxyParamCaption}) const}
+
+
+
+The function return the value of the polynomial at a given point. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em x} & the x value \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Real $ p(x) $ 
+\end{DoxyReturn}
+First find the interval that x belongs to. Then use the Horner\textquotesingle{}s method to calculate the value of the polynomial.
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+include/\mbox{\hyperlink{PPoly_8hpp}{PPoly.\+hpp}}\item 
+include/\mbox{\hyperlink{PPoly_8tpp}{PPoly.\+tpp}}\end{DoxyCompactItemize}
