@@ -22,6 +22,7 @@
 #include <vector>
 
 #define EIGEN_USE_THREADS
+#define EIGEN_USE_LAPACKE
 
 // using Real = double;
 
@@ -53,13 +54,13 @@ public:
     BSpline(const BSpline &other);
 
     int
-    get_interval(const Real x) const;
+    get_interval(const Real &x) const;
 
     BSpline &
     operator=(const BSpline &other);
 
     Real
-    operator()(const Real x);
+    operator()(const Real &x);
 
     std::vector<Real>
     get_coeffs() const;
@@ -71,22 +72,22 @@ public:
     get_n() const;
 
     std::vector<Real>
-    get_basis(const Real x);
+    get_basis(const Real &x);
 
     void
-    get_total_basis(const Real x);
+    get_total_basis(const Real &x);
 
     Real
-    cal_derivative_basis(const int interval,
-                         const int j,
-                         const int degree,
-                         const int n);
+    cal_derivative_basis(const int &interval,
+                         const int &j,
+                         const int &degree,
+                         const int &n);
 
     std::vector<Real>
-    basis_derivative(const Real x, const int n);
+    basis_derivative(const Real &x, const int &n);
 
     Real
-    derivative(const Real x, const int n);
+    derivative(const Real &x, const int &n);
 };
 
 #include "BSpline.tpp"

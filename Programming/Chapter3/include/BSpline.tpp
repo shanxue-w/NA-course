@@ -62,6 +62,8 @@ BSpline<Real>::BSpline(std::vector<Real> coeffs,
     }
 }
 
+
+
 template <typename Real>
 BSpline<Real>::BSpline(const BSpline &other)
     : _coeffs(other._coeffs), _t(other._t), _basis(other._basis),
@@ -78,7 +80,7 @@ BSpline<Real>::BSpline(const BSpline &other)
  */
 template <typename Real>
 int
-BSpline<Real>::get_interval(const Real x) const
+BSpline<Real>::get_interval(const Real &x) const
 {
     int begin_idx = _n - 1;
     int end_idx   = _t.size() - _n;
@@ -106,7 +108,7 @@ BSpline<Real>::get_interval(const Real x) const
 
 template <typename Real>
 Real
-BSpline<Real>::operator()(const Real x)
+BSpline<Real>::operator()(const Real &x)
 {
     int interval = get_interval(x);
     if (interval == -1)
@@ -127,7 +129,7 @@ BSpline<Real>::operator()(const Real x)
 
 template <typename Real>
 std::vector<Real>
-BSpline<Real>::get_basis(const Real x)
+BSpline<Real>::get_basis(const Real &x)
 {
     int interval = get_interval(x);
     if (interval == -1)
@@ -145,8 +147,8 @@ BSpline<Real>::get_basis(const Real x)
     // Calculate basis functions using a single array
     for (int k = 1; k <= _n; ++k)
     {
-        for (int j = k; j >= 0;
-             --j) // Reverse order to use previous row values directly
+        for (int j = k; j >= 0; --j)
+        // Reverse order to use previous row values directly
         {
             Real left = (j == 0)
                             ? Real(0)
@@ -203,7 +205,7 @@ BSpline<Real>::get_n() const
 // std::vector<std::vector<Real>>
 template <typename Real>
 void
-BSpline<Real>::get_total_basis(const Real x)
+BSpline<Real>::get_total_basis(const Real &x)
 {
     int interval = get_interval(x);
     if (interval == -1)
@@ -235,10 +237,10 @@ BSpline<Real>::get_total_basis(const Real x)
 
 template <typename Real>
 Real
-BSpline<Real>::cal_derivative_basis(const int interval,
-                                    const int j,
-                                    const int degree,
-                                    const int n)
+BSpline<Real>::cal_derivative_basis(const int &interval,
+                                    const int &j,
+                                    const int &degree,
+                                    const int &n)
 {
     if (n == 0)
     {
@@ -289,7 +291,7 @@ BSpline<Real>::cal_derivative_basis(const int interval,
 
 template <typename Real>
 std::vector<Real>
-BSpline<Real>::basis_derivative(const Real x, const int n)
+BSpline<Real>::basis_derivative(const Real &x, const int &n)
 {
     int interval = get_interval(x);
     if (interval == -1)
@@ -313,7 +315,7 @@ BSpline<Real>::basis_derivative(const Real x, const int n)
 
 template <typename Real>
 Real
-BSpline<Real>::derivative(const Real x, const int n)
+BSpline<Real>::derivative(const Real &x, const int &n)
 {
     if (n > _n)
     {

@@ -13,8 +13,10 @@
 #define BINTERPOLATE_HPP
 
 #include "BSpline.hpp"
+#include <json/json.h>
 
 #define EIGEN_USE_THREADS
+#define EIGEN_USE_LAPACKE
 
 template <int N, typename Real = double>
 class BInterpolate
@@ -54,6 +56,8 @@ public:
         const int               &method             = 0,
         const std::vector<Real> &boundary_condition = std::vector<Real>(N, 0.0),
         const int                check              = 0);
+
+    BInterpolate(const Json::Value &json); // load from json file
 
     void
     interpolate(const std::vector<Real> &t,

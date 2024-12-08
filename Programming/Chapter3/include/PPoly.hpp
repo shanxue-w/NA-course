@@ -21,6 +21,7 @@
 #include <vector>
 
 #define EIGEN_USE_THREADS
+#define EIGEN_USE_LAPACKE
 
 /**
  * @brief The definition of the class PPoly, which is a polynomial class.

@@ -6,16 +6,21 @@
 int
 main(void)
 {
-    int                 Max = 100;
-    std::vector<double> x(Max);
-    std::vector<double> y(Max);
+    int Max = 50;
+    mpf_set_default_prec(3000);
+    std::vector<mpf_class> x(Max);
+    std::vector<mpf_class> y(Max);
+    std::vector<mpf_class> boundary_conditions = {
+        -1.0, 2.0, -6.0, 24.0, -120.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0};
     for (int i = 0; i < Max; i++)
     {
-        x[i] = 2 * M_PI * double(i) / (double)(Max - 1);
-        y[i] = sin(x[i]);
+        x[i] = i * i;
+        y[i] = i;
     }
-    PPInterpolate<3, double> inter(x, y, 0);
-    for (double i = 0; i < 2 * M_PI; i += 0.001)
+
+    PPInterpolate<4, mpf_class> inter(x, y, 0, boundary_conditions);
+    PPoly<mpf_class>            poly = inter.getPoly();
+    for (double i = 0; i < Max; i += 0.01)
     {
         std::cout << i << "," << inter(i) << std::endl;
     }
@@ -77,4 +82,11 @@ main(void)
 //               << std::endl;
 //   }
 //   return 0;
+// }
+
+// #include "Curve.hpp"
+
+// int
+// main(void)
+// {
 // }

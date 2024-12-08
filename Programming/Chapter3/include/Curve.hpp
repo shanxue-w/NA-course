@@ -12,9 +12,7 @@
 #ifndef CURVE_HPP
 #define CURVE_HPP
 
-#include "BInterpolate.hpp"
-#include "BSpline.hpp"
-#include "PPInterpolate.hpp"
+#include "BallFunction.hpp"
 
 template <int N, typename Real = double> // N is the order of the curve and Real
                                          // is the type of the coefficients
@@ -33,6 +31,18 @@ public:
           const int                             method = 0,
           const std::vector<std::vector<Real>> &boundary_condition =
               std::vector<std::vector<Real>>());
+    Real
+    SQRT(const Real &x) const; // the square root function
+    Real
+    ARCSIN(const Real &x) const; // the arcsin function
+    Real
+    ARCCOS(const Real &x) const; // the arccos function
+    Real
+    ARCTAN(const Real &x) const; // the arctan function
+    Real
+    SIN(const Real &x) const; // the sin function
+    Real
+    COS(const Real &x) const; // the cos function
 
     std::vector<BSpline<Real>>
     BSpline2d() const; // Use BSpline to interpolate
@@ -40,6 +50,9 @@ public:
     std::vector<BSpline<Real>>
     BSpline3d() const; // Use BSpline to interpolate
                        // the curve in 3D
+    BallFunction<Real>
+    BSplineBall() const; // Use BSpline to interpolate
+                         // the curve in the surface of a ball
 
     std::vector<PPoly<Real>>
     PPoly2d() const; // Use PPoly to interpolate
@@ -47,6 +60,8 @@ public:
     std::vector<PPoly<Real>>
     PPoly3d() const; // Use PPoly to interpolate
                      // the curve in 3D
+    BallFunction<Real>
+    PPolyBall() const; // Use PPoly to interpolate
 };
 
 #include "Curve.tpp"

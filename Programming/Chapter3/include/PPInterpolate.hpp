@@ -13,8 +13,11 @@
 #define PPINTERPOLATE_HPP
 
 #include "PPoly.hpp"
+#include <json/json.h>
+#include <type_traits>
 
 #define EIGEN_USE_THREADS
+#define EIGEN_USE_LAPACKE
 
 template <int N, typename Real = double> // N is the order of the polynomial and
                                          // Real is the type of the coefficients
@@ -56,6 +59,8 @@ public:
         const int                method             = 0,
         const std::vector<Real> &boundary_condition = std::vector<Real>(N, 0.0),
         const int                check              = 0);
+
+    PPInterpolate(const Json::Value &json); // load from json file
 
     void
     interpolate(

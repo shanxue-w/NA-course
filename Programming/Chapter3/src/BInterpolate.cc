@@ -99,7 +99,6 @@ BInterpolate<2, double>::interpolate(
 {
     if (method == 0)
     {
-
         /**
          *@brief Periodic boundary condition.
          *

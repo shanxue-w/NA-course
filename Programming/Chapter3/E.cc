@@ -136,6 +136,26 @@ runC(int N)
         fout << px(x) << "," << py(x) << "," << pz(x) << std::endl;
     }
     fout.close();
+
+    auto bsplineball = curve.BSplineBall();
+    filename         = "./result/E_3_Ball" + std::to_string(N) + ".txt";
+    fout.open(filename);
+    for (double x = 0.0; x <= 2 * M_PI; x += 0.001)
+    {
+        std::vector<double> p = bsplineball(x);
+        fout << p[0] << "," << p[1] << "," << p[2] << std::endl;
+    }
+    fout.close();
+
+    auto ppolyball = curve.PPolyBall();
+    filename       = "./result/E_3_PPBall" + std::to_string(N) + ".txt";
+    fout.open(filename);
+    for (double x = 0.0; x <= 2 * M_PI; x += 0.001)
+    {
+        std::vector<double> p = ppolyball(x);
+        fout << p[0] << "," << p[1] << "," << p[2] << std::endl;
+    }
+    fout.close();
     return;
 }
 

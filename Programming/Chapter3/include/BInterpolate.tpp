@@ -46,6 +46,70 @@ BInterpolate<N, Real>::BInterpolate(const std::vector<Real> &t,
 }
 
 template <int N, typename Real>
+BInterpolate<N, Real>::BInterpolate(const Json::Value &json)
+{
+    _bspline = BSpline<Real>();
+    // load from json file
+    _method   = json.isMember("method") ? json["method"].asInt() : 0;
+    int check = json.isMember("check") ? json["check"].asInt() : 0;
+
+    if (json.isMember("t"))
+    {
+        const Json::Value &t_json = json["t"];
+        for (auto &t : t_json)
+        {
+            _t.push_back(Real(t.asDouble()));
+        }
+    }
+    if (json.isMember("y"))
+    {
+        const Json::Value &y_json = json["y"];
+        for (auto &y : y_json)
+        {
+            _y.push_back(Real(y.asDouble()));
+        }
+    }
+    if (json.isMember("boundary_condition"))
+    {
+        const Json::Value &boundary_condition_json = json["boundary_condition"];
+        for (auto &boundary_condition : boundary_condition_json)
+        {
+            _boundary_condition.push_back(Real(boundary_condition.asDouble()));
+        }
+    }
+    else
+    {
+        _boundary_condition = std::vector<Real>(N, 0.0);
+    }
+
+    if (check == 1)
+    {
+        if (!std::is_sorted(_t.begin(), _t.end()))
+        {
+            std::vector<Real> t      = _t;
+            std::vector<Real> y      = _y;
+            int               t_size = t.size();
+            std::vector<int>  idx(t_size);
+
+            for (int i = 0; i < t_size; ++i)
+            {
+                idx[i] = i;
+            }
+            std::sort(idx.begin(),
+                      idx.end(),
+                      [&](int i, int j) { return t[i] < t[j]; });
+
+            for (int i = 0; i < t_size; ++i)
+            {
+                _t[i] = t[idx[i]];
+                _y[i] = y[idx[i]];
+            }
+        }
+    }
+    interpolate(_t, _y, _method, _boundary_condition);
+}
+
+template <int N, typename Real>
 void
 BInterpolate<N, Real>::interpolate(
     const std::vector<Real> &t,

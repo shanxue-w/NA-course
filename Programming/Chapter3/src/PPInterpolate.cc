@@ -14,10 +14,10 @@
 
 template <>
 PPInterpolate<1, double>::PPInterpolate(
-    const std::vector<double> &t, // nodes
-    const std::vector<double> &y, // values
-    const int method, // 0 for periodic, 1 for complete, 2 for natural, 3 for
-                      // not-a-knot.
+    const std::vector<double> &t,      // nodes
+    const std::vector<double> &y,      // values
+    const int                  method, // 0 for periodic, 1 for complete, 2 for natural, 3 for
+                                       // not-a-knot.
     const std::vector<double> &boundary_condition,
     const int                  check) // whether to check the order of t
     : _t(t), _y(y), _method(method), _boundary_condition(boundary_condition)
@@ -33,9 +33,7 @@ PPInterpolate<1, double>::PPInterpolate(
             {
                 idx[i] = i;
             }
-            std::sort(idx.begin(),
-                      idx.end(),
-                      [&](int i, int j) { return t[i] < t[j]; });
+            std::sort(idx.begin(), idx.end(), [&](int i, int j) { return t[i] < t[j]; });
             // std::vector<Real> t_sorted(t.size()), y_sorted(t.size());
 
             for (size_t i = 0; i < t.size(); ++i)
@@ -51,10 +49,10 @@ PPInterpolate<1, double>::PPInterpolate(
 template <>
 void
 PPInterpolate<1, double>::interpolate(
-    const std::vector<double> &t, // nodes
-    const std::vector<double> &y, // values
-    const int method, // 0 for periodic, 1 for complete, 2 for natural, 3 for
-                      // not-a-knot.
+    const std::vector<double> &t,      // nodes
+    const std::vector<double> &y,      // values
+    const int                  method, // 0 for periodic, 1 for complete, 2 for natural, 3 for
+                                       // not-a-knot.
     const std::vector<double> &boundary_condition) // boundary condition
 {
     // unused variable, how to solve it.
@@ -72,10 +70,10 @@ PPInterpolate<1, double>::interpolate(
 
 template <>
 PPInterpolate<2, double>::PPInterpolate(
-    const std::vector<double> &t, // nodes
-    const std::vector<double> &y, // values
-    const int method, // 0 for periodic, 1 for complete, 2 for natural, 3 for
-                      // not-a-knot.
+    const std::vector<double> &t,      // nodes
+    const std::vector<double> &y,      // values
+    const int                  method, // 0 for periodic, 1 for complete, 2 for natural, 3 for
+                                       // not-a-knot.
     const std::vector<double> &boundary_condition,
     const int                  check) // whether to check the order of t
     : _t(t), _y(y), _method(method), _boundary_condition(boundary_condition)
@@ -91,9 +89,7 @@ PPInterpolate<2, double>::PPInterpolate(
             {
                 idx[i] = i;
             }
-            std::sort(idx.begin(),
-                      idx.end(),
-                      [&](int i, int j) { return t[i] < t[j]; });
+            std::sort(idx.begin(), idx.end(), [&](int i, int j) { return t[i] < t[j]; });
             // std::vector<Real> t_sorted(t.size()), y_sorted(t.size());
 
             for (size_t i = 0; i < t.size(); ++i)
@@ -109,10 +105,10 @@ PPInterpolate<2, double>::PPInterpolate(
 template <>
 void
 PPInterpolate<2, double>::interpolate(
-    const std::vector<double> &t, // nodes
-    const std::vector<double> &y, // values
-    const int method, // 0 for periodic, 1 for complete, 2 for natural, 3 for
-                      // not-a-knot.
+    const std::vector<double> &t,      // nodes
+    const std::vector<double> &y,      // values
+    const int                  method, // 0 for periodic, 1 for complete, 2 for natural, 3 for
+                                       // not-a-knot.
     const std::vector<double> &boundary_condition) // boundary condition
 {
     switch (method)
@@ -130,8 +126,7 @@ PPInterpolate<2, double>::interpolate(
         Eigen::SparseMatrix<double> A(t_size, t_size);
         Eigen::VectorXd             b = Eigen::VectorXd::Zero(t_size);
 
-        std::vector<Eigen::Triplet<double>>
-            triplets; // For batch insertion into the sparse matrix
+        std::vector<Eigen::Triplet<double>> triplets; // For batch insertion into the sparse matrix
 
         for (int i = 0; i < t_size - 1; i++)
         {
@@ -152,8 +147,7 @@ PPInterpolate<2, double>::interpolate(
         solver.factorize(A);
         Eigen::VectorXd c = solver.solve(b);
 
-        std::vector<std::vector<double>> coeffs(t_size - 1,
-                                                std::vector<double>(3, 0));
+        std::vector<std::vector<double>> coeffs(t_size - 1, std::vector<double>(3, 0));
 
         for (int i = 0; i < t_size - 1; ++i)
         {
@@ -184,8 +178,7 @@ PPInterpolate<2, double>::interpolate(
             c[i] = 2 * K_i[i - 1] - c[i - 1];
         }
 
-        std::vector<std::vector<double>> coeffs(t_size - 1,
-                                                std::vector<double>(3, 0));
+        std::vector<std::vector<double>> coeffs(t_size - 1, std::vector<double>(3, 0));
 
         for (int i = 0; i < t_size - 1; ++i)
         {
@@ -208,10 +201,10 @@ PPInterpolate<2, double>::interpolate(
 
 template <>
 PPInterpolate<3, double>::PPInterpolate(
-    const std::vector<double> &t, // nodes
-    const std::vector<double> &y, // values
-    const int method, // 0 for periodic, 1 for complete, 2 for natural, 3 for
-                      // not-a-knot.
+    const std::vector<double> &t,      // nodes
+    const std::vector<double> &y,      // values
+    const int                  method, // 0 for periodic, 1 for complete, 2 for natural, 3 for
+                                       // not-a-knot.
     const std::vector<double> &boundary_condition,
     const int                  check) // whether to check the order of t
     : _t(t), _y(y), _method(method), _boundary_condition(boundary_condition)
@@ -227,9 +220,7 @@ PPInterpolate<3, double>::PPInterpolate(
             {
                 idx[i] = i;
             }
-            std::sort(idx.begin(),
-                      idx.end(),
-                      [&](int i, int j) { return t[i] < t[j]; });
+            std::sort(idx.begin(), idx.end(), [&](int i, int j) { return t[i] < t[j]; });
             // std::vector<Real> t_sorted(t.size()), y_sorted(t.size());
 
             for (size_t i = 0; i < t.size(); ++i)
@@ -245,10 +236,10 @@ PPInterpolate<3, double>::PPInterpolate(
 template <>
 void
 PPInterpolate<3, double>::interpolate(
-    const std::vector<double> &t, // nodes
-    const std::vector<double> &y, // values
-    const int method, // 0 for periodic, 1 for complete, 2 for natural, 3 for
-                      // not-a-knot.
+    const std::vector<double> &t,      // nodes
+    const std::vector<double> &y,      // values
+    const int                  method, // 0 for periodic, 1 for complete, 2 for natural, 3 for
+                                       // not-a-knot.
     const std::vector<double> &boundary_condition) // boundary condition
 {
     switch (method)
@@ -314,8 +305,7 @@ PPInterpolate<3, double>::interpolate(
         Eigen::SparseMatrix<double> A(t_size, t_size);
         Eigen::VectorXd             b = Eigen::VectorXd::Zero(t_size);
 
-        std::vector<Eigen::Triplet<double>>
-            triplets; // For batch insertion into the sparse matrix
+        std::vector<Eigen::Triplet<double>> triplets; // For batch insertion into the sparse matrix
         triplets.reserve(4 * (t_size - 2));
 
         // Precompute mu_i and lambda_i to avoid redundant calculations
@@ -340,8 +330,7 @@ PPInterpolate<3, double>::interpolate(
 
         // Boundary condition handling for the last row
         triplets.push_back(Eigen::Triplet<double>(t_size - 2, 0, 1.0));
-        triplets.push_back(
-            Eigen::Triplet<double>(t_size - 2, t_size - 1, -1.0));
+        triplets.push_back(Eigen::Triplet<double>(t_size - 2, t_size - 1, -1.0));
         b(t_size - 2) = 0.0;
 
         // Boundary condition for the last element in A and b
@@ -349,10 +338,8 @@ PPInterpolate<3, double>::interpolate(
         double dt_n = t[t_size - 1] - t[t_size - 2];
         triplets.push_back(Eigen::Triplet<double>(t_size - 1, 0, 4.0 / dt_0));
         triplets.push_back(Eigen::Triplet<double>(t_size - 1, 1, 2.0 / dt_0));
-        triplets.push_back(
-            Eigen::Triplet<double>(t_size - 1, t_size - 2, 2.0 / dt_n));
-        triplets.push_back(
-            Eigen::Triplet<double>(t_size - 1, t_size - 1, 4.0 / dt_n));
+        triplets.push_back(Eigen::Triplet<double>(t_size - 1, t_size - 2, 2.0 / dt_n));
+        triplets.push_back(Eigen::Triplet<double>(t_size - 1, t_size - 1, 4.0 / dt_n));
 
         b(t_size - 1) = (6.0 * K_i[t_size - 2] / dt_n + 6.0 * K_i[0] / dt_0);
 
@@ -365,8 +352,7 @@ PPInterpolate<3, double>::interpolate(
         Eigen::VectorXd c = solver.solve(b);
 
         // Prepare the cubic spline coefficients
-        std::vector<std::vector<double>> coeffs(t_size - 1,
-                                                std::vector<double>(4, 0));
+        std::vector<std::vector<double>> coeffs(t_size - 1, std::vector<double>(4, 0));
 
         for (int i = 0; i < t_size - 1; ++i)
         {
@@ -398,8 +384,8 @@ PPInterpolate<3, double>::interpolate(
         }
 
         // init SparseMatrix A and Vector b
-        Eigen::SparseMatrix<double> A(t_size - 2, t_size - 2);
-        Eigen::VectorXd             b = Eigen::VectorXd::Zero(t_size - 2);
+        Eigen::SparseMatrix<double>         A(t_size - 2, t_size - 2);
+        Eigen::VectorXd                     b = Eigen::VectorXd::Zero(t_size - 2);
         std::vector<Eigen::Triplet<double>> triplets;
         triplets.reserve(3 * (t_size - 2));
 
@@ -438,8 +424,7 @@ PPInterpolate<3, double>::interpolate(
         Eigen::VectorXd c = solver.solve(b);
 
         // 构建多项式系数
-        std::vector<std::vector<double>> coeffs(t_size - 1,
-                                                std::vector<double>(4, 0));
+        std::vector<std::vector<double>> coeffs(t_size - 1, std::vector<double>(4, 0));
 
         for (int i = 0; i < t_size - 1; ++i)
         {
@@ -449,10 +434,8 @@ PPInterpolate<3, double>::interpolate(
             if (i == 0)
             {
                 coeffs[i][1] = boundary_condition[0];
-                coeffs[i][2] =
-                    (3 * K_i[i] - 2 * boundary_condition[0] - c(0)) / tmp;
-                coeffs[i][3] =
-                    (boundary_condition[0] - 2 * K_i[i] + c(0)) / (tmp * tmp);
+                coeffs[i][2] = (3 * K_i[i] - 2 * boundary_condition[0] - c(0)) / tmp;
+                coeffs[i][3] = (boundary_condition[0] - 2 * K_i[i] + c(0)) / (tmp * tmp);
             }
             else if (i < t_size - 2)
             {
@@ -463,10 +446,8 @@ PPInterpolate<3, double>::interpolate(
             else
             {
                 coeffs[i][1] = c(i - 1);
-                coeffs[i][2] =
-                    (3 * K_i[i] - 2 * c(i - 1) - boundary_condition[1]) / tmp;
-                coeffs[i][3] = (c(i - 1) - 2 * K_i[i] + boundary_condition[1])
-                               / (tmp * tmp);
+                coeffs[i][2] = (3 * K_i[i] - 2 * c(i - 1) - boundary_condition[1]) / tmp;
+                coeffs[i][3] = (c(i - 1) - 2 * K_i[i] + boundary_condition[1]) / (tmp * tmp);
             }
         }
 
@@ -539,8 +520,7 @@ PPInterpolate<3, double>::interpolate(
         solver.factorize(A);
         Eigen::VectorXd c = solver.solve(b);
 
-        std::vector<std::vector<double>> coeffs(t.size() - 1,
-                                                std::vector<double>(4, 0));
+        std::vector<std::vector<double>> coeffs(t.size() - 1, std::vector<double>(4, 0));
 
         for (int i = 0; i < t_size - 1; ++i)
         {
@@ -583,10 +563,10 @@ PPInterpolate<3, double>::interpolate(
 
 template <>
 PPInterpolate<1, mpf_class>::PPInterpolate(
-    const std::vector<mpf_class> &t, // nodes
-    const std::vector<mpf_class> &y, // values
-    const int method, // 0 for periodic, 1 for complete, 2 for natural, 3 for
-                      // not-a-knot.
+    const std::vector<mpf_class> &t,      // nodes
+    const std::vector<mpf_class> &y,      // values
+    const int                     method, // 0 for periodic, 1 for complete, 2 for natural, 3 for
+                                          // not-a-knot.
     const std::vector<mpf_class> &boundary_condition,
     const int                     check) // whether to check the order of t
     : _t(t), _y(y), _method(method), _boundary_condition(boundary_condition)
@@ -602,9 +582,7 @@ PPInterpolate<1, mpf_class>::PPInterpolate(
             {
                 idx[i] = i;
             }
-            std::sort(idx.begin(),
-                      idx.end(),
-                      [&](int i, int j) { return t[i] < t[j]; });
+            std::sort(idx.begin(), idx.end(), [&](int i, int j) { return t[i] < t[j]; });
             // std::vector<Real> t_sorted(t.size()), y_sorted(t.size());
 
             for (size_t i = 0; i < t.size(); ++i)
@@ -620,17 +598,16 @@ PPInterpolate<1, mpf_class>::PPInterpolate(
 template <>
 void
 PPInterpolate<1, mpf_class>::interpolate(
-    const std::vector<mpf_class> &t, // nodes
-    const std::vector<mpf_class> &y, // values
-    const int method, // 0 for periodic, 1 for complete, 2 for natural, 3 for
-                      // not-a-knot.
+    const std::vector<mpf_class> &t,      // nodes
+    const std::vector<mpf_class> &y,      // values
+    const int                     method, // 0 for periodic, 1 for complete, 2 for natural, 3 for
+                                          // not-a-knot.
     const std::vector<mpf_class> &boundary_condition) // boundary condition
 {
     // unused variable, how to solve it.
     (void)method;
     (void)boundary_condition;
-    std::vector<std::vector<mpf_class>> A(t.size() - 1,
-                                          std::vector<mpf_class>(2, 0));
+    std::vector<std::vector<mpf_class>> A(t.size() - 1, std::vector<mpf_class>(2, 0));
 
     for (size_t i = 0; i < t.size() - 1; ++i)
     {
@@ -642,10 +619,10 @@ PPInterpolate<1, mpf_class>::interpolate(
 
 template <>
 PPInterpolate<2, mpf_class>::PPInterpolate(
-    const std::vector<mpf_class> &t, // nodes
-    const std::vector<mpf_class> &y, // values
-    const int method, // 0 for periodic, 1 for complete, 2 for natural, 3 for
-                      // not-a-knot.
+    const std::vector<mpf_class> &t,      // nodes
+    const std::vector<mpf_class> &y,      // values
+    const int                     method, // 0 for periodic, 1 for complete, 2 for natural, 3 for
+                                          // not-a-knot.
     const std::vector<mpf_class> &boundary_condition,
     const int                     check) // whether to check the order of t
     : _t(t), _y(y), _method(method), _boundary_condition(boundary_condition)
@@ -661,9 +638,7 @@ PPInterpolate<2, mpf_class>::PPInterpolate(
             {
                 idx[i] = i;
             }
-            std::sort(idx.begin(),
-                      idx.end(),
-                      [&](int i, int j) { return t[i] < t[j]; });
+            std::sort(idx.begin(), idx.end(), [&](int i, int j) { return t[i] < t[j]; });
             // std::vector<Real> t_sorted(t.size()), y_sorted(t.size());
 
             for (size_t i = 0; i < t.size(); ++i)
@@ -679,10 +654,10 @@ PPInterpolate<2, mpf_class>::PPInterpolate(
 template <>
 void
 PPInterpolate<2, mpf_class>::interpolate(
-    const std::vector<mpf_class> &t, // nodes
-    const std::vector<mpf_class> &y, // values
-    const int method, // 0 for periodic, 1 for complete, 2 for natural, 3 for
-                      // not-a-knot.
+    const std::vector<mpf_class> &t,      // nodes
+    const std::vector<mpf_class> &y,      // values
+    const int                     method, // 0 for periodic, 1 for complete, 2 for natural, 3 for
+                                          // not-a-knot.
     const std::vector<mpf_class> &boundary_condition) // boundary condition
 {
     switch (method)
@@ -714,8 +689,7 @@ PPInterpolate<2, mpf_class>::interpolate(
             }
         }
         triplets.push_back(Eigen::Triplet<mpf_class>(t_size - 1, 0, 1));
-        triplets.push_back(
-            Eigen::Triplet<mpf_class>(t_size - 1, t_size - 1, -1));
+        triplets.push_back(Eigen::Triplet<mpf_class>(t_size - 1, t_size - 1, -1));
         b(t_size - 1) = 0;
         A.setFromTriplets(triplets.begin(), triplets.end());
 
@@ -725,8 +699,7 @@ PPInterpolate<2, mpf_class>::interpolate(
         // Eigen::VectorXd c = solver.solve(b);
         Eigen::Matrix<mpf_class, Eigen::Dynamic, 1> c = solver.solve(b);
 
-        std::vector<std::vector<mpf_class>> coeffs(
-            t_size - 1, std::vector<mpf_class>(3, 0));
+        std::vector<std::vector<mpf_class>> coeffs(t_size - 1, std::vector<mpf_class>(3, 0));
 
         for (int i = 0; i < t_size - 1; ++i)
         {
@@ -757,8 +730,7 @@ PPInterpolate<2, mpf_class>::interpolate(
             c[i] = 2 * K_i[i - 1] - c[i - 1];
         }
 
-        std::vector<std::vector<mpf_class>> coeffs(
-            t_size - 1, std::vector<mpf_class>(3, 0));
+        std::vector<std::vector<mpf_class>> coeffs(t_size - 1, std::vector<mpf_class>(3, 0));
 
         for (int i = 0; i < t_size - 1; ++i)
         {
@@ -781,10 +753,10 @@ PPInterpolate<2, mpf_class>::interpolate(
 
 template <>
 PPInterpolate<3, mpf_class>::PPInterpolate(
-    const std::vector<mpf_class> &t, // nodes
-    const std::vector<mpf_class> &y, // values
-    const int method, // 0 for periodic, 1 for complete, 2 for natural, 3 for
-                      // not-a-knot.
+    const std::vector<mpf_class> &t,      // nodes
+    const std::vector<mpf_class> &y,      // values
+    const int                     method, // 0 for periodic, 1 for complete, 2 for natural, 3 for
+                                          // not-a-knot.
     const std::vector<mpf_class> &boundary_condition,
     const int                     check) // whether to check the order of t
     : _t(t), _y(y), _method(method), _boundary_condition(boundary_condition)
@@ -800,9 +772,7 @@ PPInterpolate<3, mpf_class>::PPInterpolate(
             {
                 idx[i] = i;
             }
-            std::sort(idx.begin(),
-                      idx.end(),
-                      [&](int i, int j) { return t[i] < t[j]; });
+            std::sort(idx.begin(), idx.end(), [&](int i, int j) { return t[i] < t[j]; });
             // std::vector<Real> t_sorted(t.size()), y_sorted(t.size());
 
             for (size_t i = 0; i < t.size(); ++i)
@@ -818,10 +788,10 @@ PPInterpolate<3, mpf_class>::PPInterpolate(
 template <>
 void
 PPInterpolate<3, mpf_class>::interpolate(
-    const std::vector<mpf_class> &t, // nodes
-    const std::vector<mpf_class> &y, // values
-    const int method, // 0 for periodic, 1 for complete, 2 for natural, 3 for
-                      // not-a-knot.
+    const std::vector<mpf_class> &t,      // nodes
+    const std::vector<mpf_class> &y,      // values
+    const int                     method, // 0 for periodic, 1 for complete, 2 for natural, 3 for
+                                          // not-a-knot.
     const std::vector<mpf_class> &boundary_condition) // boundary condition
 {
     switch (method)
@@ -842,18 +812,16 @@ PPInterpolate<3, mpf_class>::interpolate(
         // Eigen::VectorXd             b = Eigen::VectorXd::Zero(t_size);
         Eigen::Matrix<mpf_class, Eigen::Dynamic, 1> b(t_size);
 
-        std::vector<Eigen::Triplet<mpf_class>>
-            triplets; // For batch insertion into the sparse matrix
+        // For batch insertion into the sparse matrix
+        std::vector<Eigen::Triplet<mpf_class>> triplets;
         triplets.reserve(4 * (t_size - 2));
 
         // Precompute mu_i and lambda_i to avoid redundant calculations
 
         for (int i = 0; i < t_size - 2; ++i)
         {
-            mpf_class dt_i     = t[i + 2] - t[i + 1];
-            mpf_class dt_im1   = t[i + 1] - t[i];
-            mpf_class mu_i     = dt_im1 / dt_i;
-            mpf_class lambda_i = dt_i / dt_im1;
+            mpf_class mu_i     = (t[i + 1] - t[i]) / (t[i + 2] - t[i]);
+            mpf_class lambda_i = (t[i + 2] - t[i + 1]) / (t[i + 2] - t[i]);
 
             b(i) = 3 * (mu_i * K_i[i + 1] + lambda_i * K_i[i]);
 
@@ -870,21 +838,16 @@ PPInterpolate<3, mpf_class>::interpolate(
 
         // Boundary condition handling for the last row
         triplets.push_back(Eigen::Triplet<mpf_class>(t_size - 2, 0, 1.0));
-        triplets.push_back(
-            Eigen::Triplet<mpf_class>(t_size - 2, t_size - 1, -1.0));
+        triplets.push_back(Eigen::Triplet<mpf_class>(t_size - 2, t_size - 1, -1.0));
         b(t_size - 2) = 0.0;
 
         // Boundary condition for the last element in A and b
         mpf_class dt_0 = t[1] - t[0];
         mpf_class dt_n = t[t_size - 1] - t[t_size - 2];
-        triplets.push_back(
-            Eigen::Triplet<mpf_class>(t_size - 1, 0, 4.0 / dt_0));
-        triplets.push_back(
-            Eigen::Triplet<mpf_class>(t_size - 1, 1, 2.0 / dt_0));
-        triplets.push_back(
-            Eigen::Triplet<mpf_class>(t_size - 1, t_size - 2, 2.0 / dt_n));
-        triplets.push_back(
-            Eigen::Triplet<mpf_class>(t_size - 1, t_size - 1, 4.0 / dt_n));
+        triplets.push_back(Eigen::Triplet<mpf_class>(t_size - 1, 0, 4.0 / dt_0));
+        triplets.push_back(Eigen::Triplet<mpf_class>(t_size - 1, 1, 2.0 / dt_0));
+        triplets.push_back(Eigen::Triplet<mpf_class>(t_size - 1, t_size - 2, 2.0 / dt_n));
+        triplets.push_back(Eigen::Triplet<mpf_class>(t_size - 1, t_size - 1, 4.0 / dt_n));
 
         b(t_size - 1) = (6.0 * K_i[t_size - 2] / dt_n + 6.0 * K_i[0] / dt_0);
 
@@ -898,8 +861,7 @@ PPInterpolate<3, mpf_class>::interpolate(
         Eigen::Matrix<mpf_class, Eigen::Dynamic, 1> c = solver.solve(b);
 
         // Prepare the cubic spline coefficients
-        std::vector<std::vector<mpf_class>> coeffs(
-            t_size - 1, std::vector<mpf_class>(4, 0));
+        std::vector<std::vector<mpf_class>> coeffs(t_size - 1, std::vector<mpf_class>(4, 0));
 
         for (int i = 0; i < t_size - 1; ++i)
         {
@@ -970,8 +932,7 @@ PPInterpolate<3, mpf_class>::interpolate(
         Eigen::Matrix<mpf_class, Eigen::Dynamic, 1> c = solver.solve(b);
 
         // 构建多项式系数
-        std::vector<std::vector<mpf_class>> coeffs(
-            t_size - 1, std::vector<mpf_class>(4, 0));
+        std::vector<std::vector<mpf_class>> coeffs(t_size - 1, std::vector<mpf_class>(4, 0));
 
         for (int i = 0; i < t_size - 1; ++i)
         {
@@ -981,10 +942,8 @@ PPInterpolate<3, mpf_class>::interpolate(
             if (i == 0)
             {
                 coeffs[i][1] = boundary_condition[0];
-                coeffs[i][2] =
-                    (3 * K_i[i] - 2 * boundary_condition[0] - c(0)) / tmp;
-                coeffs[i][3] =
-                    (boundary_condition[0] - 2 * K_i[i] + c(0)) / (tmp * tmp);
+                coeffs[i][2] = (3 * K_i[i] - 2 * boundary_condition[0] - c(0)) / tmp;
+                coeffs[i][3] = (boundary_condition[0] - 2 * K_i[i] + c(0)) / (tmp * tmp);
             }
             else if (i < t_size - 2)
             {
@@ -995,10 +954,8 @@ PPInterpolate<3, mpf_class>::interpolate(
             else
             {
                 coeffs[i][1] = c(i - 1);
-                coeffs[i][2] =
-                    (3 * K_i[i] - 2 * c(i - 1) - boundary_condition[1]) / tmp;
-                coeffs[i][3] = (c(i - 1) - 2 * K_i[i] + boundary_condition[1])
-                               / (tmp * tmp);
+                coeffs[i][2] = (3 * K_i[i] - 2 * c(i - 1) - boundary_condition[1]) / tmp;
+                coeffs[i][3] = (c(i - 1) - 2 * K_i[i] + boundary_condition[1]) / (tmp * tmp);
             }
         }
 
@@ -1073,8 +1030,7 @@ PPInterpolate<3, mpf_class>::interpolate(
         // Eigen::VectorXd c = solver.solve(b);
         Eigen::Matrix<mpf_class, Eigen::Dynamic, 1> c = solver.solve(b);
 
-        std::vector<std::vector<mpf_class>> coeffs(
-            t.size() - 1, std::vector<mpf_class>(4, 0));
+        std::vector<std::vector<mpf_class>> coeffs(t.size() - 1, std::vector<mpf_class>(4, 0));
 
         for (int i = 0; i < t_size - 1; ++i)
         {
@@ -1090,9 +1046,9 @@ PPInterpolate<3, mpf_class>::interpolate(
             else if (i < t_size - 2)
             {
                 mpf_class tmp = t[i + 1] - t[i];
-                coeffs[i][1] = K_i[i] - 1.0 / 6.0 * (c(i) + 2 * c(i - 1)) * tmp;
-                coeffs[i][2] = c(i - 1) / 2.0;
-                coeffs[i][3] = (c(i) - c(i - 1)) / (6.0 * tmp);
+                coeffs[i][1]  = K_i[i] - 1.0 / 6.0 * (c(i) + 2 * c(i - 1)) * tmp;
+                coeffs[i][2]  = c(i - 1) / 2.0;
+                coeffs[i][3]  = (c(i) - c(i - 1)) / (6.0 * tmp);
             }
             else
             {

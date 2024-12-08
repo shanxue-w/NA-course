@@ -25,7 +25,12 @@ PPoly<Real>::PPoly(const std::vector<std::vector<Real>> &coeffs,
 {
     /**
      * make sure the t is sorted, and the size of t is equal to the size of
-     * coeffs. coeffs is corresponding to the interval [t[i], t[i+1]], so when
+     * coeffs. coeffs is correspond
+     * 0
+     *
+     *
+     *
+     * ing to the interval [t[i], t[i+1]], so when
      * sorting t, the coeffs should be sorted too.
      *
      */
