@@ -15,7 +15,7 @@ INCLUDE_DIRS = $(shell find $(INCLUDE_DIR) -type d)
 INCLUDE_FLAGS = $(patsubst %,-I%,$(INCLUDE_DIRS))
 ADDRESS_FLAG = -fsanitize=address
 
-CXXFLAGS = $(INCLUDE_FLAGS) $(GMP_FLAX) $(EIGEN_FLAX) $(JSONCPP_FLAX) -std=c++17 -Wall -Wextra -Werror -pedantic -O2 -fuse-linker-plugin -mavx -mfma -march=native -fPIC -funroll-loops -fprefetch-loop-arrays -fomit-frame-pointer -fopenmp 
+CXXFLAGS = $(INCLUDE_FLAGS) $(GMP_FLAX) $(EIGEN_FLAX) $(JSONCPP_FLAX) -std=c++17 -Wall -Wextra -Werror -pedantic -O3 -fuse-linker-plugin -mavx -mfma -march=native -fPIC -funroll-loops -fprefetch-loop-arrays -fomit-frame-pointer -fopenmp 
 
 SRC_FILES = $(shell find $(SRC_DIR) -name '*.cc')
 
@@ -37,8 +37,13 @@ $(TARGETS): $(BIN_DIR)/%: %.cc $(OBJ_FILES)
 	@mkdir -p $(BIN_DIR)
 	$(CXX) $< $(OBJ_FILES) -o $@ $(CXXFLAGS)
 
+doxygen:
+	doxygen Doxyfile
+	cd latex && make
+
 clean:
-	rm -rf $(OBJ_DIR) $(BIN_DIR)
+	rm -rf $(OBJ_DIR) $(BIN_DIR) latex/ html/
+
 
 .PHONY: all clean
 

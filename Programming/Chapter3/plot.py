@@ -18,6 +18,7 @@ drawA('result/A_11.txt')
 drawA('result/A_21.txt')
 drawA('result/A_41.txt')
 drawA('result/A_81.txt')
+drawA('result/A_81_bspline.txt')
 
 
 def drawC(filename:str):
@@ -52,6 +53,7 @@ drawE('result/E_heart_PP160.txt')
 drawE('result/E_heart_PP500.txt')
 drawE('result/E_2_B100.txt')
 drawE('result/E_2_PP100.txt')
+drawE('result/E_heart_cum_B160.txt')
 
 
 # 1.000,2.0000,3.0000
@@ -68,6 +70,11 @@ def drawE3d(filename:str):
     plt.close()
 drawE3d('result/E_3_B100.txt')
 drawE3d('result/E_3_PP100.txt')
+drawE3d('result/E_3_Ball160.txt')
+drawE3d('result/E_3_PPBall160.txt')
+drawE3d('result/E_3_BallProj160.txt')
+drawE3d('result/E_3_PPBallProj160.txt')
+drawE3d('result/EXACT160.txt')
 
 
 def draw(filename:str):

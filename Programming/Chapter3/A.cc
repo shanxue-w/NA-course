@@ -1,3 +1,4 @@
+#include "BInterpolate.hpp"
 #include "PPInterpolate.hpp"
 #include <fstream>
 #include <iostream>
@@ -46,14 +47,20 @@ run(int N)
         t_mid[i] = mid;
     }
     // find the index of the maximum difference
-    int max_diff_index =
-        std::max_element(diff.begin(), diff.end()) - diff.begin();
+    int max_diff_index = std::max_element(diff.begin(), diff.end()) - diff.begin();
 
-    fout << "max_diff at " << t_mid[max_diff_index] << " is "
-         << diff[max_diff_index] << std::endl;
+    fout << "max_diff at " << t_mid[max_diff_index] << " is " << diff[max_diff_index] << std::endl;
     fout.close();
-    std::cout << "max_diff at " << t_mid[max_diff_index] << " is "
-              << diff[max_diff_index] << std::endl;
+    std::cout << "max_diff at " << t_mid[max_diff_index] << " is " << diff[max_diff_index] << std::endl;
+
+    BInterpolate<3, double> bx(t, y, 2);
+    filename = "result/A_" + std::to_string(N) + "_bspline.txt";
+    fout.open(filename);
+    for (double x = -1.0; x <= 1.0; x += 0.01)
+    {
+        fout << x << "," << bx(x) << std::endl;
+    }
+    fout.close();
 }
 
 int

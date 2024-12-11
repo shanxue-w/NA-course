@@ -18,6 +18,12 @@
 #define EIGEN_USE_THREADS
 #define EIGEN_USE_LAPACKE
 
+/**
+ * @brief
+ *
+ * @tparam N the order of the B-spline
+ * @tparam Real the type of the data, default is double, can be long double, mpf_class, etc.
+ */
 template <int N, typename Real = double>
 class BInterpolate
 {
@@ -50,12 +56,11 @@ private:
 public:
     BInterpolate() = default;
 
-    BInterpolate(
-        const std::vector<Real> &t,
-        const std::vector<Real> &y,
-        const int               &method             = 0,
-        const std::vector<Real> &boundary_condition = std::vector<Real>(N, 0.0),
-        const int                check              = 0);
+    BInterpolate(const std::vector<Real> &t,
+                 const std::vector<Real> &y,
+                 const int               &method             = 0,
+                 const std::vector<Real> &boundary_condition = std::vector<Real>(N, 0.0),
+                 const int                check              = 0);
 
     BInterpolate(const Json::Value &json); // load from json file
 
@@ -63,8 +68,7 @@ public:
     interpolate(const std::vector<Real> &t,
                 const std::vector<Real> &y,
                 const int               &method,
-                const std::vector<Real> &boundary_condition =
-                    std::vector<Real>(N, 0.0));
+                const std::vector<Real> &boundary_condition = std::vector<Real>(N, 0.0));
 
     BSpline<Real>
     getBSpline() const;
@@ -78,52 +82,46 @@ public:
 
 template <>
 void
-BInterpolate<1, double>::interpolate(
-    const std::vector<double> &t,
-    const std::vector<double> &y,
-    const int                 &method,
-    const std::vector<double> &boundary_condition);
+BInterpolate<1, double>::interpolate(const std::vector<double> &t,
+                                     const std::vector<double> &y,
+                                     const int                 &method,
+                                     const std::vector<double> &boundary_condition);
 
 template <>
 void
-BInterpolate<2, double>::interpolate(
-    const std::vector<double> &t,
-    const std::vector<double> &y,
-    const int                 &method,
-    const std::vector<double> &boundary_condition);
+BInterpolate<2, double>::interpolate(const std::vector<double> &t,
+                                     const std::vector<double> &y,
+                                     const int                 &method,
+                                     const std::vector<double> &boundary_condition);
 
 template <>
 void
-BInterpolate<3, double>::interpolate(
-    const std::vector<double> &t,
-    const std::vector<double> &y,
-    const int &method, // 0 for periodic, 1 for complete, 2 for natural,
-                       // 3 for not-a-knot.
-    const std::vector<double> &boundary_condition);
+BInterpolate<3, double>::interpolate(const std::vector<double> &t,
+                                     const std::vector<double> &y,
+                                     const int &method, // 0 for periodic, 1 for complete, 2 for natural,
+                                                        // 3 for not-a-knot.
+                                     const std::vector<double> &boundary_condition);
 
 template <>
 void
-BInterpolate<1, mpf_class>::interpolate(
-    const std::vector<mpf_class> &t,
-    const std::vector<mpf_class> &y,
-    const int                    &method,
-    const std::vector<mpf_class> &boundary_condition);
+BInterpolate<1, mpf_class>::interpolate(const std::vector<mpf_class> &t,
+                                        const std::vector<mpf_class> &y,
+                                        const int                    &method,
+                                        const std::vector<mpf_class> &boundary_condition);
 
 template <>
 void
-BInterpolate<2, mpf_class>::interpolate(
-    const std::vector<mpf_class> &t,
-    const std::vector<mpf_class> &y,
-    const int                    &method,
-    const std::vector<mpf_class> &boundary_condition);
+BInterpolate<2, mpf_class>::interpolate(const std::vector<mpf_class> &t,
+                                        const std::vector<mpf_class> &y,
+                                        const int                    &method,
+                                        const std::vector<mpf_class> &boundary_condition);
 
 template <>
 void
-BInterpolate<3, mpf_class>::interpolate(
-    const std::vector<mpf_class> &t,
-    const std::vector<mpf_class> &y,
-    const int                    &method,
-    const std::vector<mpf_class> &boundary_condition);
+BInterpolate<3, mpf_class>::interpolate(const std::vector<mpf_class> &t,
+                                        const std::vector<mpf_class> &y,
+                                        const int                    &method,
+                                        const std::vector<mpf_class> &boundary_condition);
 
 #include "BInterpolate.tpp"
 

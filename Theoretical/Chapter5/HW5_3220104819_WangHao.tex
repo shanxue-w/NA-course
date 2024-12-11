@@ -1,0 +1,168 @@
+\documentclass[a4paper]{article}
+\usepackage[affil-it]{authblk}
+\usepackage{ctex}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsfonts}
+\usepackage{amsthm}
+\usepackage{physics}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{listings}
+\usepackage{color}
+\usepackage{float}
+\usepackage{subcaption}
+\usepackage{caption}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\hypersetup{colorlinks=true, linkcolor=blue, citecolor=blue, urlcolor=blue}
+
+
+\usepackage{geometry}
+\geometry{margin=1.5cm, vmargin={0pt,1cm}}
+\setlength{\topmargin}{-1cm}
+\setlength{\paperheight}{29.7cm}
+\setlength{\textheight}{25.3cm}
+
+\begin{document}
+
+\title{Numerical Analysis homework \# 5}
+
+\author{王昊 Wang Hao 3220104819
+  \thanks{Electronic address: \texttt{3220104819@zju.edu.cn}}}
+\affil{(Mathematics and Applied Mathematics 2201), Zhejiang University }
+
+
+\date{Due time: \today}
+
+\maketitle
+
+\section*{I. Prove Thm 5.7}
+
+proof: Obviously $\mathcal{C} [a,b]$ is a vector space. We need to prove it is an inner product space.
+
+\subsection*{1. Well definedness of the inner product}
+
+In a closed interval $[a,b]$, we have $\abs{u(t)} \leq M_1, ~ \abs{v(t)} < M_2$, so we have $\abs{\rho(t) u(t) \overline{v(t)}} \leq M_1 M_2 \abs{\rho(t)}$. Since $\rho(t)>0$ and $\rho(t) \in \mathcal{L}[a,b]$, by Lebesgue' thm, we have $\int_a^b \abs{\rho(t) u(t) \overline{v(t)}} \mathrm{d}t < \infty$. Therefore, the inner product is well defined.
+
+% (2) Prove $\mathcal{C} [a,b]$ is a inner product space.
+\subsection*{2. Linearity of the inner product}
+
+We have
+\begin{equation}
+    \begin{aligned}
+        \langle u, \lambda v_1 + \mu v_2 \rangle &= \int_a^b \rho (t) u(t) \overline{(\lambda v_1 + \mu v_2)(t)} \mathrm{d}t \\
+        &= \int_a^b \rho (t) u(t) \overline{(\lambda v_1(t))} \mathrm{d} t + \int_a^b \rho (t) u(t) \overline{(\mu v_2(t))} \mathrm{d} t \\
+        &= \overline{\lambda} \langle u, v_1 \rangle + \overline{\mu} \langle u, v_2 \rangle,
+    \end{aligned}
+\end{equation}
+
+and 
+\begin{equation}
+    \begin{aligned}
+        \langle \lambda u_1 + \mu u_2, v \rangle &= \int_a^b \rho (t) (\lambda u_1 + \mu u_2)(t) \overline{v(t)} \mathrm{d}t \\
+        &= \int_a^b \rho (t) (\lambda u_1(t)) \overline{v(t)} \mathrm{d} t + \int_a^b \rho (t) (\mu u_2(t)) \overline{v(t)} \mathrm{d} t \\
+        &= \lambda \langle u_1, v \rangle + \mu \langle u_2, v \rangle.
+    \end{aligned}
+\end{equation}  
+
+Therefore, $\mathcal{C} [a,b]$ is an inner product space.
+
+\subsection*{3. Normed space}
+
+By the definition of the norm, we have
+\begin{equation}
+    \norm{u}_2 = 0 \Rightarrow u(t) = 0, a.e. x \in [a,b],
+\end{equation}
+By the continuity of $u$, we have $u(t) = 0, \forall t \in [a,b]$. Therefore, $\norm{u}_2 = 0 \Leftrightarrow u\equiv 0$.
+
+For linearity, we have $\norm{\alpha u}_2 = ( \int_{a}^{b} \rho(t) (\alpha u(t))^2 \,\mathrm{d}t )^{\frac{1}{2}} = \abs{\alpha} \norm{u}_2$. 
+
+For the triangle inequality, by Cauchy-Schwarz inequality, we have
+\begin{equation}
+    \norm{u+v}_2 = \left( \int_{a}^{b} \rho(t) (u(t)+v(t))^2 \,\mathrm{d}t \right)^{\frac{1}{2}} \leq \left( \int_{a}^{b} \rho(t) u(t)^2 \,\mathrm{d}t \right)^{\frac{1}{2}} + \left( \int_{a}^{b} \rho(t) v(t)^2 \,\mathrm{d}t \right)^{\frac{1}{2}} = \norm{u}_2 + \norm{v}_2.
+\end{equation}
+
+
+\section*{II. Chebyshev Polynomials of the First Kind}
+
+\subsection*{a. Orthogonality}
+
+The Chebyshev polynomials have the form of 
+\begin{equation}
+    T_n(x) = \cos(n \arccos x), \quad x \in [-1,1].
+\end{equation}
+
+So for $n \neq m$, we have
+\begin{equation}
+    \begin{aligned}
+        \langle T_n, T_m \rangle &= \int_{-1}^{1} \frac{1}{\sqrt{1-x^2}} T_n(x) T_m(x) \mathrm{d}x \\
+        &= \int_{0}^{\pi} \cos(n \theta) \cos(m \theta) \mathrm{d} \theta \quad \theta = \cos\qty(x) \\
+        &= \int_{0}^{\pi} \frac{1}{2} (\cos\qty(n+m)\theta + \cos\qty(n-m) \theta ) \,\mathrm{d}\theta \\
+        &= 0.
+    \end{aligned}
+\end{equation}
+
+So the Chebyshev polynomials are orthogonal.
+
+\subsection*{b. Normalize the First Three Chebyshev Polynomials}
+
+The first three Chebyshev polynomials are $T_0(x) = 1, T_1(x) = x, T_2(x) = 2x^2 - 1$. For they are orthogonal, we only need to calculate the norm of them.
+
+\begin{equation}
+    \norm{T_0} = \sqrt{\pi}, \quad \norm{T_1} = \sqrt{\frac{\pi}{2}}, \quad \norm{T_2} = \sqrt{\frac{\pi}{2}}.
+\end{equation}
+
+So we have
+\begin{equation}
+    u_1 = \frac{1}{\sqrt{\pi}}, \quad u_2 = \sqrt{\frac{2}{\pi}} x, \quad u_3 = \sqrt{\frac{2}{\pi}} (2x^2 - 1).
+    \label{EQ::II.B.u123}
+\end{equation}
+
+\section*{III. Approxmiation of A Continuous Function}
+
+\subsection*{a. Approxmiate by Fourier Expansion}
+
+The basis repect to $\rho(x) = \frac{1}{\sqrt{1-x^2}}$ is the Chebyshev polynomials, which given in \ref{EQ::II.B.u123}, so we have
+\begin{equation}
+    \begin{aligned}
+        f(x) &= \langle y, u_1 \rangle u_1 + \langle y, u_2 \rangle u_2 + \langle y, u_3 \rangle u_3 \\
+        &= \frac{1}{\sqrt{\pi}} \langle y, 1 \rangle \frac{1}{\sqrt{\pi}} + \sqrt{\frac{2}{\pi}} \langle y, x \rangle \sqrt{\frac{2}{\pi}} x + \sqrt{\frac{2}{\pi}} \langle y, 2x^2 - 1 \rangle \sqrt{\frac{2}{\pi}} (2x^2 - 1) \\
+        &= \frac{2}{\pi} - \frac{4}{3 \pi} (2x^2 - 1) \\
+        &= -\frac{8}{3 \pi} x^2 + \frac{10}{3 \pi}. 
+    \end{aligned}
+\end{equation}
+
+
+\subsection*{b. Approxmiate by normal equations}
+
+For $u_1, u_2, u_3$ orthonormal, we have
+\begin{equation}
+    G(u_1, u_2, u_3) = I. 
+\end{equation}
+
+For $b$ we have
+\begin{equation}
+    b = \begin{pmatrix} \langle y, u_1 \rangle \\ \langle y, u_2 \rangle \\ \langle y, u_3 \rangle \end{pmatrix} = \begin{pmatrix} \frac{2}{\sqrt{\pi}} \\ 0 \\ -\frac{2 \sqrt{2}}{3 \sqrt{\pi}} \end{pmatrix}.
+\end{equation}
+
+By solving the normal equations, we have
+\begin{equation}
+    u(x) = -\frac{8}{3 \pi} x^2 + \frac{10}{3 \pi}. 
+\end{equation}
+
+
+\section*{IV. Discrete Least Square via Orthonormal Polynomials}
+
+\subsection*{a. Normalize $(1, x, x^2)$ }
+
+To normalize $(1, x, x^2)$, by Gram-Schmidt process, we have
+
+$\norm{u_1} = (\sum_{i=1}^{N} 1^2) ^{\frac{1}{2}} = 2 \sqrt{3}$, $v_1 = \frac{u_1}{\norm{u_1}} = \frac{1}{2 \sqrt{3}} = \frac{\sqrt{3}}{6}$.
+
+$\langle u_2, v_1 \rangle = \sum_{i=1}^{N} u_2(t_i) \frac{1}{2 \sqrt{3}} = 13 \sqrt{3}$, $\hat{u}_2 = u_2 - \langle u_2, v_1 \rangle v_1 = x - \frac{13}{2}$, $v_2 = \frac{x - \frac{13}{2}}{\sqrt{143}}$. 
+
+$\langle u_3, v_1 \rangle = \frac{325}{\sqrt{3}}$, $\langle u_3, v_2 \rangle = \frac{1859}{\sqrt{143}}$, $\hat{u}_3 = x^2 - 13 x + \frac{91}{3}$, $v_3 = $
+
+
+\end{document}

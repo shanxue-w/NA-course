@@ -9,28 +9,25 @@
  *
  */
 
+#ifndef BSPLINE_TPP
+#define BSPLINE_TPP
+
 #include "BSpline.hpp"
 #include <algorithm>
 #include <cmath>
 #include <iostream>
 
-/**
- * @brief Construct a new BSpline::BSpline object
- *
- * @param coeffs
- * @param t \f$[t_0,\cdots,t_{n-2}, t_{n-1},\cdots,t_{len-1}]\f$, the first n-1
- * elements are added, we actually interpolate at \f$f(t_{n-1}), \cdots,
- * f(t_{len-1})\f$
- * @param n
- * @param check
- */
 template <typename Real>
-BSpline<Real>::BSpline(std::vector<Real> coeffs,
-                       std::vector<Real> t,
-                       const int         n,
-                       const int         check)
+BSpline<Real>::BSpline(std::vector<Real> coeffs, std::vector<Real> t, const int n, const int check)
     : _coeffs(coeffs), _n(n)
 {
+    /**
+     * @details For we have only \f$N\f$ knots and \f$N+n-1\f$ coefficients, we
+     * need to add \f$2n-2\f$ knots at the beginning and the end of the knot
+     *
+     * Here simply use equal spaced knots with space \f$1.0\f$
+     *
+     */
     _basis.resize(n + 1);
     for (int i = 0; i <= n; i++)
     {
@@ -44,10 +41,9 @@ BSpline<Real>::BSpline(std::vector<Real> coeffs,
     int len = t.size();
     for (int i = 1 - _n; i < len + (_n - 1); ++i)
     {
-        _t.push_back((i < 0)      ? t.front() + i
-                     : (i >= len) ? t.back() + (i - len + 1)
-                                  : t[i]);
+        _t.push_back((i < 0) ? t.front() + i : (i >= len) ? t.back() + (i - len + 1) : t[i]);
     }
+    len = _t.size();
 
     // Check if _t.size() and _coeffs.size() align correctly
     if (static_cast<int>(_t.size() - _coeffs.size()) != (_n - 1))
@@ -62,26 +58,24 @@ BSpline<Real>::BSpline(std::vector<Real> coeffs,
     }
 }
 
-
-
 template <typename Real>
 BSpline<Real>::BSpline(const BSpline &other)
-    : _coeffs(other._coeffs), _t(other._t), _basis(other._basis),
-      _total_basis(other._total_basis),
+    : _coeffs(other._coeffs), _t(other._t), _basis(other._basis), _total_basis(other._total_basis),
       _derivative_basis(other._derivative_basis), _n(other._n)
 {
 }
 
-/**
- * @brief The minimum idx of the interval that contains x
- *
- * @param x
- * @return int
- */
 template <typename Real>
 int
 BSpline<Real>::get_interval(const Real &x) const
 {
+    /**
+     * @details For BSpline, we only care the value in \f$[t_1, t_{N}]\f$,
+     * so when x < t_1 or x > t_N, we return -1.
+     *
+     * Then use `std::lower_bound` to find the first element in _t that is not
+     * less than x. Just a binary search.
+     */
     int begin_idx = _n - 1;
     int end_idx   = _t.size() - _n;
 
@@ -92,11 +86,10 @@ BSpline<Real>::get_interval(const Real &x) const
     }
 
     // int interval = begin_idx;
-    auto it =
-        std::lower_bound(_t.begin() + begin_idx, _t.begin() + end_idx + 1, x);
+    auto it = std::lower_bound(_t.begin() + begin_idx, _t.begin() + end_idx + 1, x);
 
     // // return the index of the interval
-    if (mpf_class(*it) - mpf_class(_t[begin_idx]) < 1e-10)
+    if (Real(*it) - Real(_t[begin_idx]) < 1e-10)
     {
         return begin_idx;
     }
@@ -150,18 +143,11 @@ BSpline<Real>::get_basis(const Real &x)
         for (int j = k; j >= 0; --j)
         // Reverse order to use previous row values directly
         {
-            Real left = (j == 0)
-                            ? Real(0)
-                            : (x - _t[interval - k + j])
-                                  / (_t[interval + j] - _t[interval - k + j]);
+            Real left = (j == 0) ? Real(0) : (x - _t[interval - k + j]) / (_t[interval + j] - _t[interval - k + j]);
             Real right =
-                (j == k)
-                    ? Real(0)
-                    : (_t[interval + j + 1] - x)
-                          / (_t[interval + j + 1] - _t[interval - k + j + 1]);
+                (j == k) ? Real(0) : (_t[interval + j + 1] - x) / (_t[interval + j + 1] - _t[interval - k + j + 1]);
 
-            _basis[j] = left * ((j > 0) ? _basis[j - 1] : Real(0))
-                        + right * ((j < k) ? _basis[j] : Real(0));
+            _basis[j] = left * ((j > 0) ? _basis[j - 1] : Real(0)) + right * ((j < k) ? _basis[j] : Real(0));
         }
     }
 
@@ -218,18 +204,11 @@ BSpline<Real>::get_total_basis(const Real &x)
     {
         for (int j = k; j >= 0; --j)
         {
-            Real left = (j == 0)
-                            ? Real(0)
-                            : (x - _t[interval - k + j])
-                                  / (_t[interval + j] - _t[interval - k + j]);
+            Real left = (j == 0) ? Real(0) : (x - _t[interval - k + j]) / (_t[interval + j] - _t[interval - k + j]);
             Real right =
-                (j == k)
-                    ? Real(0)
-                    : (_t[interval + j + 1] - x)
-                          / (_t[interval + j + 1] - _t[interval - k + j + 1]);
-            _total_basis[k][j] =
-                left * ((j > 0) ? _total_basis[k - 1][j - 1] : Real(0))
-                + right * ((j < k) ? _total_basis[k - 1][j] : Real(0));
+                (j == k) ? Real(0) : (_t[interval + j + 1] - x) / (_t[interval + j + 1] - _t[interval - k + j + 1]);
+            _total_basis[k][j] = left * ((j > 0) ? _total_basis[k - 1][j - 1] : Real(0))
+                                 + right * ((j < k) ? _total_basis[k - 1][j] : Real(0));
             // std::cout << _total_basis[k][j] << std::endl;
         }
     }
@@ -237,10 +216,7 @@ BSpline<Real>::get_total_basis(const Real &x)
 
 template <typename Real>
 Real
-BSpline<Real>::cal_derivative_basis(const int &interval,
-                                    const int &j,
-                                    const int &degree,
-                                    const int &n)
+BSpline<Real>::cal_derivative_basis(const int &interval, const int &j, const int &degree, const int &n)
 {
     if (n == 0)
     {
@@ -251,15 +227,12 @@ BSpline<Real>::cal_derivative_basis(const int &interval,
         Real left = 0.0, right = 0.0;
         if (j > 0)
         {
-            left = (static_cast<Real>(degree)
-                    / (_t[interval + j + degree - _n] - _t[interval + j - _n]))
+            left = (static_cast<Real>(degree) / (_t[interval + j + degree - _n] - _t[interval + j - _n]))
                    * _total_basis[degree - 1][j - 1];
         }
         if (j < degree)
         {
-            right = (static_cast<Real>(degree)
-                     / (_t[interval + j + degree - _n + 1]
-                        - _t[interval + j + 1 - _n]))
+            right = (static_cast<Real>(degree) / (_t[interval + j + degree - _n + 1] - _t[interval + j + 1 - _n]))
                     * _total_basis[degree - 1][j];
         }
         return left - right;
@@ -274,15 +247,12 @@ BSpline<Real>::cal_derivative_basis(const int &interval,
         Real left = 0.0, right = 0.0;
         if (j > 0)
         {
-            left = (static_cast<Real>(degree)
-                    / (_t[interval + j + degree - _n] - _t[interval + j - _n]))
+            left = (static_cast<Real>(degree) / (_t[interval + j + degree - _n] - _t[interval + j - _n]))
                    * cal_derivative_basis(interval, j - 1, degree - 1, n - 1);
         }
         if (j < degree)
         {
-            right = (static_cast<Real>(degree)
-                     / (_t[interval + j + degree - _n + 1]
-                        - _t[interval + j + 1 - _n]))
+            right = (static_cast<Real>(degree) / (_t[interval + j + degree - _n + 1] - _t[interval + j + 1 - _n]))
                     * cal_derivative_basis(interval, j, degree - 1, n - 1);
         }
         return left - right;
@@ -340,3 +310,5 @@ BSpline<Real>::derivative(const Real &x, const int &n)
     }
     return sum;
 }
+
+#endif // BSPLINE_TPP

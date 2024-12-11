@@ -9,30 +9,49 @@
  *
  */
 
+#ifndef PPOLY_TPP
+#define PPOLY_TPP
+
 #include "PPoly.hpp"
 #include <algorithm>
 #include <stdexcept>
 
+/**
+ * @brief Construct a new PPoly<Real>::PPoly object
+ *
+ * @tparam Real The type of data, can be `double`, `float`, `mpf_class` etc.
+ *
+ * @details The default constructor of the class PPoly.
+ * The coefficients and knots are initialized as empty.
+ */
 template <typename Real>
 PPoly<Real>::PPoly()
 {
+    _t.clear();
+    _coeffs.clear();
 }
 
+/**
+ * @brief Construct a new PPoly<Real>::PPoly object
+ *
+ * @tparam Real The type of data, can be `double`, `float`, `mpf_class` etc.
+ * @param coeffs The coefficients of pp-form
+ * @param t The knots of pp-form
+ * @param check Whether to check the input data, default is 0.
+ *
+ * @details The pp-form polynomial has the form
+ * \f[
+ * p_i(x) = \sum_{j=0}^{n} a_{i,j} (x - t_i)^j, x \in [t_i, t_{i+1}].
+ * \f]
+ * \f$a_{i,j}\f$ are the `coeffs`, and \f$t_i\f$ are the `t`.
+ */
 template <typename Real>
-PPoly<Real>::PPoly(const std::vector<std::vector<Real>> &coeffs,
-                   const std::vector<Real>              &t,
-                   const int                             check)
+PPoly<Real>::PPoly(const std::vector<std::vector<Real>> &coeffs, const std::vector<Real> &t, const int check)
 {
     /**
      * make sure the t is sorted, and the size of t is equal to the size of
-     * coeffs. coeffs is correspond
-     * 0
-     *
-     *
-     *
-     * ing to the interval [t[i], t[i+1]], so when
+     * coeffs. coeffs is corresponding to the interval [t[i], t[i+1]], so when
      * sorting t, the coeffs should be sorted too.
-     *
      */
     _t      = t;
     _coeffs = coeffs;
@@ -41,8 +60,7 @@ PPoly<Real>::PPoly(const std::vector<std::vector<Real>> &coeffs,
         // check if the size of t is equal to the size of coeffs
         if (t.size() - 1 != coeffs.size())
         {
-            throw std::invalid_argument(
-                "The size of t is not equal to the size of coeffs");
+            throw std::invalid_argument("The size of t is not equal to the size of coeffs");
         }
         // check if t is sorted
         if (!std::is_sorted(t.begin(), t.end()))
@@ -53,9 +71,7 @@ PPoly<Real>::PPoly(const std::vector<std::vector<Real>> &coeffs,
                 idx[i] = i;
             }
 
-            std::sort(idx.begin(),
-                      idx.end(),
-                      [&](size_t i, size_t j) { return t[i] < t[j]; });
+            std::sort(idx.begin(), idx.end(), [&](size_t i, size_t j) { return t[i] < t[j]; });
 
             for (size_t i = 0; i < t.size(); i++)
             {
@@ -66,6 +82,12 @@ PPoly<Real>::PPoly(const std::vector<std::vector<Real>> &coeffs,
     }
 }
 
+/**
+ * @brief Construct a new PPoly<Real>::PPoly object
+ *
+ * @tparam Real The type of data, can be `double`, `float`, `mpf_class` etc.
+ * @param other The object to copy, class `PPoly`.
+ */
 template <typename Real>
 PPoly<Real>::PPoly(const PPoly<Real> &other)
 {
@@ -73,14 +95,28 @@ PPoly<Real>::PPoly(const PPoly<Real> &other)
     this->_coeffs = other._coeffs;
 }
 
+/**
+ * @brief Find the interval that x belongs to.
+ *
+ * @tparam Real The type of data, can be `double`, `float`, `mpf_class` etc.
+ * @param x The value to find the interval.
+ * @return int
+ */
 template <typename Real>
 int
 PPoly<Real>::findInterval(Real x) const
 {
     /**
-     * find the interval that x belongs to.
      *
-     * if x is out of the range of t, return -1.
+     * @details When we input a value \f$ x \f$, we need to find the interval that
+     * \f$ x \in[t_i, t_{i+1}) \f$, and return the index \f$ i \f$.
+     * For the end point \f$ t_n \f$, we return \f$ n-1 \f$.
+     *
+     * If x is out of the range of the knots, return -1, means
+     * we don't have the interval that x belongs to.
+     *
+     * @note For the knots already sorted, we can use binary search to find the
+     * interval.
      *
      */
     if (x < _t[0] || x > _t[_t.size() - 1])
@@ -106,13 +142,28 @@ PPoly<Real>::findInterval(Real x) const
     return -1;
 }
 
+/**
+ * @brief Overload the operator() to calculate the value of the polynomial at x.
+ *
+ * @tparam Real The type of data, can be `double`, `float`, `mpf_class` etc.
+ * @param x The value to calculate the polynomial.
+ * @return Real The value of the polynomial at x.
+ */
 template <typename Real>
 Real
 PPoly<Real>::operator()(Real x) const
 {
     /**
+     *
+     * @details The function return the value of the polynomial at a given point.
+     *
      * First find the interval that x belongs to.
      * Then use the Horner's method to calculate the value of the polynomial.
+     *
+     * \f[
+     * p_i(x) = \sum_{j=0}^{n} a_{i,j} (x - t_i)^j
+     * = a_{i,0} + (x-t_i)(a_{i,1} + (x-t_i)(a_{i,2} + \cdots ))
+     * \f]
      */
     int interval = findInterval(x);
     if (interval == -1)
@@ -136,6 +187,20 @@ PPoly<Real>::operator()(Real x) const
     return 0.;
 }
 
+/**
+ * @brief Calculate the n-th derivative of the polynomial at x.
+ *
+ * @tparam Real The type of data, can be `double`, `float`, `mpf_class` etc.
+ * @param x The value to calculate the derivative.
+ * @param n The order of the derivative.
+ * @return Real The value of the n-th derivative of the polynomial at x.
+ *
+ * @details If the derivative order n is greater than the degree of the polynomial,
+ * return 0. If n is negative, return 0. If x is out of bounds, return 0.
+ *
+ * Then just derive the polynomial and use Horner's method to evaluate the n-th
+ * derivative at x.
+ */
 template <typename Real>
 Real
 PPoly<Real>::derivative(Real x, int n) const
@@ -145,12 +210,10 @@ PPoly<Real>::derivative(Real x, int n) const
     if (idx == -1)
         return 0.0; // If x is out of bounds, return 0
 
-    int N =
-        _coeffs[idx].size() - 1; // Degree of the polynomial in this interval
-    if (n > N)
+    int N = _coeffs[idx].size() - 1; // Degree of the polynomial in this interval
+    if (n > N || n < 0)
         return 0.0; // If the derivative order n is greater than the degree,
-                    // return
-                    // 0
+                    // return 0
 
     // The number of coefficients after taking the n-th derivative
     int m = N - n;
@@ -169,8 +232,7 @@ PPoly<Real>::derivative(Real x, int n) const
     // m
     // + 1);
     Eigen::Matrix<Real, Eigen::Dynamic, 1> tmp =
-        Eigen::Map<const Eigen::Matrix<Real, Eigen::Dynamic, 1>>(
-            &_coeffs[idx][n], m + 1);
+        Eigen::Map<const Eigen::Matrix<Real, Eigen::Dynamic, 1>>(&_coeffs[idx][n], m + 1);
 
     // Use Horner's method to evaluate the n-th derivative at x
     for (int i = m; i >= 0; --i)
@@ -185,18 +247,33 @@ PPoly<Real>::derivative(Real x, int n) const
     return result;
 }
 
-template <typename Real>
-Real
-PPoly<Real>::integral(Real a, Real b) const
-{
-    /**
-     * integrate the polynomial from a to b.
-     *
-     * Not implemented yet.
-     */
-    return (b - a);
-}
+// /**
+//  * @brief
+//  *
+//  * @tparam Real
+//  * @param a
+//  * @param b
+//  * @return Real
+//  */
+// template <typename Real>
+// Real
+// PPoly<Real>::integral(Real a, Real b) const
+// {
+//     /**
+//      * integrate the polynomial from a to b.
+//      *
+//      * Not implemented yet.
+//      */
+//     return (b - a);
+// }
 
+/**
+ * @brief Overload the operator= to copy the object.
+ *
+ * @tparam Real The type of data, can be `double`, `float`, `mpf_class` etc.
+ * @param other The object to copy.
+ * @return PPoly<Real>&
+ */
 template <typename Real>
 PPoly<Real> &
 PPoly<Real>::operator=(const PPoly<Real> &other)
@@ -209,3 +286,5 @@ PPoly<Real>::operator=(const PPoly<Real> &other)
     }
     return *this;
 }
+
+#endif

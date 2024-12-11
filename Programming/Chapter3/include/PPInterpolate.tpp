@@ -9,17 +9,20 @@
  *
  */
 
+#ifndef PPINTERPOLATE_TPP
+#define PPINTERPOLATE_TPP
+
 #include "PPInterpolate.hpp"
 #include <algorithm>
 #include <iostream>
 
 template <int N, typename Real>
-PPInterpolate<N, Real>::PPInterpolate(const std::vector<Real> &t, // nodes
-                                      const std::vector<Real> &y, // values
-                                      const int method,           // 0 for periodic, 1 for complete,
+PPInterpolate<N, Real>::PPInterpolate(const std::vector<Real> &t,      // nodes
+                                      const std::vector<Real> &y,      // values
+                                      const int                method, // 0 for periodic, 1 for complete,
                                       // 2 for natural, 3 for not-a-knot.
                                       const std::vector<Real> &boundary_condition,
-                                      const int check) // whether to check the order of t
+                                      const int                check) // whether to check the order of t
     : _t(t), _y(y), _method(method), _boundary_condition(boundary_condition)
 {
     poly = PPoly<Real>();
@@ -47,13 +50,72 @@ PPInterpolate<N, Real>::PPInterpolate(const std::vector<Real> &t, // nodes
 }
 
 template <int N, typename Real>
+PPInterpolate<N, Real>::PPInterpolate(const Json::Value &json)
+{
+    poly      = PPoly<Real>();
+    _method   = json.isMember("method") ? json["method"].asInt() : 0;
+    int check = json.isMember("check") ? json["check"].asInt() : 0;
+    if (json.isMember("t"))
+    {
+        const Json::Value &t_json = json["t"];
+        for (auto &t : t_json)
+        {
+            _t.push_back(Real(t.asDouble()));
+        }
+    }
+    if (json.isMember("y"))
+    {
+        const Json::Value &y_json = json["y"];
+        for (auto &y : y_json)
+        {
+            _y.push_back(Real(y.asDouble()));
+        }
+    }
+    if (json.isMember("boundary_condition"))
+    {
+        const Json::Value &boundary_condition_json = json["boundary_condition"];
+        for (auto &boundary_condition : boundary_condition_json)
+        {
+            _boundary_condition.push_back(Real(boundary_condition.asDouble()));
+        }
+    }
+    else
+    {
+        _boundary_condition = std::vector<Real>(N, 0.0);
+    }
+
+    if (check == 1)
+    {
+        if (!std::is_sorted(_t.begin(), _t.end()))
+        {
+            std::vector<Real> t      = _t;
+            std::vector<Real> y      = _y;
+            int               t_size = t.size();
+            std::vector<int>  idx(t_size);
+
+            for (int i = 0; i < t_size; ++i)
+            {
+                idx[i] = i;
+            }
+            std::sort(idx.begin(), idx.end(), [&](int i, int j) { return t[i] < t[j]; });
+
+            for (int i = 0; i < t_size; ++i)
+            {
+                _t[i] = t[idx[i]];
+                _y[i] = y[idx[i]];
+            }
+        }
+    }
+    interpolate(_t, _y, _method, _boundary_condition);
+}
+
+template <int N, typename Real>
 void
-PPInterpolate<N, Real>::interpolate(
-    const std::vector<Real> &t,      // nodes
-    const std::vector<Real> &y,      // values
-    const int                method, // 0 for periodic, 1 for complete, 2 for natural, 3 for
-                                     // not-a-knot.
-    const std::vector<Real> &boundary_condition) // boundary condition
+PPInterpolate<N, Real>::interpolate(const std::vector<Real> &t, // nodes
+                                    const std::vector<Real> &y, // values
+                                    const int method,           // 0 for periodic, 1 for complete, 2 for natural, 3 for
+                                                                // not-a-knot.
+                                    const std::vector<Real> &boundary_condition) // boundary condition
 {
     /**
      * @details Here are the details of the interpolation:
@@ -96,27 +158,22 @@ PPInterpolate<N, Real>::interpolate(
     // std::cout << "CMatrix: " << CMatrix << std::endl;
     if (method == 0)
     {
-        int                            t_size = t.size();
-        std::vector<std::vector<Real>> coeffs(
-            t_size - 1, std::vector<Real>(N)); // coefficients of the polynomial
-        Eigen::Matrix<Real, N - 1, 1>     C = Eigen::Matrix<Real, N - 1, 1>::Zero(N - 1);
-        Eigen::Matrix<Real, N - 1, N - 1> A_ahead =
-            Eigen::Matrix<Real, N - 1, N - 1>::Identity(N - 1, N - 1);
-        Eigen::Matrix<Real, N - 1, 1>     b_ahead = Eigen::Matrix<Real, N - 1, 1>::Zero(N - 1);
-        Eigen::Matrix<Real, N - 1, N - 1> A_behind =
-            Eigen::Matrix<Real, N - 1, N - 1>::Identity(N - 1, N - 1);
-        Eigen::Matrix<Real, N - 1, 1> b_behind  = Eigen::Matrix<Real, N - 1, 1>::Zero(N - 1);
-        Eigen::Matrix<Real, N, 1>     tmp_lists = Eigen::Matrix<Real, N, 1>::Ones(N);
-        int                           ahead = 0, behind = t_size - 1;
+        int                               t_size = t.size();
+        std::vector<std::vector<Real>>    coeffs(t_size - 1, std::vector<Real>(N)); // coefficients of the polynomial
+        Eigen::Matrix<Real, N - 1, 1>     C         = Eigen::Matrix<Real, N - 1, 1>::Zero(N - 1);
+        Eigen::Matrix<Real, N - 1, N - 1> A_ahead   = Eigen::Matrix<Real, N - 1, N - 1>::Identity(N - 1, N - 1);
+        Eigen::Matrix<Real, N - 1, 1>     b_ahead   = Eigen::Matrix<Real, N - 1, 1>::Zero(N - 1);
+        Eigen::Matrix<Real, N - 1, N - 1> A_behind  = Eigen::Matrix<Real, N - 1, N - 1>::Identity(N - 1, N - 1);
+        Eigen::Matrix<Real, N - 1, 1>     b_behind  = Eigen::Matrix<Real, N - 1, 1>::Zero(N - 1);
+        Eigen::Matrix<Real, N, 1>         tmp_lists = Eigen::Matrix<Real, N, 1>::Ones(N);
+        int                               ahead = 0, behind = t_size - 1;
 
-        Eigen::Matrix<Real, N - 1, N - 1> A_copy =
-            Eigen::Matrix<Real, N - 1, N - 1>::Zero(N - 1, N - 1);
-        Eigen::Matrix<Real, N - 1, 1> b_copy = Eigen::Matrix<Real, N - 1, 1>::Zero(N - 1);
-        Real                          dx     = t[ahead + 1] - t[ahead];
-        Real                          dy     = y[ahead + 1] - y[ahead];
-        Real                          tmpx   = dx;
-        Real                          C_iN   = dy; // C_{i,N}
-        std::cout << "CMatrix: " << CMatrix << std::endl;
+        Eigen::Matrix<Real, N - 1, N - 1> A_copy = Eigen::Matrix<Real, N - 1, N - 1>::Zero(N - 1, N - 1);
+        Eigen::Matrix<Real, N - 1, 1>     b_copy = Eigen::Matrix<Real, N - 1, 1>::Zero(N - 1);
+        Real                              dx     = t[ahead + 1] - t[ahead];
+        Real                              dy     = y[ahead + 1] - y[ahead];
+        Real                              tmpx   = dx;
+        Real                              C_iN   = dy; // C_{i,N}
         while (ahead < behind)
         {
             Real max_value1 = A_ahead.cwiseAbs().maxCoeff();
@@ -128,6 +185,9 @@ PPInterpolate<N, Real>::interpolate(
                 // C_i = A_ahead_i C_0 + b_ahead_i
                 // A_ahead_{i+1} = A_i A_ahead_i
                 // b_ahead_{i+1} = A_i b_ahead_i + b_i
+                dx           = t[ahead + 1] - t[ahead];
+                dy           = y[ahead + 1] - y[ahead];
+                tmpx         = dx;
                 tmp_lists    = Eigen::Matrix<Real, N, 1>::Ones(N);
                 tmp_lists(0) = dx;
                 for (int j = 1; j < N; j++)
@@ -196,15 +256,14 @@ PPInterpolate<N, Real>::interpolate(
                 A_behind = solver.solve(A_behind); // 解线性方程 A_copy * x = A_behind
 
                 // 求解b_behind
-                b_behind =
-                    solver.solve(b_behind - b_copy); // 解线性方程 A_copy * x = b_behind - b_copy
+                b_behind = solver.solve(b_behind - b_copy); // 解线性方程 A_copy * x = b_behind - b_copy
                 behind--;
             }
 
             // find the maximum
             max_value1 = A_ahead.cwiseAbs().maxCoeff();
             max_value2 = A_behind.cwiseAbs().maxCoeff();
-            // if (max_value1 > 1e6 and max_value2 > 1e6 and max_value3 > 1e6 and max_value4 > 1e6)
+            // if (max_value1 > 1e6 and max_value2 > 1e6)
             // {
             //     A_ahead /= Real(1e4);
             //     b_ahead /= Real(1e4);
@@ -219,6 +278,11 @@ PPInterpolate<N, Real>::interpolate(
         }
         Eigen::Matrix<Real, N - 1, N - 1> A = A_ahead - A_behind;
         Eigen::Matrix<Real, N - 1, 1>     b = -(b_ahead - b_behind);
+        // while (A.cwiseAbs().maxCoeff() > 1e6)
+        // {
+        //     A /= Real(1e4);
+        //     b /= Real(1e4);
+        // }
         // Real                              maxvalue = A.cwiseAbs().maxCoeff() / Real(100);
         // A /= maxvalue;
         // b /= maxvalue;
@@ -250,8 +314,6 @@ PPInterpolate<N, Real>::interpolate(
 
         for (int i = 0; i < ahead / 2; i++)
         {
-            std::cout << "i = " << i << std::endl;
-            std::cout << "C = " << C << std::endl;
             dx           = t[i + 1] - t[i];
             dy           = y[i + 1] - y[i];
             tmp_lists(0) = dx;
@@ -299,8 +361,6 @@ PPInterpolate<N, Real>::interpolate(
         C = C_0;
         for (int i = t_size - 1; i > ahead / 2; i--)
         {
-            std::cout << "i = " << i << std::endl;
-            std::cout << "C = " << C << std::endl;
             dx           = t[i] - t[i - 1];
             dy           = y[i] - y[i - 1];
             tmp_lists(0) = dx;
@@ -385,8 +445,8 @@ PPInterpolate<N, Real>::interpolate(
         coeffs.push_back(tmp_coeffs);
         // first finished, iteration begin.
 
-        Eigen::Matrix<Real, N - 1, N - 1> A = Eigen::Matrix<Real, N - 1, N - 1>::Zero(N - 1, N - 1);
-        Eigen::Matrix<Real, N - 1, 1>     b = Eigen::Matrix<Real, N - 1, 1>::Zero(N - 1);
+        Eigen::Matrix<Real, N - 1, N - 1> A         = Eigen::Matrix<Real, N - 1, N - 1>::Zero(N - 1, N - 1);
+        Eigen::Matrix<Real, N - 1, 1>     b         = Eigen::Matrix<Real, N - 1, 1>::Zero(N - 1);
         Eigen::Matrix<Real, N - 1, 1>     tmp_lists = Eigen::Matrix<Real, N - 1, 1>::Ones(N - 1);
         for (int i = 0; i < t_size - 2; i++)
         {
@@ -455,3 +515,5 @@ PPInterpolate<N, Real>::getPoly() const
 {
     return poly;
 }
+
+#endif // PPInterpolate.tpp

@@ -19,18 +19,16 @@ template <int N, typename Real = double> // N is the order of the curve and Real
 class Curve
 {
 private:
-    std::vector<Real>              _t;      // the knots of the curve
-    std::vector<std::vector<Real>> _xy;     // the values of the curve
-    int                            _method; // the method of the curve
-    std::vector<std::vector<Real>>
-        _boundary_condition; // the boundary condition
+    std::vector<Real>              _t;                  // the knots of the curve
+    std::vector<std::vector<Real>> _xy;                 // the values of the curve
+    int                            _method;             // the method of the curve
+    std::vector<std::vector<Real>> _boundary_condition; // the boundary condition
 public:
     Curve() = default;
     Curve(const std::vector<Real>              &t,
           const std::vector<std::vector<Real>> &xy,
-          const int                             method = 0,
-          const std::vector<std::vector<Real>> &boundary_condition =
-              std::vector<std::vector<Real>>());
+          const int                             method             = 0,
+          const std::vector<std::vector<Real>> &boundary_condition = std::vector<std::vector<Real>>());
     Real
     SQRT(const Real &x) const; // the square root function
     Real
@@ -53,6 +51,8 @@ public:
     BallFunction<Real>
     BSplineBall() const; // Use BSpline to interpolate
                          // the curve in the surface of a ball
+    BallFunction<Real>
+    BSplineBallProj() const;
 
     std::vector<PPoly<Real>>
     PPoly2d() const; // Use PPoly to interpolate
@@ -62,6 +62,9 @@ public:
                      // the curve in 3D
     BallFunction<Real>
     PPolyBall() const; // Use PPoly to interpolate
+
+    BallFunction<Real>
+    PPolyBallProj() const;
 };
 
 #include "Curve.tpp"

@@ -9,6 +9,9 @@
  *
  */
 
+#ifndef BINTERPOLATE_TPP
+#define BINTERPOLATE_TPP
+
 #include "BInterpolate.hpp"
 
 template <int N, typename Real>
@@ -31,9 +34,7 @@ BInterpolate<N, Real>::BInterpolate(const std::vector<Real> &t,
             {
                 idx[i] = i;
             }
-            std::sort(idx.begin(),
-                      idx.end(),
-                      [&](int i, int j) { return t[i] < t[j]; });
+            std::sort(idx.begin(), idx.end(), [&](int i, int j) { return t[i] < t[j]; });
 
             for (int i = 0; i < t_size; ++i)
             {
@@ -95,9 +96,7 @@ BInterpolate<N, Real>::BInterpolate(const Json::Value &json)
             {
                 idx[i] = i;
             }
-            std::sort(idx.begin(),
-                      idx.end(),
-                      [&](int i, int j) { return t[i] < t[j]; });
+            std::sort(idx.begin(), idx.end(), [&](int i, int j) { return t[i] < t[j]; });
 
             for (int i = 0; i < t_size; ++i)
             {
@@ -111,28 +110,24 @@ BInterpolate<N, Real>::BInterpolate(const Json::Value &json)
 
 template <int N, typename Real>
 void
-BInterpolate<N, Real>::interpolate(
-    const std::vector<Real> &t,
-    const std::vector<Real> &y,
-    const int               &method, // 0 for periodic, 1 for complete,
-                                     // 2 for natural, 3 for not-a-knot.
-    const std::vector<Real> &boundary_condition)
+BInterpolate<N, Real>::interpolate(const std::vector<Real> &t,
+                                   const std::vector<Real> &y,
+                                   const int               &method, // 0 for periodic, 1 for complete,
+                                                                    // 2 for natural, 3 for not-a-knot.
+                                   const std::vector<Real> &boundary_condition)
 {
     // (void)method;
     if (method == 0)
     {
         int                                                 t_size = t.size();
-        Eigen::Matrix<Real, Eigen::Dynamic, Eigen::Dynamic> A(t_size + N - 1,
-                                                              t_size + N - 1);
+        Eigen::Matrix<Real, Eigen::Dynamic, Eigen::Dynamic> A(t_size + N - 1, t_size + N - 1);
         Eigen::Matrix<Real, Eigen::Dynamic, 1>              b(t_size + N - 1);
-        std::vector<Real> tmp_coeff(t_size + N - 1, 1.0);
-        BSpline<Real>     tmp_spline(tmp_coeff, t, N);
+        std::vector<Real>                                   tmp_coeff(t_size + N - 1, 1.0);
+        BSpline<Real>                                       tmp_spline(tmp_coeff, t, N);
         for (int i = 0; i < N - 1; i++)
         {
-            std::vector<Real> diff_basis1 =
-                tmp_spline.basis_derivative(t[0], i + 1);
-            std::vector<Real> diff_basis2 =
-                tmp_spline.basis_derivative(t[t_size - 1], i + 1);
+            std::vector<Real> diff_basis1 = tmp_spline.basis_derivative(t[0], i + 1);
+            std::vector<Real> diff_basis2 = tmp_spline.basis_derivative(t[t_size - 1], i + 1);
             for (int j = 0; j < N; ++j)
             {
                 A(i, j)              = diff_basis1[j];
@@ -161,12 +156,11 @@ BInterpolate<N, Real>::interpolate(
             b(N - 1 + i) = y[i];
         }
 
-        Eigen::PartialPivLU<Eigen::Matrix<Real, Eigen::Dynamic, Eigen::Dynamic>>
-            solver;
+        Eigen::PartialPivLU<Eigen::Matrix<Real, Eigen::Dynamic, Eigen::Dynamic>> solver;
         solver.compute(A);
 
         Eigen::Matrix<Real, Eigen::Dynamic, 1> x = solver.solve(b);
-        std::vector<Real> coeffs(x.data(), x.data() + x.size());
+        std::vector<Real>                      coeffs(x.data(), x.data() + x.size());
 
         _bspline = BSpline<Real>(coeffs, t, N);
         return;
@@ -177,8 +171,7 @@ BInterpolate<N, Real>::interpolate(
         // Eigen::SparseMatrix<Real, Eigen::RowMajor> A(t_size + N - 1, t_size +
         // N - 1); Eigen::MatrixXd A(t_size+N-1, t_size+N-1); Eigen::VectorXd
         // b(t_size+N-1);
-        Eigen::Matrix<Real, Eigen::Dynamic, Eigen::Dynamic> A(t_size + N - 1,
-                                                              t_size + N - 1);
+        Eigen::Matrix<Real, Eigen::Dynamic, Eigen::Dynamic> A(t_size + N - 1, t_size + N - 1);
         Eigen::Matrix<Real, Eigen::Dynamic, 1>              b(t_size + N - 1);
         // std::vector<Eigen::Triplet<Real>>      triplets;
         // triplets.reserve(N * (t_size + N - 1));
@@ -187,8 +180,7 @@ BInterpolate<N, Real>::interpolate(
 
         for (int i = 0; i < N - 1; i++)
         {
-            std::vector<Real> diff_basis =
-                tmp_spline.basis_derivative(t[0], i + 1);
+            std::vector<Real> diff_basis = tmp_spline.basis_derivative(t[0], i + 1);
             for (int j = 0; j < N; ++j)
             {
                 // triplets.push_back(Eigen::Triplet<Real>(i, j,
@@ -227,8 +219,7 @@ BInterpolate<N, Real>::interpolate(
         // 计算矩阵条件数
         // use more stable solver, not LU, iteration method
         // use the most accurate solver
-        Eigen::PartialPivLU<Eigen::Matrix<Real, Eigen::Dynamic, Eigen::Dynamic>>
-            solver;
+        Eigen::PartialPivLU<Eigen::Matrix<Real, Eigen::Dynamic, Eigen::Dynamic>> solver;
         solver.compute(A);
         // if (solver.info() != Eigen::Success)
         // {
@@ -276,3 +267,5 @@ BInterpolate<N, Real>::derivative(const Real x, const int n)
 {
     return _bspline.derivative(x, n);
 }
+
+#endif // BINTERPOLATE_TPP
