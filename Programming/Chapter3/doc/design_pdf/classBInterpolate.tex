@@ -1,0 +1,377 @@
+\hypertarget{classBInterpolate}{}\doxysection{BInterpolate$<$ N, Real $>$ Class Template Reference}
+\label{classBInterpolate}\index{BInterpolate$<$ N, Real $>$@{BInterpolate$<$ N, Real $>$}}
+
+
+Implement of {\ttfamily \mbox{\hyperlink{classBInterpolate}{BInterpolate}}}.  
+
+
+
+
+{\ttfamily \#include $<$BInterpolate.\+hpp$>$}
+
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classBInterpolate_aec37679e5d52451f2bc36a70f4020099}\label{classBInterpolate_aec37679e5d52451f2bc36a70f4020099}} 
+{\bfseries BInterpolate} (const std\+::vector$<$ Real $>$ \&t, const std\+::vector$<$ Real $>$ \&y, const int \&method=0, const std\+::vector$<$ Real $>$ \&boundary\+\_\+condition=std\+::vector$<$ Real $>$(N, 0.\+0), const int check=0)
+\item 
+\mbox{\Hypertarget{classBInterpolate_a1fde331ee30fef0ef131924e51b2c438}\label{classBInterpolate_a1fde331ee30fef0ef131924e51b2c438}} 
+{\bfseries BInterpolate} (const Json\+::\+Value \&json)
+\item 
+void \mbox{\hyperlink{classBInterpolate_a8b0cde31c8622c0de221d4e0563d2ddc}{interpolate}} (const std\+::vector$<$ Real $>$ \&t, const std\+::vector$<$ Real $>$ \&y, const int \&method, const std\+::vector$<$ Real $>$ \&boundary\+\_\+condition=std\+::vector$<$ Real $>$(N, 0.\+0))
+\item 
+\mbox{\Hypertarget{classBInterpolate_a260850d56ffe22897b4ac0a50e2e3bdf}\label{classBInterpolate_a260850d56ffe22897b4ac0a50e2e3bdf}} 
+\mbox{\hyperlink{classBSpline}{BSpline}}$<$ Real $>$ {\bfseries get\+BSpline} () const
+\item 
+\mbox{\Hypertarget{classBInterpolate_a8fcb95f04e5117eaa3963e36355d7430}\label{classBInterpolate_a8fcb95f04e5117eaa3963e36355d7430}} 
+Real {\bfseries operator()} (const Real x)
+\item 
+\mbox{\Hypertarget{classBInterpolate_a949fc5654e6e6aeae8f8ae854b82bf84}\label{classBInterpolate_a949fc5654e6e6aeae8f8ae854b82bf84}} 
+Real {\bfseries derivative} (const Real x, const int n)
+\item 
+\mbox{\Hypertarget{classBInterpolate_a8fc45bf8779c48c8e9cbef65acd7b76f}\label{classBInterpolate_a8fc45bf8779c48c8e9cbef65acd7b76f}} 
+void {\bfseries interpolate} (const std\+::vector$<$ double $>$ \&t, const std\+::vector$<$ double $>$ \&y, const int \&method, const std\+::vector$<$ double $>$ \&boundary\+\_\+condition)
+\item 
+\mbox{\Hypertarget{classBInterpolate_a85281314a8194c7062008eaa5494253e}\label{classBInterpolate_a85281314a8194c7062008eaa5494253e}} 
+void {\bfseries interpolate} (const std\+::vector$<$ double $>$ \&t, const std\+::vector$<$ double $>$ \&y, const int \&method, const std\+::vector$<$ double $>$ \&boundary\+\_\+condition)
+\item 
+\mbox{\Hypertarget{classBInterpolate_a075cda67ea13b9689e70f1d6ab1f2993}\label{classBInterpolate_a075cda67ea13b9689e70f1d6ab1f2993}} 
+void {\bfseries interpolate} (const std\+::vector$<$ double $>$ \&t, const std\+::vector$<$ double $>$ \&y, const int \&method, const std\+::vector$<$ double $>$ \&boundary\+\_\+condition)
+\item 
+\mbox{\Hypertarget{classBInterpolate_aaf0d881230afb88d26a6b871226ffe68}\label{classBInterpolate_aaf0d881230afb88d26a6b871226ffe68}} 
+void {\bfseries interpolate} (const std\+::vector$<$ mpf\+\_\+class $>$ \&t, const std\+::vector$<$ mpf\+\_\+class $>$ \&y, const int \&method, const std\+::vector$<$ mpf\+\_\+class $>$ \&boundary\+\_\+condition)
+\item 
+\mbox{\Hypertarget{classBInterpolate_a5318dbb95fd8280f920f95c67b6531b1}\label{classBInterpolate_a5318dbb95fd8280f920f95c67b6531b1}} 
+void {\bfseries interpolate} (const std\+::vector$<$ mpf\+\_\+class $>$ \&t, const std\+::vector$<$ mpf\+\_\+class $>$ \&y, const int \&method, const std\+::vector$<$ mpf\+\_\+class $>$ \&boundary\+\_\+condition)
+\item 
+\mbox{\Hypertarget{classBInterpolate_a1a6ac7677d7e1e140c37a3c42d4dfab5}\label{classBInterpolate_a1a6ac7677d7e1e140c37a3c42d4dfab5}} 
+void {\bfseries interpolate} (const std\+::vector$<$ mpf\+\_\+class $>$ \&t, const std\+::vector$<$ mpf\+\_\+class $>$ \&y, const int \&method, const std\+::vector$<$ mpf\+\_\+class $>$ \&boundary\+\_\+condition)
+\item 
+\mbox{\hyperlink{classBInterpolate_a24a96ca3a9cca9abdc9925aed5f5a658}{BInterpolate}} (const std\+::vector$<$ double $>$ \&t, const std\+::vector$<$ double $>$ \&y, const int \&method, const std\+::vector$<$ double $>$ \&boundary\+\_\+condition, const int check)
+\begin{DoxyCompactList}\small\item\em Construct a new BInterpolate$<$1, double$>$\+::\+BInterpolate object. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classBInterpolate_a8fc45bf8779c48c8e9cbef65acd7b76f}{interpolate}} (const std\+::vector$<$ double $>$ \&t, const std\+::vector$<$ double $>$ \&y, const int \&method, const std\+::vector$<$ double $>$ \&boundary\+\_\+condition)
+\begin{DoxyCompactList}\small\item\em Interpolate the data using B-\/spline. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classBInterpolate_a984e3c51e2e3948ee390cf8b77e25ae2}{BInterpolate}} (const std\+::vector$<$ double $>$ \&t, const std\+::vector$<$ double $>$ \&y, const int \&method, const std\+::vector$<$ double $>$ \&boundary\+\_\+condition, const int check)
+\begin{DoxyCompactList}\small\item\em Construct a new BInterpolate$<$2, double$>$\+::\+BInterpolate object. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classBInterpolate_a85281314a8194c7062008eaa5494253e}{interpolate}} (const std\+::vector$<$ double $>$ \&t, const std\+::vector$<$ double $>$ \&y, const int \&method, const std\+::vector$<$ double $>$ \&boundary\+\_\+condition)
+\begin{DoxyCompactList}\small\item\em Construct a new BInterpolate$<$2, double$>$\+::\+BInterpolate object. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classBInterpolate_ad484bba2caebf1c98d30b2c0bca0884f}{BInterpolate}} (const std\+::vector$<$ double $>$ \&t, const std\+::vector$<$ double $>$ \&y, const int \&method, const std\+::vector$<$ double $>$ \&boundary\+\_\+condition, const int check)
+\begin{DoxyCompactList}\small\item\em Construct a new BInterpolate$<$3, double$>$\+::\+BInterpolate object. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classBInterpolate_a075cda67ea13b9689e70f1d6ab1f2993}{interpolate}} (const std\+::vector$<$ double $>$ \&t, const std\+::vector$<$ double $>$ \&y, const int \&method, const std\+::vector$<$ double $>$ \&boundary\+\_\+condition)
+\begin{DoxyCompactList}\small\item\em Construct a new BInterpolate$<$3, double$>$\+::\+BInterpolate object. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classBInterpolate_aac3a78630f5ca6c2abb89df8592d720c}\label{classBInterpolate_aac3a78630f5ca6c2abb89df8592d720c}} 
+{\bfseries BInterpolate} (const std\+::vector$<$ mpf\+\_\+class $>$ \&t, const std\+::vector$<$ mpf\+\_\+class $>$ \&y, const int \&method, const std\+::vector$<$ mpf\+\_\+class $>$ \&boundary\+\_\+condition, const int check)
+\item 
+\mbox{\Hypertarget{classBInterpolate_aaf0d881230afb88d26a6b871226ffe68}\label{classBInterpolate_aaf0d881230afb88d26a6b871226ffe68}} 
+void {\bfseries interpolate} (const std\+::vector$<$ mpf\+\_\+class $>$ \&t, const std\+::vector$<$ mpf\+\_\+class $>$ \&y, const int \&method, const std\+::vector$<$ mpf\+\_\+class $>$ \&boundary\+\_\+condition)
+\item 
+\mbox{\Hypertarget{classBInterpolate_ade55c64d96e8568fd7734b209f148718}\label{classBInterpolate_ade55c64d96e8568fd7734b209f148718}} 
+{\bfseries BInterpolate} (const std\+::vector$<$ mpf\+\_\+class $>$ \&t, const std\+::vector$<$ mpf\+\_\+class $>$ \&y, const int \&method, const std\+::vector$<$ mpf\+\_\+class $>$ \&boundary\+\_\+condition, const int check)
+\item 
+\mbox{\Hypertarget{classBInterpolate_a5318dbb95fd8280f920f95c67b6531b1}\label{classBInterpolate_a5318dbb95fd8280f920f95c67b6531b1}} 
+void {\bfseries interpolate} (const std\+::vector$<$ mpf\+\_\+class $>$ \&t, const std\+::vector$<$ mpf\+\_\+class $>$ \&y, const int \&method, const std\+::vector$<$ mpf\+\_\+class $>$ \&boundary\+\_\+condition)
+\item 
+\mbox{\Hypertarget{classBInterpolate_a11148e8030dc6786afb2ff240b90b196}\label{classBInterpolate_a11148e8030dc6786afb2ff240b90b196}} 
+{\bfseries BInterpolate} (const std\+::vector$<$ mpf\+\_\+class $>$ \&t, const std\+::vector$<$ mpf\+\_\+class $>$ \&y, const int \&method, const std\+::vector$<$ mpf\+\_\+class $>$ \&boundary\+\_\+condition, const int check)
+\item 
+\mbox{\Hypertarget{classBInterpolate_a1a6ac7677d7e1e140c37a3c42d4dfab5}\label{classBInterpolate_a1a6ac7677d7e1e140c37a3c42d4dfab5}} 
+void {\bfseries interpolate} (const std\+::vector$<$ mpf\+\_\+class $>$ \&t, const std\+::vector$<$ mpf\+\_\+class $>$ \&y, const int \&method, const std\+::vector$<$ mpf\+\_\+class $>$ \&boundary\+\_\+condition)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\subsubsection*{template$<$int N, typename Real = double$>$\newline
+class BInterpolate$<$ N, Real $>$}
+
+Implement of {\ttfamily \mbox{\hyperlink{classBInterpolate}{BInterpolate}}}. 
+
+
+\begin{DoxyTemplParams}{Template Parameters}
+{\em N} & The order of the B-\/spline \\
+\hline
+{\em Real} & The type of the data\\
+\hline
+\end{DoxyTemplParams}
+The B-\/spline interpolation is implemented using the {\ttfamily \mbox{\hyperlink{classBSpline}{BSpline}}} class. 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classBInterpolate_a24a96ca3a9cca9abdc9925aed5f5a658}\label{classBInterpolate_a24a96ca3a9cca9abdc9925aed5f5a658}} 
+\index{BInterpolate$<$ N, Real $>$@{BInterpolate$<$ N, Real $>$}!BInterpolate@{BInterpolate}}
+\index{BInterpolate@{BInterpolate}!BInterpolate$<$ N, Real $>$@{BInterpolate$<$ N, Real $>$}}
+\doxysubsubsection{\texorpdfstring{BInterpolate()}{BInterpolate()}\hspace{0.1cm}{\footnotesize\ttfamily [1/3]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classBInterpolate}{BInterpolate}}$<$ 1, double $>$\+::\mbox{\hyperlink{classBInterpolate}{BInterpolate}} (\begin{DoxyParamCaption}\item[{const std\+::vector$<$ double $>$ \&}]{t,  }\item[{const std\+::vector$<$ double $>$ \&}]{y,  }\item[{const int \&}]{method,  }\item[{const std\+::vector$<$ double $>$ \&}]{boundary\+\_\+condition,  }\item[{const int}]{check }\end{DoxyParamCaption})}
+
+
+
+Construct a new BInterpolate$<$1, double$>$\+::\+BInterpolate object. 
+
+
+\begin{DoxyTemplParams}{Template Parameters}
+{\em N} & The order of the B-\/spline. Here N = 1. \\
+\hline
+{\em Real} & The type of the coefficients. Here Real = double. \\
+\hline
+\end{DoxyTemplParams}
+
+\begin{DoxyParams}{Parameters}
+{\em t} & The nodes of the interpolation \\
+\hline
+{\em y} & The values of the interpolation \\
+\hline
+{\em method} & The method of interpolation, not used here in $ N = 1 $ \\
+\hline
+{\em boundary\+\_\+condition} & The boundary condition, not used here in $ N = 1 $ \\
+\hline
+{\em check} & Whether to check the input data, default is 0\\
+\hline
+\end{DoxyParams}
+The constructor of the \mbox{\hyperlink{classBInterpolate}{BInterpolate}} class, which is used to interpolate the data using B-\/spline. Make sure the input data is sorted. If not, sort the data.\mbox{\Hypertarget{classBInterpolate_a984e3c51e2e3948ee390cf8b77e25ae2}\label{classBInterpolate_a984e3c51e2e3948ee390cf8b77e25ae2}} 
+\index{BInterpolate$<$ N, Real $>$@{BInterpolate$<$ N, Real $>$}!BInterpolate@{BInterpolate}}
+\index{BInterpolate@{BInterpolate}!BInterpolate$<$ N, Real $>$@{BInterpolate$<$ N, Real $>$}}
+\doxysubsubsection{\texorpdfstring{BInterpolate()}{BInterpolate()}\hspace{0.1cm}{\footnotesize\ttfamily [2/3]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classBInterpolate}{BInterpolate}}$<$ 2, double $>$\+::\mbox{\hyperlink{classBInterpolate}{BInterpolate}} (\begin{DoxyParamCaption}\item[{const std\+::vector$<$ double $>$ \&}]{t,  }\item[{const std\+::vector$<$ double $>$ \&}]{y,  }\item[{const int \&}]{method,  }\item[{const std\+::vector$<$ double $>$ \&}]{boundary\+\_\+condition,  }\item[{const int}]{check }\end{DoxyParamCaption})}
+
+
+
+Construct a new BInterpolate$<$2, double$>$\+::\+BInterpolate object. 
+
+
+\begin{DoxyTemplParams}{Template Parameters}
+{\em N} & The order of the B-\/spline. Here N = 2. \\
+\hline
+{\em Real} & The type of the coefficients. Here Real = double. \\
+\hline
+\end{DoxyTemplParams}
+
+\begin{DoxyParams}{Parameters}
+{\em t} & The nodes of the interpolation \\
+\hline
+{\em y} & The values of the interpolation \\
+\hline
+{\em method} & The method of interpolation, 0 for periodic, 1 for complete (given one derivative at the beginning point), 2 for special case. \\
+\hline
+{\em boundary\+\_\+condition} & The boundary condition, used when method is 1. \\
+\hline
+{\em check} & Whether to check the input data, default is 0. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classBInterpolate_ad484bba2caebf1c98d30b2c0bca0884f}\label{classBInterpolate_ad484bba2caebf1c98d30b2c0bca0884f}} 
+\index{BInterpolate$<$ N, Real $>$@{BInterpolate$<$ N, Real $>$}!BInterpolate@{BInterpolate}}
+\index{BInterpolate@{BInterpolate}!BInterpolate$<$ N, Real $>$@{BInterpolate$<$ N, Real $>$}}
+\doxysubsubsection{\texorpdfstring{BInterpolate()}{BInterpolate()}\hspace{0.1cm}{\footnotesize\ttfamily [3/3]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classBInterpolate}{BInterpolate}}$<$ 3, double $>$\+::\mbox{\hyperlink{classBInterpolate}{BInterpolate}} (\begin{DoxyParamCaption}\item[{const std\+::vector$<$ double $>$ \&}]{t,  }\item[{const std\+::vector$<$ double $>$ \&}]{y,  }\item[{const int \&}]{method,  }\item[{const std\+::vector$<$ double $>$ \&}]{boundary\+\_\+condition,  }\item[{const int}]{check }\end{DoxyParamCaption})}
+
+
+
+Construct a new BInterpolate$<$3, double$>$\+::\+BInterpolate object. 
+
+
+\begin{DoxyTemplParams}{Template Parameters}
+{\em N} & The order of the B-\/spline. Here N = 3. \\
+\hline
+{\em Real} & The type of the coefficients. Here Real = double. \\
+\hline
+\end{DoxyTemplParams}
+
+\begin{DoxyParams}{Parameters}
+{\em t} & The nodes of the interpolation \\
+\hline
+{\em y} & The values of the interpolation \\
+\hline
+{\em method} & The method of the interpolation. 0 for periodic, 1 for complete, 2 for natural. default is 0. \\
+\hline
+{\em boundary\+\_\+condition} & The boundary condition. default is \{\}. size of the boundary condition should bigger than 1, greater than 2 is ok, but just use the first two. \\
+\hline
+{\em check} & Whether to check the input data, default is 0 \\
+\hline
+\end{DoxyParams}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classBInterpolate_a8fc45bf8779c48c8e9cbef65acd7b76f}\label{classBInterpolate_a8fc45bf8779c48c8e9cbef65acd7b76f}} 
+\index{BInterpolate$<$ N, Real $>$@{BInterpolate$<$ N, Real $>$}!interpolate@{interpolate}}
+\index{interpolate@{interpolate}!BInterpolate$<$ N, Real $>$@{BInterpolate$<$ N, Real $>$}}
+\doxysubsubsection{\texorpdfstring{interpolate()}{interpolate()}\hspace{0.1cm}{\footnotesize\ttfamily [1/4]}}
+{\footnotesize\ttfamily void \mbox{\hyperlink{classBInterpolate}{BInterpolate}}$<$ 1, double $>$\+::interpolate (\begin{DoxyParamCaption}\item[{const std\+::vector$<$ double $>$ \&}]{t,  }\item[{const std\+::vector$<$ double $>$ \&}]{y,  }\item[{const int \&}]{method,  }\item[{const std\+::vector$<$ double $>$ \&}]{boundary\+\_\+condition }\end{DoxyParamCaption})}
+
+
+
+Interpolate the data using B-\/spline. 
+
+
+\begin{DoxyTemplParams}{Template Parameters}
+{\em N} & The order of the B-\/splin. Here N = 1. \\
+\hline
+{\em Real} & The type of the coefficients. Here Real = double. \\
+\hline
+\end{DoxyTemplParams}
+
+\begin{DoxyParams}{Parameters}
+{\em t} & The nodes of the interpolation \\
+\hline
+{\em y} & The values of the interpolation \\
+\hline
+{\em method} & The method of interpolation, not used here in $ N = 1 $ \\
+\hline
+{\em boundary\+\_\+condition} & The boundary condition, not used here in $ N = 1 $\\
+\hline
+\end{DoxyParams}
+In the linear case, we not need to calculte the coefficients, the values are the coefficients. So we just need to construct the {\ttfamily \mbox{\hyperlink{classBSpline}{BSpline}}} object. \mbox{\Hypertarget{classBInterpolate_a85281314a8194c7062008eaa5494253e}\label{classBInterpolate_a85281314a8194c7062008eaa5494253e}} 
+\index{BInterpolate$<$ N, Real $>$@{BInterpolate$<$ N, Real $>$}!interpolate@{interpolate}}
+\index{interpolate@{interpolate}!BInterpolate$<$ N, Real $>$@{BInterpolate$<$ N, Real $>$}}
+\doxysubsubsection{\texorpdfstring{interpolate()}{interpolate()}\hspace{0.1cm}{\footnotesize\ttfamily [2/4]}}
+{\footnotesize\ttfamily void \mbox{\hyperlink{classBInterpolate}{BInterpolate}}$<$ 2, double $>$\+::interpolate (\begin{DoxyParamCaption}\item[{const std\+::vector$<$ double $>$ \&}]{t,  }\item[{const std\+::vector$<$ double $>$ \&}]{y,  }\item[{const int \&}]{method,  }\item[{const std\+::vector$<$ double $>$ \&}]{boundary\+\_\+condition }\end{DoxyParamCaption})}
+
+
+
+Construct a new BInterpolate$<$2, double$>$\+::\+BInterpolate object. 
+
+
+\begin{DoxyTemplParams}{Template Parameters}
+{\em N} & The order of the B-\/spline. Here N = 2. \\
+\hline
+{\em Real} & The type of the coefficients. Here Real = double. \\
+\hline
+\end{DoxyTemplParams}
+
+\begin{DoxyParams}{Parameters}
+{\em t} & The nodes of the interpolation \\
+\hline
+{\em y} & The values of the interpolation \\
+\hline
+{\em method} & The method of interpolation, 0 for periodic, 1 for complete, 2 for special case. default is 0. \\
+\hline
+{\em boundary\+\_\+condition} & The boundary condition, default is \{\}. size of the boundary condition should bigger than 0, greater than 1 is ok, but just use the first one.\\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyExceptions}{Exceptions}
+{\em std\+::invalid\+\_\+argument} & If the method is not supported. \\
+\hline
+\end{DoxyExceptions}
+We have \[ B(x) = \sum_{i=0}^{N} a_i B_{i}^2(x), x\in [t_1, t_N]. \] So we just need to construct the linear system to solve the coefficients and use them to construct the {\ttfamily \mbox{\hyperlink{classBSpline}{BSpline}}} object.
+
+{\bfseries{Periodic boundary condition.}}
+
+$ B(x_i) = y_i $ is needed, which gives the first t\+\_\+size equations. Where $ B(x_i) = \sum_{j=i-1}^{i+1} c_j B_j(x_i) $ (Actually i-\/1 to i). And the basis functions can be calculated by the {\ttfamily get\+\_\+basis} function defined in the {\ttfamily \mbox{\hyperlink{classBSpline}{BSpline}}} class.
+
+For periodic boundary condition, we need to add one additional equation $ B^{\prime} (x_0) = B^{\prime} (x_{t_{size} - 1}) $. And we have $ B^{\prime} (x) = \sum_{j=i-1}^{i+1} c_j B_j^{\prime}(x), x \in (x_{i}, x_{i+1}] $.
+
+The primes can be easily calculated by the {\ttfamily basis\+\_\+derivative} function defined in the {\ttfamily \mbox{\hyperlink{classBSpline}{BSpline}}} class.
+
+Finally we have $ t_{size} + 1$ equations. Then use Eigen to solve the linear system.
+
+\begin{DoxyNote}{Note}
+For the matrix here is a sparse matrix, we use the {\ttfamily Eigen\+::\+Sparse\+Matrix} class. And the solver is {\ttfamily Eigen\+::\+Sparse\+LU} to solve the sparse linear system.
+\end{DoxyNote}
+{\bfseries{Complete boundary condition.}}
+
+$ B(x_i) = y_i $ is needed, which gives the first t\+\_\+size equations. Where $ B(x_i) = \sum_{j=i-1}^{i+1} c_j B_j(x_i) $ (Actually i-\/1 to i). And the basis functions can be calculated by the {\ttfamily get\+\_\+basis} function defined in the {\ttfamily \mbox{\hyperlink{classBSpline}{BSpline}}} class.
+
+For the complete boundary condition, we need to add two additional equations \[ B^{\prime} (x_0) = m_0, \quad B^{\prime} (x_{t_{size} - 1}) = m_{t_{size} - 1} \] Similarly, we can calculate the derivative of the basis functions by the {\ttfamily basis\+\_\+derivative} function defined in the {\ttfamily \mbox{\hyperlink{classBSpline}{BSpline}}} class.
+
+So we can construct the linear system for the coefficients.
+
+\begin{DoxyNote}{Note}
+For the matrix here is a sparse matrix, we use the {\ttfamily Eigen\+::\+Sparse\+Matrix} class. And the solver is {\ttfamily Eigen\+::\+Sparse\+LU} to solve the sparse linear system.
+\end{DoxyNote}
+{\bfseries{Special case.}}
+
+This case is to implement Thm 3.\+58 to solve question {\ttfamily C}, not too much to say.
+
+{\bfseries{Other conditions}}
+
+Just throw an exception.\mbox{\Hypertarget{classBInterpolate_a075cda67ea13b9689e70f1d6ab1f2993}\label{classBInterpolate_a075cda67ea13b9689e70f1d6ab1f2993}} 
+\index{BInterpolate$<$ N, Real $>$@{BInterpolate$<$ N, Real $>$}!interpolate@{interpolate}}
+\index{interpolate@{interpolate}!BInterpolate$<$ N, Real $>$@{BInterpolate$<$ N, Real $>$}}
+\doxysubsubsection{\texorpdfstring{interpolate()}{interpolate()}\hspace{0.1cm}{\footnotesize\ttfamily [3/4]}}
+{\footnotesize\ttfamily void \mbox{\hyperlink{classBInterpolate}{BInterpolate}}$<$ 3, double $>$\+::interpolate (\begin{DoxyParamCaption}\item[{const std\+::vector$<$ double $>$ \&}]{t,  }\item[{const std\+::vector$<$ double $>$ \&}]{y,  }\item[{const int \&}]{method,  }\item[{const std\+::vector$<$ double $>$ \&}]{boundary\+\_\+condition }\end{DoxyParamCaption})}
+
+
+
+Construct a new BInterpolate$<$3, double$>$\+::\+BInterpolate object. 
+
+
+\begin{DoxyTemplParams}{Template Parameters}
+{\em N} & The order of the B-\/spline. Here N = 3. \\
+\hline
+{\em Real} & The type of the coefficients. Here Real = double. \\
+\hline
+\end{DoxyTemplParams}
+
+\begin{DoxyParams}{Parameters}
+{\em t} & The nodes of the interpolation \\
+\hline
+{\em y} & The values of the interpolation \\
+\hline
+{\em method} & The method of the interpolation. 0 for periodic, 1 for complete, 2 for natural. default is 0. \\
+\hline
+{\em boundary\+\_\+condition} & The boundary condition. default is \{\}. size of the boundary condition should bigger than 1, greater than 2 is ok, but just use the first two. \\
+\hline
+\end{DoxyParams}
+We have \[ B(x) = \sum_{i=-1}^{N} a_i B_{i}^3(x), x\in [t_1, t_N]. \] So we just need to construct the linear system to solve the coefficients and use them to construct the {\ttfamily \mbox{\hyperlink{classBSpline}{BSpline}}} object.
+
+{\bfseries{Periodic conditions}}
+
+We have (Actually i-\/2 to i is enough.) \[ B(x_i) = \sum_{j=i-2}^{i+1} a_j B_j^3(x_i), \] So by the value condition \[ B(x_i) = y_i, \quad i = 1, 2, \cdots, N, \] we can have the first N equations.
+
+More generally, we have (left side is open) \[ B(x) = \sum_{j=i-2}^{i+1} a_j B_j^3(x), x \in (t_i,t_{i+1}] \]
+
+Due to the implement of the {\ttfamily \mbox{\hyperlink{classBSpline}{BSpline}}} class, in the returned vector of the {\ttfamily get\+\_\+basis} function, we have that at the beginning point $ t_1 $, the first three basis are non-\/zero, and at other points $ x \in (t_1, t_N] $, the basis of the last three is non-\/zero. Therefore, in the implementation, we specific the situation of the first point.
+
+For the periodic condition, we have \[ B^{\prime} (x_1) = B^{\prime} (x_N),~ B^{\prime\prime} (x_1) = B^{\prime\prime} (x_N). \] So we can have the last equations as \[ \sum_{j=-2}^{1} a_j B_j^{\prime} (x_1) = \sum_{j=N-3}^{N} a_j B_j^{\prime} (x_N), \] \[ \sum_{j=-2}^{1} a_j B_j^{\prime\prime} (x_1) = \sum_{j=N-3}^{N} a_j B_j^{\prime\prime} (x_N). \] Same problem as above, we specific the situation of the first point.
+
+Simply use the {\ttfamily basis\+\_\+derivative} function to get the derivative of the basis functions. we can construct the linear system to solve the coefficients.
+
+Finally, we can solve the linear system to get the coefficients.
+
+\begin{DoxyNote}{Note}
+For the matrix here is a sparse matrix, we use the {\ttfamily Eigen\+::\+Sparse\+Matrix} class. And the solver is {\ttfamily Eigen\+::\+Sparse\+LU} to solve the sparse linear system.
+\end{DoxyNote}
+{\bfseries{Complete conditions}}
+
+The first $ N $ equations are the same as the periodic case. Just need to add the boundary condition.
+
+For the complete boundary condition, we have \[ B^{\prime} (x_0) = m_0, \quad B^{\prime} (x_{t_{size} - 1}) = m_{t_{size} - 1} \] So we have \[ \sum_{j=-2}^{1} a_j B_j^{\prime} (x_0) = m_0, \quad \sum_{j=N-3}^{N} a_j B_j^{\prime} (x_{t_{size} - 1}) = m_{t_{size} - 1} \] Use the {\ttfamily basis\+\_\+derivative} function to get the derivative of the basis functions, we can construct the linear system to solve the coefficients.
+
+Finally, we can solve the linear system to get the coefficients.
+
+\begin{DoxyNote}{Note}
+For the matrix here is a sparse matrix, we use the {\ttfamily Eigen\+::\+Sparse\+Matrix} class. And the solver is {\ttfamily Eigen\+::\+Sparse\+LU} to solve the sparse linear system.
+\end{DoxyNote}
+{\bfseries{Natural conditions}} The first $ N $ equations are the same as the periodic case. We just need to add two natural conditions. \[ B^{\prime\prime} (x_0) = 0, \quad B^{\prime\prime} (x_{t_{size} - 1}) = 0 \] So we have \[ \sum_{j=-2}^{1} a_j B_j^{\prime\prime} (x_0) = 0, \quad \sum_{j=N-3}^{N} a_j B_j^{\prime\prime} (x_{t_{size} - 1}) = 0 \]
+
+Finally we can solve the linear system to get the coefficients.
+
+\begin{DoxyNote}{Note}
+For the matrix here is a sparse matrix, we use the {\ttfamily Eigen\+::\+Sparse\+Matrix} class. And the solver is {\ttfamily Eigen\+::\+Sparse\+LU} to solve the sparse linear system.
+\end{DoxyNote}
+\mbox{\Hypertarget{classBInterpolate_a8b0cde31c8622c0de221d4e0563d2ddc}\label{classBInterpolate_a8b0cde31c8622c0de221d4e0563d2ddc}} 
+\index{BInterpolate$<$ N, Real $>$@{BInterpolate$<$ N, Real $>$}!interpolate@{interpolate}}
+\index{interpolate@{interpolate}!BInterpolate$<$ N, Real $>$@{BInterpolate$<$ N, Real $>$}}
+\doxysubsubsection{\texorpdfstring{interpolate()}{interpolate()}\hspace{0.1cm}{\footnotesize\ttfamily [4/4]}}
+{\footnotesize\ttfamily template$<$int N, typename Real $>$ \\
+void \mbox{\hyperlink{classBInterpolate}{BInterpolate}}$<$ N, Real $>$\+::interpolate (\begin{DoxyParamCaption}\item[{const std\+::vector$<$ Real $>$ \&}]{t,  }\item[{const std\+::vector$<$ Real $>$ \&}]{y,  }\item[{const int \&}]{method,  }\item[{const std\+::vector$<$ Real $>$ \&}]{boundary\+\_\+condition = {\ttfamily std\+:\+:vector$<$Real$>$(N,~0.0)} }\end{DoxyParamCaption})}
+
+Here are the details for the interpolation.
+
+For B-\/\+Spline, the interpolation is easy, we can easily construct the matrix A and vector b.
+
+Firstly, for the $f(x_i) = y_i$, we just calculate the basis function that is non-\/zero at x\+\_\+i, and let them be the coefficients.
+
+{\bfseries{Periodic Condition}}
+
+For the periodic condition, we can have $n-1$ more condtions that is \[ \frac{\mathrm{d}^i f(x_1)}{\mathrm{d} x^i} = \frac{\mathrm{d}^i f(x_n)}{\mathrm{d} x^i} \]
+
+Recall the form of B-\/\+Spline, then we can easily construct the matrix A and vector b.
+
+{\bfseries{Complete Condition}}
+
+This condition is based on all the derivates at the beginning point are given.
+
+The more $n-1$ equations is easy to construct.
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+src/include/\mbox{\hyperlink{BInterpolate_8hpp}{BInterpolate.\+hpp}}\item 
+src/include/\mbox{\hyperlink{BInterpolate_8tpp}{BInterpolate.\+tpp}}\end{DoxyCompactItemize}

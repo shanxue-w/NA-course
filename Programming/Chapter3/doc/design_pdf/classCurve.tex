@@ -1,0 +1,408 @@
+\hypertarget{classCurve}{}\doxysection{Curve$<$ N, Real $>$ Class Template Reference}
+\label{classCurve}\index{Curve$<$ N, Real $>$@{Curve$<$ N, Real $>$}}
+
+
+This class is used to implement the curve interpolation, which can be used to interpolate the curve in 2D, 3D, and the surface of a ball. The curve is represented by a set of points, and the interpolation method is determined by the method parameter.  
+
+
+
+
+{\ttfamily \#include $<$Curve.\+hpp$>$}
+
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classCurve_aa553da092562a1a56afa9697f0a875dd}{Curve}} (const std\+::vector$<$ Real $>$ \&t, const std\+::vector$<$ std\+::vector$<$ Real $>$$>$ \&xy, const int method=0, const std\+::vector$<$ std\+::vector$<$ Real $>$$>$ \&boundary\+\_\+condition=std\+::vector$<$ std\+::vector$<$ Real $>$$>$())
+\begin{DoxyCompactList}\small\item\em Construct a new \mbox{\hyperlink{classCurve}{Curve}} object. \end{DoxyCompactList}\item 
+Real \mbox{\hyperlink{classCurve_a9d0b5d8c8e77f0980429c24feb979700}{SQRT}} (const Real \&x) const
+\begin{DoxyCompactList}\small\item\em Sqrt function. \end{DoxyCompactList}\item 
+Real \mbox{\hyperlink{classCurve_a0cdefe5c4ce5b8237357ca6454476ce2}{ARCSIN}} (const Real \&x) const
+\begin{DoxyCompactList}\small\item\em Arcsin function. \end{DoxyCompactList}\item 
+Real \mbox{\hyperlink{classCurve_ad5cae4dfc62fe5be1984340af4865d87}{ARCCOS}} (const Real \&x) const
+\begin{DoxyCompactList}\small\item\em Arctan function. \end{DoxyCompactList}\item 
+Real \mbox{\hyperlink{classCurve_af6b8ebc142a1905459dcbf8ceef60701}{ARCTAN}} (const Real \&x) const
+\begin{DoxyCompactList}\small\item\em Arctan function. \end{DoxyCompactList}\item 
+Real \mbox{\hyperlink{classCurve_abd57bd3ac34c6508bfac4130ed599707}{SIN}} (const Real \&x) const
+\begin{DoxyCompactList}\small\item\em Sin function. \end{DoxyCompactList}\item 
+Real \mbox{\hyperlink{classCurve_ab375a53b9a852df91d248a64c575958a}{COS}} (const Real \&x) const
+\begin{DoxyCompactList}\small\item\em Cos function. \end{DoxyCompactList}\item 
+std\+::vector$<$ \mbox{\hyperlink{classBSpline}{BSpline}}$<$ Real $>$ $>$ \mbox{\hyperlink{classCurve_a4ffd8041a9a6eb00b2790f3c6adfea68}{BSpline2d}} () const
+\begin{DoxyCompactList}\small\item\em Use Bspline to interpolate the curve in 2D. \end{DoxyCompactList}\item 
+std\+::vector$<$ \mbox{\hyperlink{classBSpline}{BSpline}}$<$ Real $>$ $>$ \mbox{\hyperlink{classCurve_a9aa4d7ea6fef8e8a9765b537d519f5da}{BSpline3d}} () const
+\begin{DoxyCompactList}\small\item\em Use Bspline to interpolate the curve in 3D. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classBallFunction}{Ball\+Function}}$<$ Real $>$ \mbox{\hyperlink{classCurve_a0633d384e544253cab336b09da3dd06c}{BSpline\+Ball}} () const
+\begin{DoxyCompactList}\small\item\em Use Bspline to interpolate the curve in the surface of a ball. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classBallFunction}{Ball\+Function}}$<$ Real $>$ \mbox{\hyperlink{classCurve_a80bbbde45ef0c41e52e21726ae1e1cda}{BSpline\+Ball\+Proj}} () const
+\begin{DoxyCompactList}\small\item\em Use Bspline to interpolate the curve in the surface of a ball. \end{DoxyCompactList}\item 
+std\+::vector$<$ \mbox{\hyperlink{classPPoly}{PPoly}}$<$ Real $>$ $>$ \mbox{\hyperlink{classCurve_a53ace529368174b7997f3a32ef37daec}{PPoly2d}} () const
+\begin{DoxyCompactList}\small\item\em Use \mbox{\hyperlink{classPPoly}{PPoly}} to interpolate the curve in 2D. \end{DoxyCompactList}\item 
+std\+::vector$<$ \mbox{\hyperlink{classPPoly}{PPoly}}$<$ Real $>$ $>$ \mbox{\hyperlink{classCurve_afd98f71f45da245fa79a5005c33daf76}{PPoly3d}} () const
+\begin{DoxyCompactList}\small\item\em Use \mbox{\hyperlink{classPPoly}{PPoly}} to interpolate the curve in 3D. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classBallFunction}{Ball\+Function}}$<$ Real $>$ \mbox{\hyperlink{classCurve_aca18f8122777943ef9dbaf5a12c654ed}{PPoly\+Ball}} () const
+\begin{DoxyCompactList}\small\item\em Use \mbox{\hyperlink{classPPoly}{PPoly}} to interpolate the curve in the surface of a ball. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classBallFunction}{Ball\+Function}}$<$ Real $>$ \mbox{\hyperlink{classCurve_a60c04b68212d1d9fa2bfa442db23a84c}{PPoly\+Ball\+Proj}} () const
+\begin{DoxyCompactList}\small\item\em Use \mbox{\hyperlink{classPPoly}{PPoly}} to interpolate the curve in the surface of a ball. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{classCurve_ab2b5ca0b4d2f66d3adbd89b019cf1fbd}{is\+Point\+In\+Set}} (Real x, Real y, Real z) const
+\begin{DoxyCompactList}\small\item\em Check if a point is in the curve. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classCurve_abd0ec4cfdc3a90617c2e6f23d125bcd6}{Find\+Random\+Point}} (Real \&x\+\_\+0, Real \&y\+\_\+0, Real \&z\+\_\+0) const
+\begin{DoxyCompactList}\small\item\em Find a random point on the surface of the ball, in order to find a point not in the curve. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classCurve_a932ca7d6446740cb976538f30906d4c3}{Calculate\+Theta\+Phi}} (std\+::vector$<$ Real $>$ \&theta, std\+::vector$<$ Real $>$ \&phi) const
+\begin{DoxyCompactList}\small\item\em Calculate the theta and phi of the curve. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\subsubsection*{template$<$int N, typename Real = double$>$\newline
+class Curve$<$ N, Real $>$}
+
+This class is used to implement the curve interpolation, which can be used to interpolate the curve in 2D, 3D, and the surface of a ball. The curve is represented by a set of points, and the interpolation method is determined by the method parameter. 
+
+The curve can be interpolated by using the Bspline or \mbox{\hyperlink{classPPoly}{PPoly}} method.
+
+
+\begin{DoxyTemplParams}{Template Parameters}
+{\em N} & Order of the spline to be used. \\
+\hline
+{\em Real} & The type of the data. Default is double. \\
+\hline
+\end{DoxyTemplParams}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classCurve_aa553da092562a1a56afa9697f0a875dd}\label{classCurve_aa553da092562a1a56afa9697f0a875dd}} 
+\index{Curve$<$ N, Real $>$@{Curve$<$ N, Real $>$}!Curve@{Curve}}
+\index{Curve@{Curve}!Curve$<$ N, Real $>$@{Curve$<$ N, Real $>$}}
+\doxysubsubsection{\texorpdfstring{Curve()}{Curve()}}
+{\footnotesize\ttfamily template$<$int N, typename Real $>$ \\
+\mbox{\hyperlink{classCurve}{Curve}}$<$ N, Real $>$\+::\mbox{\hyperlink{classCurve}{Curve}} (\begin{DoxyParamCaption}\item[{const std\+::vector$<$ Real $>$ \&}]{t,  }\item[{const std\+::vector$<$ std\+::vector$<$ Real $>$$>$ \&}]{xy,  }\item[{const int}]{method = {\ttfamily 0},  }\item[{const std\+::vector$<$ std\+::vector$<$ Real $>$$>$ \&}]{boundary\+\_\+condition = {\ttfamily std\+:\+:vector$<$std\+:\+:vector$<$Real$>$$>$()} }\end{DoxyParamCaption})}
+
+
+
+Construct a new \mbox{\hyperlink{classCurve}{Curve}} object. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em t} & The knots of the curve \\
+\hline
+{\em xy} & The values of the curve \\
+\hline
+{\em method} & The method of the curve to be interpolated \\
+\hline
+{\em boundary\+\_\+condition} & The boundary condition of the curve \\
+\hline
+\end{DoxyParams}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classCurve_ad5cae4dfc62fe5be1984340af4865d87}\label{classCurve_ad5cae4dfc62fe5be1984340af4865d87}} 
+\index{Curve$<$ N, Real $>$@{Curve$<$ N, Real $>$}!ARCCOS@{ARCCOS}}
+\index{ARCCOS@{ARCCOS}!Curve$<$ N, Real $>$@{Curve$<$ N, Real $>$}}
+\doxysubsubsection{\texorpdfstring{ARCCOS()}{ARCCOS()}}
+{\footnotesize\ttfamily template$<$int N, typename Real $>$ \\
+Real \mbox{\hyperlink{classCurve}{Curve}}$<$ N, Real $>$\+::ARCCOS (\begin{DoxyParamCaption}\item[{const Real \&}]{x }\end{DoxyParamCaption}) const}
+
+
+
+Arctan function. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em x} & The value to calculate the arctan \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Real The arctan of x 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classCurve_a0cdefe5c4ce5b8237357ca6454476ce2}\label{classCurve_a0cdefe5c4ce5b8237357ca6454476ce2}} 
+\index{Curve$<$ N, Real $>$@{Curve$<$ N, Real $>$}!ARCSIN@{ARCSIN}}
+\index{ARCSIN@{ARCSIN}!Curve$<$ N, Real $>$@{Curve$<$ N, Real $>$}}
+\doxysubsubsection{\texorpdfstring{ARCSIN()}{ARCSIN()}}
+{\footnotesize\ttfamily template$<$int N, typename Real $>$ \\
+Real \mbox{\hyperlink{classCurve}{Curve}}$<$ N, Real $>$\+::ARCSIN (\begin{DoxyParamCaption}\item[{const Real \&}]{x }\end{DoxyParamCaption}) const}
+
+
+
+Arcsin function. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em x} & The value to calculate the arcsin \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Real The arcsin of x 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classCurve_af6b8ebc142a1905459dcbf8ceef60701}\label{classCurve_af6b8ebc142a1905459dcbf8ceef60701}} 
+\index{Curve$<$ N, Real $>$@{Curve$<$ N, Real $>$}!ARCTAN@{ARCTAN}}
+\index{ARCTAN@{ARCTAN}!Curve$<$ N, Real $>$@{Curve$<$ N, Real $>$}}
+\doxysubsubsection{\texorpdfstring{ARCTAN()}{ARCTAN()}}
+{\footnotesize\ttfamily template$<$int N, typename Real $>$ \\
+Real \mbox{\hyperlink{classCurve}{Curve}}$<$ N, Real $>$\+::ARCTAN (\begin{DoxyParamCaption}\item[{const Real \&}]{x }\end{DoxyParamCaption}) const}
+
+
+
+Arctan function. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em x} & The value to calculate the arctan \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Real The arctan of x 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classCurve_a4ffd8041a9a6eb00b2790f3c6adfea68}\label{classCurve_a4ffd8041a9a6eb00b2790f3c6adfea68}} 
+\index{Curve$<$ N, Real $>$@{Curve$<$ N, Real $>$}!BSpline2d@{BSpline2d}}
+\index{BSpline2d@{BSpline2d}!Curve$<$ N, Real $>$@{Curve$<$ N, Real $>$}}
+\doxysubsubsection{\texorpdfstring{BSpline2d()}{BSpline2d()}}
+{\footnotesize\ttfamily template$<$int N, typename Real $>$ \\
+std\+::vector$<$ \mbox{\hyperlink{classBSpline}{BSpline}}$<$ Real $>$ $>$ \mbox{\hyperlink{classCurve}{Curve}}$<$ N, Real $>$\+::BSpline2d}
+
+
+
+Use Bspline to interpolate the curve in 2D. 
+
+\begin{DoxyReturn}{Returns}
+std\+::vector$<$\mbox{\hyperlink{classBSpline}{BSpline$<$\+Real$>$}}$>$ 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classCurve_a9aa4d7ea6fef8e8a9765b537d519f5da}\label{classCurve_a9aa4d7ea6fef8e8a9765b537d519f5da}} 
+\index{Curve$<$ N, Real $>$@{Curve$<$ N, Real $>$}!BSpline3d@{BSpline3d}}
+\index{BSpline3d@{BSpline3d}!Curve$<$ N, Real $>$@{Curve$<$ N, Real $>$}}
+\doxysubsubsection{\texorpdfstring{BSpline3d()}{BSpline3d()}}
+{\footnotesize\ttfamily template$<$int N, typename Real $>$ \\
+std\+::vector$<$ \mbox{\hyperlink{classBSpline}{BSpline}}$<$ Real $>$ $>$ \mbox{\hyperlink{classCurve}{Curve}}$<$ N, Real $>$\+::BSpline3d}
+
+
+
+Use Bspline to interpolate the curve in 3D. 
+
+\begin{DoxyReturn}{Returns}
+std\+::vector$<$\mbox{\hyperlink{classBSpline}{BSpline$<$\+Real$>$}}$>$ 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classCurve_a0633d384e544253cab336b09da3dd06c}\label{classCurve_a0633d384e544253cab336b09da3dd06c}} 
+\index{Curve$<$ N, Real $>$@{Curve$<$ N, Real $>$}!BSplineBall@{BSplineBall}}
+\index{BSplineBall@{BSplineBall}!Curve$<$ N, Real $>$@{Curve$<$ N, Real $>$}}
+\doxysubsubsection{\texorpdfstring{BSplineBall()}{BSplineBall()}}
+{\footnotesize\ttfamily template$<$int N, typename Real $>$ \\
+\mbox{\hyperlink{classBallFunction}{Ball\+Function}}$<$ Real $>$ \mbox{\hyperlink{classCurve}{Curve}}$<$ N, Real $>$\+::BSpline\+Ball}
+
+
+
+Use Bspline to interpolate the curve in the surface of a ball. 
+
+\begin{DoxyReturn}{Returns}
+Ball\+Function$<$\+Real$>$
+\end{DoxyReturn}
+Write all points into \[ x = r \sin \theta \cos \phi, \quad y = r \sin \theta \sin \phi, \quad z = r \cos \theta \]
+
+Then use Bspline to interpolate $ \theta $ and $ \phi $. By polar coordinates, we can transform the 3D curve to a 2D curve
+
+$ x = r \sin \theta \cos \varphi $ $ y = r \sin \theta \sin \varphi $ $ z = r \cos \theta $\mbox{\Hypertarget{classCurve_a80bbbde45ef0c41e52e21726ae1e1cda}\label{classCurve_a80bbbde45ef0c41e52e21726ae1e1cda}} 
+\index{Curve$<$ N, Real $>$@{Curve$<$ N, Real $>$}!BSplineBallProj@{BSplineBallProj}}
+\index{BSplineBallProj@{BSplineBallProj}!Curve$<$ N, Real $>$@{Curve$<$ N, Real $>$}}
+\doxysubsubsection{\texorpdfstring{BSplineBallProj()}{BSplineBallProj()}}
+{\footnotesize\ttfamily template$<$int N, typename Real $>$ \\
+\mbox{\hyperlink{classBallFunction}{Ball\+Function}}$<$ Real $>$ \mbox{\hyperlink{classCurve}{Curve}}$<$ N, Real $>$\+::BSpline\+Ball\+Proj}
+
+
+
+Use Bspline to interpolate the curve in the surface of a ball. 
+
+\begin{DoxyReturn}{Returns}
+Ball\+Function$<$\+Real$>$
+\end{DoxyReturn}
+We can find a point $(x_0,y_0,z_0)$ not in the cruve, then the point can project the curve to a plane. \[ x_1 = \frac{z x_0 - z_0 x}{z - z_0}, \quad y_1 = \frac{z y_0 - z_0 y}{z - z_0} \]
+
+Use Bspline to interpolate the projected curve.
+
+Finally, use the inverse formula to project the curve back to the surface of the ball.
+
+\[ t = \frac{2 x_0 x + 2 y_0 y - 2 r^2}{r^2 - 2 x_0 x - 2 y_0 y + x^2 + y^2}, \quad x_1 = x_0 + t (x_0 - x), \quad y_1 = y_0 + t (y_0 - y), \quad z_1 = z_0 + t (z_0 - z) \] \mbox{\Hypertarget{classCurve_a932ca7d6446740cb976538f30906d4c3}\label{classCurve_a932ca7d6446740cb976538f30906d4c3}} 
+\index{Curve$<$ N, Real $>$@{Curve$<$ N, Real $>$}!CalculateThetaPhi@{CalculateThetaPhi}}
+\index{CalculateThetaPhi@{CalculateThetaPhi}!Curve$<$ N, Real $>$@{Curve$<$ N, Real $>$}}
+\doxysubsubsection{\texorpdfstring{CalculateThetaPhi()}{CalculateThetaPhi()}}
+{\footnotesize\ttfamily template$<$int N, typename Real $>$ \\
+void \mbox{\hyperlink{classCurve}{Curve}}$<$ N, Real $>$\+::Calculate\+Theta\+Phi (\begin{DoxyParamCaption}\item[{std\+::vector$<$ Real $>$ \&}]{theta,  }\item[{std\+::vector$<$ Real $>$ \&}]{phi }\end{DoxyParamCaption}) const}
+
+
+
+Calculate the theta and phi of the curve. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em theta} & theta of the curve \\
+\hline
+{\em phi} & phi of the curve \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classCurve_ab375a53b9a852df91d248a64c575958a}\label{classCurve_ab375a53b9a852df91d248a64c575958a}} 
+\index{Curve$<$ N, Real $>$@{Curve$<$ N, Real $>$}!COS@{COS}}
+\index{COS@{COS}!Curve$<$ N, Real $>$@{Curve$<$ N, Real $>$}}
+\doxysubsubsection{\texorpdfstring{COS()}{COS()}}
+{\footnotesize\ttfamily template$<$int N, typename Real $>$ \\
+Real \mbox{\hyperlink{classCurve}{Curve}}$<$ N, Real $>$\+::COS (\begin{DoxyParamCaption}\item[{const Real \&}]{x }\end{DoxyParamCaption}) const}
+
+
+
+Cos function. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em x} & The value to calculate the cos \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Real The cos of x 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classCurve_abd0ec4cfdc3a90617c2e6f23d125bcd6}\label{classCurve_abd0ec4cfdc3a90617c2e6f23d125bcd6}} 
+\index{Curve$<$ N, Real $>$@{Curve$<$ N, Real $>$}!FindRandomPoint@{FindRandomPoint}}
+\index{FindRandomPoint@{FindRandomPoint}!Curve$<$ N, Real $>$@{Curve$<$ N, Real $>$}}
+\doxysubsubsection{\texorpdfstring{FindRandomPoint()}{FindRandomPoint()}}
+{\footnotesize\ttfamily template$<$int N, typename Real $>$ \\
+void \mbox{\hyperlink{classCurve}{Curve}}$<$ N, Real $>$\+::Find\+Random\+Point (\begin{DoxyParamCaption}\item[{Real \&}]{x\+\_\+0,  }\item[{Real \&}]{y\+\_\+0,  }\item[{Real \&}]{z\+\_\+0 }\end{DoxyParamCaption}) const}
+
+
+
+Find a random point on the surface of the ball, in order to find a point not in the curve. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em x\+\_\+0} & x-\/coordinate of the point \\
+\hline
+{\em y\+\_\+0} & y-\/coordinate of the point \\
+\hline
+{\em z\+\_\+0} & z-\/coordinate of the point \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classCurve_ab2b5ca0b4d2f66d3adbd89b019cf1fbd}\label{classCurve_ab2b5ca0b4d2f66d3adbd89b019cf1fbd}} 
+\index{Curve$<$ N, Real $>$@{Curve$<$ N, Real $>$}!isPointInSet@{isPointInSet}}
+\index{isPointInSet@{isPointInSet}!Curve$<$ N, Real $>$@{Curve$<$ N, Real $>$}}
+\doxysubsubsection{\texorpdfstring{isPointInSet()}{isPointInSet()}}
+{\footnotesize\ttfamily template$<$int N, typename Real $>$ \\
+bool \mbox{\hyperlink{classCurve}{Curve}}$<$ N, Real $>$\+::is\+Point\+In\+Set (\begin{DoxyParamCaption}\item[{Real}]{x,  }\item[{Real}]{y,  }\item[{Real}]{z }\end{DoxyParamCaption}) const}
+
+
+
+Check if a point is in the curve. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em x} & x-\/coordinate of the point \\
+\hline
+{\em y} & y-\/coordinate of the point \\
+\hline
+{\em z} & z-\/coordinate of the point \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if the point is in the curve 
+
+false if the point is not in the curve 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classCurve_a53ace529368174b7997f3a32ef37daec}\label{classCurve_a53ace529368174b7997f3a32ef37daec}} 
+\index{Curve$<$ N, Real $>$@{Curve$<$ N, Real $>$}!PPoly2d@{PPoly2d}}
+\index{PPoly2d@{PPoly2d}!Curve$<$ N, Real $>$@{Curve$<$ N, Real $>$}}
+\doxysubsubsection{\texorpdfstring{PPoly2d()}{PPoly2d()}}
+{\footnotesize\ttfamily template$<$int N, typename Real $>$ \\
+std\+::vector$<$ \mbox{\hyperlink{classPPoly}{PPoly}}$<$ Real $>$ $>$ \mbox{\hyperlink{classCurve}{Curve}}$<$ N, Real $>$\+::PPoly2d}
+
+
+
+Use \mbox{\hyperlink{classPPoly}{PPoly}} to interpolate the curve in 2D. 
+
+\begin{DoxyReturn}{Returns}
+std\+::vector$<$\mbox{\hyperlink{classPPoly}{PPoly$<$\+Real$>$}}$>$ 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classCurve_afd98f71f45da245fa79a5005c33daf76}\label{classCurve_afd98f71f45da245fa79a5005c33daf76}} 
+\index{Curve$<$ N, Real $>$@{Curve$<$ N, Real $>$}!PPoly3d@{PPoly3d}}
+\index{PPoly3d@{PPoly3d}!Curve$<$ N, Real $>$@{Curve$<$ N, Real $>$}}
+\doxysubsubsection{\texorpdfstring{PPoly3d()}{PPoly3d()}}
+{\footnotesize\ttfamily template$<$int N, typename Real $>$ \\
+std\+::vector$<$ \mbox{\hyperlink{classPPoly}{PPoly}}$<$ Real $>$ $>$ \mbox{\hyperlink{classCurve}{Curve}}$<$ N, Real $>$\+::PPoly3d}
+
+
+
+Use \mbox{\hyperlink{classPPoly}{PPoly}} to interpolate the curve in 3D. 
+
+\begin{DoxyReturn}{Returns}
+std\+::vector$<$\mbox{\hyperlink{classPPoly}{PPoly$<$\+Real$>$}}$>$ 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classCurve_aca18f8122777943ef9dbaf5a12c654ed}\label{classCurve_aca18f8122777943ef9dbaf5a12c654ed}} 
+\index{Curve$<$ N, Real $>$@{Curve$<$ N, Real $>$}!PPolyBall@{PPolyBall}}
+\index{PPolyBall@{PPolyBall}!Curve$<$ N, Real $>$@{Curve$<$ N, Real $>$}}
+\doxysubsubsection{\texorpdfstring{PPolyBall()}{PPolyBall()}}
+{\footnotesize\ttfamily template$<$int N, typename Real $>$ \\
+\mbox{\hyperlink{classBallFunction}{Ball\+Function}}$<$ Real $>$ \mbox{\hyperlink{classCurve}{Curve}}$<$ N, Real $>$\+::PPoly\+Ball}
+
+
+
+Use \mbox{\hyperlink{classPPoly}{PPoly}} to interpolate the curve in the surface of a ball. 
+
+\begin{DoxyReturn}{Returns}
+Ball\+Function$<$\+Real$>$
+\end{DoxyReturn}
+Write all points into \[ x = r \sin \theta \cos \phi, \quad y = r \sin \theta \sin \phi, \quad z = r \cos \theta \]
+
+Then use \mbox{\hyperlink{classPPoly}{PPoly}} to interpolate $ \theta $ and $ \phi $. \mbox{\Hypertarget{classCurve_a60c04b68212d1d9fa2bfa442db23a84c}\label{classCurve_a60c04b68212d1d9fa2bfa442db23a84c}} 
+\index{Curve$<$ N, Real $>$@{Curve$<$ N, Real $>$}!PPolyBallProj@{PPolyBallProj}}
+\index{PPolyBallProj@{PPolyBallProj}!Curve$<$ N, Real $>$@{Curve$<$ N, Real $>$}}
+\doxysubsubsection{\texorpdfstring{PPolyBallProj()}{PPolyBallProj()}}
+{\footnotesize\ttfamily template$<$int N, typename Real $>$ \\
+\mbox{\hyperlink{classBallFunction}{Ball\+Function}}$<$ Real $>$ \mbox{\hyperlink{classCurve}{Curve}}$<$ N, Real $>$\+::PPoly\+Ball\+Proj}
+
+
+
+Use \mbox{\hyperlink{classPPoly}{PPoly}} to interpolate the curve in the surface of a ball. 
+
+\begin{DoxyReturn}{Returns}
+Ball\+Function$<$\+Real$>$
+\end{DoxyReturn}
+We can find a point $(x_0,y_0,z_0)$ not in the cruve, then the point can project the curve to a plane. \[ x_1 = \frac{z x_0 - z_0 x}{z - z_0}, \quad y_1 = \frac{z y_0 - z_0 y}{z - z_0} \]
+
+Use \mbox{\hyperlink{classPPoly}{PPoly}} to interpolate the projected curve.
+
+Finally, use the inverse formula to project the curve back to the surface of the ball.
+
+\[ t = \frac{2 x_0 x + 2 y_0 y - 2 r^2}{r^2 - 2 x_0 x - 2 y_0 y + x^2 + y^2}, \quad x_1 = x_0 + t (x_0 - x), \quad y_1 = y_0 + t (y_0 - y), \quad z_1 = z_0 + t (z_0 - z) \] \mbox{\Hypertarget{classCurve_abd57bd3ac34c6508bfac4130ed599707}\label{classCurve_abd57bd3ac34c6508bfac4130ed599707}} 
+\index{Curve$<$ N, Real $>$@{Curve$<$ N, Real $>$}!SIN@{SIN}}
+\index{SIN@{SIN}!Curve$<$ N, Real $>$@{Curve$<$ N, Real $>$}}
+\doxysubsubsection{\texorpdfstring{SIN()}{SIN()}}
+{\footnotesize\ttfamily template$<$int N, typename Real $>$ \\
+Real \mbox{\hyperlink{classCurve}{Curve}}$<$ N, Real $>$\+::SIN (\begin{DoxyParamCaption}\item[{const Real \&}]{x }\end{DoxyParamCaption}) const}
+
+
+
+Sin function. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em x} & The value to calculate the sin \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Real The sin of x 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classCurve_a9d0b5d8c8e77f0980429c24feb979700}\label{classCurve_a9d0b5d8c8e77f0980429c24feb979700}} 
+\index{Curve$<$ N, Real $>$@{Curve$<$ N, Real $>$}!SQRT@{SQRT}}
+\index{SQRT@{SQRT}!Curve$<$ N, Real $>$@{Curve$<$ N, Real $>$}}
+\doxysubsubsection{\texorpdfstring{SQRT()}{SQRT()}}
+{\footnotesize\ttfamily template$<$int N, typename Real $>$ \\
+Real \mbox{\hyperlink{classCurve}{Curve}}$<$ N, Real $>$\+::SQRT (\begin{DoxyParamCaption}\item[{const Real \&}]{x }\end{DoxyParamCaption}) const}
+
+
+
+Sqrt function. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em x} & The value to calculate the square root \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Real The square root of x 
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+src/include/\mbox{\hyperlink{Curve_8hpp}{Curve.\+hpp}}\item 
+src/include/\mbox{\hyperlink{Curve_8tpp}{Curve.\+tpp}}\end{DoxyCompactItemize}

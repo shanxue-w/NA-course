@@ -1,8 +1,8 @@
-all: design.pdf 
+all: report.tex report.pdf 
 
-design.pdf: design.tex
-	pdflatex design.tex
-	pdflatex design.tex
+report.pdf: report.tex
+	xelatex report.tex
+	xelatex report.tex
 
 clean:
-	rm *.aux *.log *.out *.toc 
+	rm -f *.aux *.log *.out *.toc

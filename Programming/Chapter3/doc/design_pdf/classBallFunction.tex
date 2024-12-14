@@ -1,0 +1,187 @@
+\hypertarget{classBallFunction}{}\doxysection{Ball\+Function$<$ Real $>$ Class Template Reference}
+\label{classBallFunction}\index{BallFunction$<$ Real $>$@{BallFunction$<$ Real $>$}}
+
+
+Ball Function Class, which is used to calculate the ball function value.  
+
+
+
+
+{\ttfamily \#include $<$Ball\+Function.\+hpp$>$}
+
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classBallFunction_a9527669d0f5bda3259adaa24df27d031}{Ball\+Function}} (const std\+::vector$<$ \mbox{\hyperlink{classPPoly}{PPoly}}$<$ Real $>$$>$ \&pp\+\_\+ball\+\_\+function, const Real \&r)
+\begin{DoxyCompactList}\small\item\em Construct a new Ball Function object. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classBallFunction_ab9eb649a4f79c5766febcd24df9fe524}{Ball\+Function}} (const std\+::vector$<$ \mbox{\hyperlink{classBSpline}{BSpline}}$<$ Real $>$$>$ \&bs\+\_\+ball\+\_\+function, const Real \&r)
+\begin{DoxyCompactList}\small\item\em Construct a new Ball Function object. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classBallFunction_a36c6e28dbf769c70d457d3d93868f045}{Ball\+Function}} (const std\+::vector$<$ \mbox{\hyperlink{classPPoly}{PPoly}}$<$ Real $>$$>$ \&pp\+\_\+ball\+\_\+function, const std\+::vector$<$ Real $>$ \&xyz, const Real \&r)
+\begin{DoxyCompactList}\small\item\em Construct a new Ball Function object. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classBallFunction_a6d7dff042825a39e8e93216b3863a9ad}{Ball\+Function}} (const std\+::vector$<$ \mbox{\hyperlink{classBSpline}{BSpline}}$<$ Real $>$$>$ \&bs\+\_\+ball\+\_\+function, const std\+::vector$<$ Real $>$ \&xyz, const Real \&r)
+\begin{DoxyCompactList}\small\item\em Construct a new Ball Function object. \end{DoxyCompactList}\item 
+Real \mbox{\hyperlink{classBallFunction_acddeb4866c45a68ff4905f78086e6212}{SIN}} (const Real \&x) const
+\begin{DoxyCompactList}\small\item\em Overload the sin function. \end{DoxyCompactList}\item 
+Real \mbox{\hyperlink{classBallFunction_a3a6fb3d7752181db26446bebfbf55552}{COS}} (const Real \&x) const
+\begin{DoxyCompactList}\small\item\em Overload the cos function. \end{DoxyCompactList}\item 
+std\+::vector$<$ Real $>$ \mbox{\hyperlink{classBallFunction_aac57b14cce82ec4ab3e72a788a18b658}{operator()}} (const Real \&x)
+\begin{DoxyCompactList}\small\item\em Calculate the ball function value. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\subsubsection*{template$<$typename Real$>$\newline
+class Ball\+Function$<$ Real $>$}
+
+Ball Function Class, which is used to calculate the ball function value. 
+
+
+\begin{DoxyTemplParams}{Template Parameters}
+{\em Real} & Type of the real number. \\
+\hline
+\end{DoxyTemplParams}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classBallFunction_a9527669d0f5bda3259adaa24df27d031}\label{classBallFunction_a9527669d0f5bda3259adaa24df27d031}} 
+\index{BallFunction$<$ Real $>$@{BallFunction$<$ Real $>$}!BallFunction@{BallFunction}}
+\index{BallFunction@{BallFunction}!BallFunction$<$ Real $>$@{BallFunction$<$ Real $>$}}
+\doxysubsubsection{\texorpdfstring{BallFunction()}{BallFunction()}\hspace{0.1cm}{\footnotesize\ttfamily [1/4]}}
+{\footnotesize\ttfamily template$<$typename Real $>$ \\
+\mbox{\hyperlink{classBallFunction}{Ball\+Function}}$<$ Real $>$\+::\mbox{\hyperlink{classBallFunction}{Ball\+Function}} (\begin{DoxyParamCaption}\item[{const std\+::vector$<$ \mbox{\hyperlink{classPPoly}{PPoly}}$<$ Real $>$$>$ \&}]{pp\+\_\+ball\+\_\+function,  }\item[{const Real \&}]{r }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Construct a new Ball Function object. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em pp\+\_\+ball\+\_\+function} & The piecewise polynomial ball function. \\
+\hline
+{\em r} & The radius of the ball. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classBallFunction_ab9eb649a4f79c5766febcd24df9fe524}\label{classBallFunction_ab9eb649a4f79c5766febcd24df9fe524}} 
+\index{BallFunction$<$ Real $>$@{BallFunction$<$ Real $>$}!BallFunction@{BallFunction}}
+\index{BallFunction@{BallFunction}!BallFunction$<$ Real $>$@{BallFunction$<$ Real $>$}}
+\doxysubsubsection{\texorpdfstring{BallFunction()}{BallFunction()}\hspace{0.1cm}{\footnotesize\ttfamily [2/4]}}
+{\footnotesize\ttfamily template$<$typename Real $>$ \\
+\mbox{\hyperlink{classBallFunction}{Ball\+Function}}$<$ Real $>$\+::\mbox{\hyperlink{classBallFunction}{Ball\+Function}} (\begin{DoxyParamCaption}\item[{const std\+::vector$<$ \mbox{\hyperlink{classBSpline}{BSpline}}$<$ Real $>$$>$ \&}]{bs\+\_\+ball\+\_\+function,  }\item[{const Real \&}]{r }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Construct a new Ball Function object. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em bs\+\_\+ball\+\_\+function} & The B-\/spline ball function. \\
+\hline
+{\em r} & The radius of the ball. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classBallFunction_a36c6e28dbf769c70d457d3d93868f045}\label{classBallFunction_a36c6e28dbf769c70d457d3d93868f045}} 
+\index{BallFunction$<$ Real $>$@{BallFunction$<$ Real $>$}!BallFunction@{BallFunction}}
+\index{BallFunction@{BallFunction}!BallFunction$<$ Real $>$@{BallFunction$<$ Real $>$}}
+\doxysubsubsection{\texorpdfstring{BallFunction()}{BallFunction()}\hspace{0.1cm}{\footnotesize\ttfamily [3/4]}}
+{\footnotesize\ttfamily template$<$typename Real $>$ \\
+\mbox{\hyperlink{classBallFunction}{Ball\+Function}}$<$ Real $>$\+::\mbox{\hyperlink{classBallFunction}{Ball\+Function}} (\begin{DoxyParamCaption}\item[{const std\+::vector$<$ \mbox{\hyperlink{classPPoly}{PPoly}}$<$ Real $>$$>$ \&}]{pp\+\_\+ball\+\_\+function,  }\item[{const std\+::vector$<$ Real $>$ \&}]{xyz,  }\item[{const Real \&}]{r }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Construct a new Ball Function object. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em pp\+\_\+ball\+\_\+function} & The piecewise polynomial ball function. \\
+\hline
+{\em xyz} & Stereographic projection point. \\
+\hline
+{\em r} & The radius of the ball. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classBallFunction_a6d7dff042825a39e8e93216b3863a9ad}\label{classBallFunction_a6d7dff042825a39e8e93216b3863a9ad}} 
+\index{BallFunction$<$ Real $>$@{BallFunction$<$ Real $>$}!BallFunction@{BallFunction}}
+\index{BallFunction@{BallFunction}!BallFunction$<$ Real $>$@{BallFunction$<$ Real $>$}}
+\doxysubsubsection{\texorpdfstring{BallFunction()}{BallFunction()}\hspace{0.1cm}{\footnotesize\ttfamily [4/4]}}
+{\footnotesize\ttfamily template$<$typename Real $>$ \\
+\mbox{\hyperlink{classBallFunction}{Ball\+Function}}$<$ Real $>$\+::\mbox{\hyperlink{classBallFunction}{Ball\+Function}} (\begin{DoxyParamCaption}\item[{const std\+::vector$<$ \mbox{\hyperlink{classBSpline}{BSpline}}$<$ Real $>$$>$ \&}]{bs\+\_\+ball\+\_\+function,  }\item[{const std\+::vector$<$ Real $>$ \&}]{xyz,  }\item[{const Real \&}]{r }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Construct a new Ball Function object. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em bs\+\_\+ball\+\_\+function} & The B-\/spline ball function. \\
+\hline
+{\em xyz} & Stereographic projection point. \\
+\hline
+{\em r} & The radius of the ball. \\
+\hline
+\end{DoxyParams}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classBallFunction_a3a6fb3d7752181db26446bebfbf55552}\label{classBallFunction_a3a6fb3d7752181db26446bebfbf55552}} 
+\index{BallFunction$<$ Real $>$@{BallFunction$<$ Real $>$}!COS@{COS}}
+\index{COS@{COS}!BallFunction$<$ Real $>$@{BallFunction$<$ Real $>$}}
+\doxysubsubsection{\texorpdfstring{COS()}{COS()}}
+{\footnotesize\ttfamily template$<$typename Real $>$ \\
+Real \mbox{\hyperlink{classBallFunction}{Ball\+Function}}$<$ Real $>$\+::COS (\begin{DoxyParamCaption}\item[{const Real \&}]{x }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Overload the cos function. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em x} & The input value. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Real The cos value. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classBallFunction_aac57b14cce82ec4ab3e72a788a18b658}\label{classBallFunction_aac57b14cce82ec4ab3e72a788a18b658}} 
+\index{BallFunction$<$ Real $>$@{BallFunction$<$ Real $>$}!operator()@{operator()}}
+\index{operator()@{operator()}!BallFunction$<$ Real $>$@{BallFunction$<$ Real $>$}}
+\doxysubsubsection{\texorpdfstring{operator()()}{operator()()}}
+{\footnotesize\ttfamily template$<$typename Real $>$ \\
+std\+::vector$<$Real$>$ \mbox{\hyperlink{classBallFunction}{Ball\+Function}}$<$ Real $>$\+::operator() (\begin{DoxyParamCaption}\item[{const Real \&}]{x }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Calculate the ball function value. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em x} & The input value. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+std\+::vector$<$\+Real$>$ The ball function value.
+\end{DoxyReturn}
+For Stereographic projection, we use the following formula\+: \[ t = \frac{2 x_0 x + 2 y_0 y - 2 r^2}{r^2 - 2 x_0 x - 2 y_0 y + x^2 + y^2}, \quad x_1 = x_0 + t (x_0 - x), \quad y_1 = y_0 + t (y_0 - y), \quad z_1 = z_0 + t z_0. \]
+
+For the Spherical coordinates, we just write all points on the ball as \[ x = r \sin \theta \cos \phi, \quad y = r \sin \theta \sin \phi, \quad z = r \cos \theta. \] \mbox{\Hypertarget{classBallFunction_acddeb4866c45a68ff4905f78086e6212}\label{classBallFunction_acddeb4866c45a68ff4905f78086e6212}} 
+\index{BallFunction$<$ Real $>$@{BallFunction$<$ Real $>$}!SIN@{SIN}}
+\index{SIN@{SIN}!BallFunction$<$ Real $>$@{BallFunction$<$ Real $>$}}
+\doxysubsubsection{\texorpdfstring{SIN()}{SIN()}}
+{\footnotesize\ttfamily template$<$typename Real $>$ \\
+Real \mbox{\hyperlink{classBallFunction}{Ball\+Function}}$<$ Real $>$\+::SIN (\begin{DoxyParamCaption}\item[{const Real \&}]{x }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Overload the sin function. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em x} & The input value. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Real The sin value. 
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+src/include/Ball\+Function.\+hpp\end{DoxyCompactItemize}

@@ -1,0 +1,30 @@
+/**
+ * @mainpage Numerical Analysis Project -- Spline
+ *
+ * @section intro_sec Introduction
+ * This is the documentation for the project. All classes and functions are documented here.
+ * 
+ * 
+ * @section usage_sec More Information 
+ * 
+ * Every documented function has its own description and the usage of the function. 
+ * You can check the documentation of the function to see how to use it.
+ *
+ *
+ * `PPoly` is the class that is used to create a piecewise polynomial. 
+ * It has a constructor that takes a list of coefficients and a list of breakpoints.
+ * 
+ * `BSpline` is the class that is used to create a B-spline.
+ *
+ *
+ * `PPInterpolate` is the class that is used to interpolate a set of points using a piecewise polynomial.
+ *
+ *
+ * `BInterpolate` is the class that is used to interpolate a set of points using a B-spline.
+ * 
+ * `Curve` is the class that is used to curve fitting. 
+ * 
+ * `BallFunction` is the class that is used to create a ball function.
+ * 
+ * 
+ */

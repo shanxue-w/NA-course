@@ -1,0 +1,316 @@
+\hypertarget{classBSpline}{}\doxysection{BSpline$<$ Real $>$ Class Template Reference}
+\label{classBSpline}\index{BSpline$<$ Real $>$@{BSpline$<$ Real $>$}}
+
+
+The definition of the class \mbox{\hyperlink{classBSpline}{BSpline}}, which is a B-\/spline class.  
+
+
+
+
+{\ttfamily \#include $<$BSpline.\+hpp$>$}
+
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classBSpline_ab736e75c372fd703f3fa398dd7c131aa}{BSpline}} (const std\+::vector$<$ Real $>$ coeffs, const std\+::vector$<$ Real $>$ t, const int n, const int check=0)
+\begin{DoxyCompactList}\small\item\em Construct a new BSpline\+::\+BSpline object. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classBSpline_a6a44ef13cb242c6c03d13557fcea9919}{BSpline}} (const \mbox{\hyperlink{classBSpline}{BSpline}} \&other)
+\begin{DoxyCompactList}\small\item\em Construct a new \mbox{\hyperlink{classBSpline}{BSpline}} object by copying another one. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{classBSpline_ad90501c171d7364ffe28ce8e369c694f}{get\+\_\+interval}} (const Real \&x) const
+\begin{DoxyCompactList}\small\item\em The minimum idx of the interval that contains x. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classBSpline}{BSpline}} \& \mbox{\hyperlink{classBSpline_a8f3add424cdc6c4bc27388b8e3a16a30}{operator=}} (const \mbox{\hyperlink{classBSpline}{BSpline}} \&other)
+\begin{DoxyCompactList}\small\item\em Overload the assignment operator. \end{DoxyCompactList}\item 
+Real \mbox{\hyperlink{classBSpline_a1e06980b504bc49cb22211cabc72c89b}{operator()}} (const Real \&x)
+\begin{DoxyCompactList}\small\item\em Overload the operator {\ttfamily ()} to evaluate the B-\/spline at x. \end{DoxyCompactList}\item 
+std\+::vector$<$ Real $>$ \mbox{\hyperlink{classBSpline_a3a0bb6135e07c422c7aeb02f05a73ee5}{get\+\_\+coeffs}} () const
+\begin{DoxyCompactList}\small\item\em Get the coeffs object. \end{DoxyCompactList}\item 
+std\+::vector$<$ Real $>$ \mbox{\hyperlink{classBSpline_a7fed71a7208f255def1667ee4dd20196}{get\+\_\+t}} () const
+\begin{DoxyCompactList}\small\item\em Get the t object. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{classBSpline_afda230aa13d0d58901ce5c7b9911aadb}{get\+\_\+n}} () const
+\begin{DoxyCompactList}\small\item\em Get the n object, which is the order of the B-\/spline. \end{DoxyCompactList}\item 
+std\+::vector$<$ Real $>$ \mbox{\hyperlink{classBSpline_ae747fd967d046c50429ef0817e139cb2}{get\+\_\+basis}} (const Real \&x)
+\begin{DoxyCompactList}\small\item\em Get the basis developed by a signal point x, which will disscussed in {\ttfamily operator()} function. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classBSpline_a5eccc102e5cc886860858df1b82f2bd9}{get\+\_\+total\+\_\+basis}} (const Real \&x)
+\begin{DoxyCompactList}\small\item\em Get the total basis object. \end{DoxyCompactList}\item 
+Real \mbox{\hyperlink{classBSpline_a018f208722b3242c7fa4eefccad0e257}{cal\+\_\+derivative\+\_\+basis}} (const int \&interval, const int \&j, const int \&degree, const int \&n)
+\begin{DoxyCompactList}\small\item\em Get the derivative basis object. \end{DoxyCompactList}\item 
+std\+::vector$<$ Real $>$ \mbox{\hyperlink{classBSpline_a266217a9324ec46fc4e7c4916323218e}{basis\+\_\+derivative}} (const Real \&x, const int \&n)
+\begin{DoxyCompactList}\small\item\em Get the derivative basis object. \end{DoxyCompactList}\item 
+Real \mbox{\hyperlink{classBSpline_a8bba9335ce40a7d2477acf0101e89aba}{derivative}} (const Real \&x, const int \&n=1)
+\begin{DoxyCompactList}\small\item\em Evaluate the n-\/th derivative of the B-\/spline at x. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\subsubsection*{template$<$typename Real = double$>$\newline
+class BSpline$<$ Real $>$}
+
+The definition of the class \mbox{\hyperlink{classBSpline}{BSpline}}, which is a B-\/spline class. 
+
+
+\begin{DoxyTemplParams}{Template Parameters}
+{\em Real} & The type of the real number, default is double. Can be double, long double, mpf\+\_\+class, etc.\\
+\hline
+\end{DoxyTemplParams}
+The \mbox{\hyperlink{classBSpline}{BSpline}} is in the form of \[ B(x) = \sum_{j=i-n+1}^{i+1} c_j B_j^n(x), ~ x\in (x_i, x_{i+1}] \] In my implementation, the left side is open and the right side is closed. The computation of $ B_j^n(x) $ is very important. And the main function to do this is {\ttfamily \mbox{\hyperlink{classBSpline_ae747fd967d046c50429ef0817e139cb2}{get\+\_\+basis(const Real \&x)}}}. This function is high performance, which will be explained in the implementation.
+
+This class overrides the {\ttfamily operator()} to make it easier to use. Other functions are also provided for convenience. 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classBSpline_ab736e75c372fd703f3fa398dd7c131aa}\label{classBSpline_ab736e75c372fd703f3fa398dd7c131aa}} 
+\index{BSpline$<$ Real $>$@{BSpline$<$ Real $>$}!BSpline@{BSpline}}
+\index{BSpline@{BSpline}!BSpline$<$ Real $>$@{BSpline$<$ Real $>$}}
+\doxysubsubsection{\texorpdfstring{BSpline()}{BSpline()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily template$<$typename Real  = double$>$ \\
+\mbox{\hyperlink{classBSpline}{BSpline}}$<$ Real $>$\+::\mbox{\hyperlink{classBSpline}{BSpline}} (\begin{DoxyParamCaption}\item[{const std\+::vector$<$ Real $>$}]{coeffs,  }\item[{const std\+::vector$<$ Real $>$}]{t,  }\item[{const int}]{n,  }\item[{const int}]{check = {\ttfamily 0} }\end{DoxyParamCaption})}
+
+
+
+Construct a new BSpline\+::\+BSpline object. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em coeffs} & The coefficients of the B-\/spline \\
+\hline
+{\em t} & $[t_1,\cdots,t_{N-1}, t_{N},]$. \\
+\hline
+{\em n} & The order of the B-\/spline \\
+\hline
+{\em check} & Whether to check the input data, default is 0.\\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyExceptions}{Exceptions}
+{\em std\+::invalid\+\_\+argument} & if the size of t is not sorted or the final size of t minus the size of coeffs is not equal to n-\/1.\\
+\hline
+\end{DoxyExceptions}
+For we have only $N$ knots and $N+n-1$ coefficients, we need to add $2n-2$ knots at the beginning and the end of the knot
+
+Here simply use equal spaced knots with space $1.0$ \mbox{\Hypertarget{classBSpline_a6a44ef13cb242c6c03d13557fcea9919}\label{classBSpline_a6a44ef13cb242c6c03d13557fcea9919}} 
+\index{BSpline$<$ Real $>$@{BSpline$<$ Real $>$}!BSpline@{BSpline}}
+\index{BSpline@{BSpline}!BSpline$<$ Real $>$@{BSpline$<$ Real $>$}}
+\doxysubsubsection{\texorpdfstring{BSpline()}{BSpline()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily template$<$typename Real  = double$>$ \\
+\mbox{\hyperlink{classBSpline}{BSpline}}$<$ Real $>$\+::\mbox{\hyperlink{classBSpline}{BSpline}} (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classBSpline}{BSpline}}$<$ Real $>$ \&}]{other }\end{DoxyParamCaption})}
+
+
+
+Construct a new \mbox{\hyperlink{classBSpline}{BSpline}} object by copying another one. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em other} & The object to copy, class {\ttfamily \mbox{\hyperlink{classBSpline}{BSpline}}}. \\
+\hline
+\end{DoxyParams}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classBSpline_a266217a9324ec46fc4e7c4916323218e}\label{classBSpline_a266217a9324ec46fc4e7c4916323218e}} 
+\index{BSpline$<$ Real $>$@{BSpline$<$ Real $>$}!basis\_derivative@{basis\_derivative}}
+\index{basis\_derivative@{basis\_derivative}!BSpline$<$ Real $>$@{BSpline$<$ Real $>$}}
+\doxysubsubsection{\texorpdfstring{basis\_derivative()}{basis\_derivative()}}
+{\footnotesize\ttfamily template$<$typename Real  = double$>$ \\
+std\+::vector$<$Real$>$ \mbox{\hyperlink{classBSpline}{BSpline}}$<$ Real $>$\+::basis\+\_\+derivative (\begin{DoxyParamCaption}\item[{const Real \&}]{x,  }\item[{const int \&}]{n }\end{DoxyParamCaption})}
+
+
+
+Get the derivative basis object. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em x} & The signal point \\
+\hline
+{\em n} & The index of the derivative \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+std\+::vector$<$\+Real$>$ 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classBSpline_a018f208722b3242c7fa4eefccad0e257}\label{classBSpline_a018f208722b3242c7fa4eefccad0e257}} 
+\index{BSpline$<$ Real $>$@{BSpline$<$ Real $>$}!cal\_derivative\_basis@{cal\_derivative\_basis}}
+\index{cal\_derivative\_basis@{cal\_derivative\_basis}!BSpline$<$ Real $>$@{BSpline$<$ Real $>$}}
+\doxysubsubsection{\texorpdfstring{cal\_derivative\_basis()}{cal\_derivative\_basis()}}
+{\footnotesize\ttfamily template$<$typename Real  = double$>$ \\
+Real \mbox{\hyperlink{classBSpline}{BSpline}}$<$ Real $>$\+::cal\+\_\+derivative\+\_\+basis (\begin{DoxyParamCaption}\item[{const int \&}]{interval,  }\item[{const int \&}]{j,  }\item[{const int \&}]{degree,  }\item[{const int \&}]{n }\end{DoxyParamCaption})}
+
+
+
+Get the derivative basis object. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em interval} & The interval that contains x \\
+\hline
+{\em j} & The index of the basis function \\
+\hline
+{\em degree} & The order of the B-\/spline \\
+\hline
+{\em n} & The index of the derivative \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Real The value of the derivative basis function 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classBSpline_a8bba9335ce40a7d2477acf0101e89aba}\label{classBSpline_a8bba9335ce40a7d2477acf0101e89aba}} 
+\index{BSpline$<$ Real $>$@{BSpline$<$ Real $>$}!derivative@{derivative}}
+\index{derivative@{derivative}!BSpline$<$ Real $>$@{BSpline$<$ Real $>$}}
+\doxysubsubsection{\texorpdfstring{derivative()}{derivative()}}
+{\footnotesize\ttfamily template$<$typename Real  = double$>$ \\
+Real \mbox{\hyperlink{classBSpline}{BSpline}}$<$ Real $>$\+::derivative (\begin{DoxyParamCaption}\item[{const Real \&}]{x,  }\item[{const int \&}]{n = {\ttfamily 1} }\end{DoxyParamCaption})}
+
+
+
+Evaluate the n-\/th derivative of the B-\/spline at x. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em x} & The value to be evaluated \\
+\hline
+{\em n} & The order of the derivative \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Real The value of the n-\/th derivative of the B-\/spline at x 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classBSpline_ae747fd967d046c50429ef0817e139cb2}\label{classBSpline_ae747fd967d046c50429ef0817e139cb2}} 
+\index{BSpline$<$ Real $>$@{BSpline$<$ Real $>$}!get\_basis@{get\_basis}}
+\index{get\_basis@{get\_basis}!BSpline$<$ Real $>$@{BSpline$<$ Real $>$}}
+\doxysubsubsection{\texorpdfstring{get\_basis()}{get\_basis()}}
+{\footnotesize\ttfamily template$<$typename Real  = double$>$ \\
+std\+::vector$<$Real$>$ \mbox{\hyperlink{classBSpline}{BSpline}}$<$ Real $>$\+::get\+\_\+basis (\begin{DoxyParamCaption}\item[{const Real \&}]{x }\end{DoxyParamCaption})}
+
+
+
+Get the basis developed by a signal point x, which will disscussed in {\ttfamily operator()} function. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em x} & The signal point \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+std\+::vector$<$\+Real$>$ 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classBSpline_a3a0bb6135e07c422c7aeb02f05a73ee5}\label{classBSpline_a3a0bb6135e07c422c7aeb02f05a73ee5}} 
+\index{BSpline$<$ Real $>$@{BSpline$<$ Real $>$}!get\_coeffs@{get\_coeffs}}
+\index{get\_coeffs@{get\_coeffs}!BSpline$<$ Real $>$@{BSpline$<$ Real $>$}}
+\doxysubsubsection{\texorpdfstring{get\_coeffs()}{get\_coeffs()}}
+{\footnotesize\ttfamily template$<$typename Real  = double$>$ \\
+std\+::vector$<$Real$>$ \mbox{\hyperlink{classBSpline}{BSpline}}$<$ Real $>$\+::get\+\_\+coeffs (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+
+Get the coeffs object. 
+
+\begin{DoxyReturn}{Returns}
+std\+::vector$<$\+Real$>$
+\end{DoxyReturn}
+For every point $x \in(x_i, x_{i+1}]$, we know there are only $n+1$ basis functions are non-\/zero. More specifically, they are \[ B_{i-n+1}^n, B_{i-n+2}^n, \cdots, B_{i+1}^n. \] Therefore, we only need to calculate the $n+1$ basis functions and multiply them with the corresponding coefficients, then sum them up we can get the value of the B-\/spline at $x$.
+
+Calculate the basis functions using a single array and use the formula \[ B_i^n(x) = \frac{x - t_{i-1}}{t_{i+n-1} - t_{i-1}} B_{i}^{n-1}(x) + \frac{t_{i+n} - x}{t_{i+n} - t_{i}} B_{i+1}^{n-1}(x). \] \mbox{\Hypertarget{classBSpline_ad90501c171d7364ffe28ce8e369c694f}\label{classBSpline_ad90501c171d7364ffe28ce8e369c694f}} 
+\index{BSpline$<$ Real $>$@{BSpline$<$ Real $>$}!get\_interval@{get\_interval}}
+\index{get\_interval@{get\_interval}!BSpline$<$ Real $>$@{BSpline$<$ Real $>$}}
+\doxysubsubsection{\texorpdfstring{get\_interval()}{get\_interval()}}
+{\footnotesize\ttfamily template$<$typename Real  = double$>$ \\
+int \mbox{\hyperlink{classBSpline}{BSpline}}$<$ Real $>$\+::get\+\_\+interval (\begin{DoxyParamCaption}\item[{const Real \&}]{x }\end{DoxyParamCaption}) const}
+
+
+
+The minimum idx of the interval that contains x. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em x} & The value to be checked \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+int The minimum idx of the interval that contains x
+\end{DoxyReturn}
+For \mbox{\hyperlink{classBSpline}{BSpline}}, we only care the value in $[t_1, t_{N}]$, so when $x < t_1$ or $x > t_N$, we return -\/1.
+
+Then use {\ttfamily std\+::lower\+\_\+bound} to find the first element in \+\_\+t that is not less than x. Just a binary search. \mbox{\Hypertarget{classBSpline_afda230aa13d0d58901ce5c7b9911aadb}\label{classBSpline_afda230aa13d0d58901ce5c7b9911aadb}} 
+\index{BSpline$<$ Real $>$@{BSpline$<$ Real $>$}!get\_n@{get\_n}}
+\index{get\_n@{get\_n}!BSpline$<$ Real $>$@{BSpline$<$ Real $>$}}
+\doxysubsubsection{\texorpdfstring{get\_n()}{get\_n()}}
+{\footnotesize\ttfamily template$<$typename Real  = double$>$ \\
+int \mbox{\hyperlink{classBSpline}{BSpline}}$<$ Real $>$\+::get\+\_\+n (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+
+Get the n object, which is the order of the B-\/spline. 
+
+\begin{DoxyReturn}{Returns}
+int 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classBSpline_a7fed71a7208f255def1667ee4dd20196}\label{classBSpline_a7fed71a7208f255def1667ee4dd20196}} 
+\index{BSpline$<$ Real $>$@{BSpline$<$ Real $>$}!get\_t@{get\_t}}
+\index{get\_t@{get\_t}!BSpline$<$ Real $>$@{BSpline$<$ Real $>$}}
+\doxysubsubsection{\texorpdfstring{get\_t()}{get\_t()}}
+{\footnotesize\ttfamily template$<$typename Real  = double$>$ \\
+std\+::vector$<$Real$>$ \mbox{\hyperlink{classBSpline}{BSpline}}$<$ Real $>$\+::get\+\_\+t (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+
+Get the t object. 
+
+\begin{DoxyReturn}{Returns}
+std\+::vector$<$\+Real$>$ 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classBSpline_a5eccc102e5cc886860858df1b82f2bd9}\label{classBSpline_a5eccc102e5cc886860858df1b82f2bd9}} 
+\index{BSpline$<$ Real $>$@{BSpline$<$ Real $>$}!get\_total\_basis@{get\_total\_basis}}
+\index{get\_total\_basis@{get\_total\_basis}!BSpline$<$ Real $>$@{BSpline$<$ Real $>$}}
+\doxysubsubsection{\texorpdfstring{get\_total\_basis()}{get\_total\_basis()}}
+{\footnotesize\ttfamily template$<$typename Real  = double$>$ \\
+void \mbox{\hyperlink{classBSpline}{BSpline}}$<$ Real $>$\+::get\+\_\+total\+\_\+basis (\begin{DoxyParamCaption}\item[{const Real \&}]{x }\end{DoxyParamCaption})}
+
+
+
+Get the total basis object. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em x} & The signal point \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classBSpline_a1e06980b504bc49cb22211cabc72c89b}\label{classBSpline_a1e06980b504bc49cb22211cabc72c89b}} 
+\index{BSpline$<$ Real $>$@{BSpline$<$ Real $>$}!operator()@{operator()}}
+\index{operator()@{operator()}!BSpline$<$ Real $>$@{BSpline$<$ Real $>$}}
+\doxysubsubsection{\texorpdfstring{operator()()}{operator()()}}
+{\footnotesize\ttfamily template$<$typename Real  = double$>$ \\
+Real \mbox{\hyperlink{classBSpline}{BSpline}}$<$ Real $>$\+::operator() (\begin{DoxyParamCaption}\item[{const Real \&}]{x }\end{DoxyParamCaption})}
+
+
+
+Overload the operator {\ttfamily ()} to evaluate the B-\/spline at x. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em x} & The value to be evaluated \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Real The value of the B-\/spline at x 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classBSpline_a8f3add424cdc6c4bc27388b8e3a16a30}\label{classBSpline_a8f3add424cdc6c4bc27388b8e3a16a30}} 
+\index{BSpline$<$ Real $>$@{BSpline$<$ Real $>$}!operator=@{operator=}}
+\index{operator=@{operator=}!BSpline$<$ Real $>$@{BSpline$<$ Real $>$}}
+\doxysubsubsection{\texorpdfstring{operator=()}{operator=()}}
+{\footnotesize\ttfamily template$<$typename Real  = double$>$ \\
+\mbox{\hyperlink{classBSpline}{BSpline}}\& \mbox{\hyperlink{classBSpline}{BSpline}}$<$ Real $>$\+::operator= (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classBSpline}{BSpline}}$<$ Real $>$ \&}]{other }\end{DoxyParamCaption})}
+
+
+
+Overload the assignment operator. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em other} & The object to copy, class {\ttfamily \mbox{\hyperlink{classBSpline}{BSpline}}}. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+\mbox{\hyperlink{classBSpline}{BSpline}}\& 
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+src/include/\mbox{\hyperlink{BSpline_8hpp}{BSpline.\+hpp}}\end{DoxyCompactItemize}

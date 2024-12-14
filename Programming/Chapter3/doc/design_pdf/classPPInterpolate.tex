@@ -1,0 +1,497 @@
+\hypertarget{classPPInterpolate}{}\doxysection{PPInterpolate$<$ N, Real $>$ Class Template Reference}
+\label{classPPInterpolate}\index{PPInterpolate$<$ N, Real $>$@{PPInterpolate$<$ N, Real $>$}}
+
+
+Interpolation using {\ttfamily \mbox{\hyperlink{classPPoly}{PPoly}}} class.  
+
+
+
+
+{\ttfamily \#include $<$PPInterpolate.\+hpp$>$}
+
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classPPInterpolate_a85372a4ca3c5f4775019e4301e9a7138}\label{classPPInterpolate_a85372a4ca3c5f4775019e4301e9a7138}} 
+{\bfseries PPInterpolate} (const std\+::vector$<$ Real $>$ \&t, const std\+::vector$<$ Real $>$ \&y, const int method=0, const std\+::vector$<$ Real $>$ \&boundary\+\_\+condition=std\+::vector$<$ Real $>$(N, 0.\+0), const int check=0)
+\item 
+\mbox{\Hypertarget{classPPInterpolate_a9cd67b4f8a4c665ff0601ab689bc0a2e}\label{classPPInterpolate_a9cd67b4f8a4c665ff0601ab689bc0a2e}} 
+{\bfseries PPInterpolate} (const Json\+::\+Value \&json)
+\item 
+void \mbox{\hyperlink{classPPInterpolate_a25842fc4d47cb59baf6c56e87040b5e9}{interpolate}} (const std\+::vector$<$ Real $>$ \&t, const std\+::vector$<$ Real $>$ \&y, const int method=0, const std\+::vector$<$ Real $>$ \&boundary\+\_\+condition=std\+::vector$<$ Real $>$(N, 0.\+0))
+\item 
+Real \mbox{\hyperlink{classPPInterpolate_ab7105d399404dfe3f34f2c7c8c69d89f}{operator()}} (Real x) const
+\begin{DoxyCompactList}\small\item\em Evaluate the polynomial at a given point. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classPPoly}{PPoly}}$<$ Real $>$ \mbox{\hyperlink{classPPInterpolate_afb08b2889c7505a395c84e534575198d}{get\+Poly}} () const
+\begin{DoxyCompactList}\small\item\em Get the poly object. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classPPInterpolate_a6a8d833f826d89194c9c364ebe97458f}\label{classPPInterpolate_a6a8d833f826d89194c9c364ebe97458f}} 
+void {\bfseries interpolate} (const std\+::vector$<$ double $>$ \&t, const std\+::vector$<$ double $>$ \&y, const int method, const std\+::vector$<$ double $>$ \&boundary\+\_\+condition)
+\item 
+\mbox{\Hypertarget{classPPInterpolate_ade46dcaa580aa337c20ad8eb59307482}\label{classPPInterpolate_ade46dcaa580aa337c20ad8eb59307482}} 
+void {\bfseries interpolate} (const std\+::vector$<$ double $>$ \&t, const std\+::vector$<$ double $>$ \&y, const int method, const std\+::vector$<$ double $>$ \&boundary\+\_\+condition)
+\item 
+\mbox{\Hypertarget{classPPInterpolate_a81dc0973592f97982ad50280578a6fbe}\label{classPPInterpolate_a81dc0973592f97982ad50280578a6fbe}} 
+void {\bfseries interpolate} (const std\+::vector$<$ double $>$ \&t, const std\+::vector$<$ double $>$ \&y, const int method, const std\+::vector$<$ double $>$ \&boundary\+\_\+condition)
+\item 
+\mbox{\Hypertarget{classPPInterpolate_a2948f09d1b6e84cdd635b5ec2411e4dc}\label{classPPInterpolate_a2948f09d1b6e84cdd635b5ec2411e4dc}} 
+void {\bfseries interpolate} (const std\+::vector$<$ mpf\+\_\+class $>$ \&t, const std\+::vector$<$ mpf\+\_\+class $>$ \&y, const int method, const std\+::vector$<$ mpf\+\_\+class $>$ \&boundary\+\_\+condition)
+\item 
+\mbox{\Hypertarget{classPPInterpolate_ad74b9d3a09e7ebfb96bbcc22e617b87c}\label{classPPInterpolate_ad74b9d3a09e7ebfb96bbcc22e617b87c}} 
+void {\bfseries interpolate} (const std\+::vector$<$ mpf\+\_\+class $>$ \&t, const std\+::vector$<$ mpf\+\_\+class $>$ \&y, const int method, const std\+::vector$<$ mpf\+\_\+class $>$ \&boundary\+\_\+condition)
+\item 
+\mbox{\Hypertarget{classPPInterpolate_a620d45876169509d85b2f59990883803}\label{classPPInterpolate_a620d45876169509d85b2f59990883803}} 
+void {\bfseries interpolate} (const std\+::vector$<$ mpf\+\_\+class $>$ \&t, const std\+::vector$<$ mpf\+\_\+class $>$ \&y, const int method, const std\+::vector$<$ mpf\+\_\+class $>$ \&boundary\+\_\+condition)
+\item 
+\mbox{\hyperlink{classPPInterpolate_af385a8262049c7dd420bd7bf817cb413}{PPInterpolate}} (const std\+::vector$<$ double $>$ \&t, const std\+::vector$<$ double $>$ \&y, const int method, const std\+::vector$<$ double $>$ \&boundary\+\_\+condition, const int check)
+\begin{DoxyCompactList}\small\item\em Construct a new PPInterpolate$<$1, double$>$\+::\+PPInterpolate object. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classPPInterpolate_a6a8d833f826d89194c9c364ebe97458f}{interpolate}} (const std\+::vector$<$ double $>$ \&t, const std\+::vector$<$ double $>$ \&y, const int method, const std\+::vector$<$ double $>$ \&boundary\+\_\+condition)
+\begin{DoxyCompactList}\small\item\em Interpolate the given data. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classPPInterpolate_a47f08f56bc2f0bcc36a898bf98cc1f0e}{PPInterpolate}} (const std\+::vector$<$ double $>$ \&t, const std\+::vector$<$ double $>$ \&y, const int method, const std\+::vector$<$ double $>$ \&boundary\+\_\+condition, const int check)
+\begin{DoxyCompactList}\small\item\em Construct a new PPInterpolate$<$2, double$>$\+::\+PPInterpolate object. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classPPInterpolate_ade46dcaa580aa337c20ad8eb59307482}{interpolate}} (const std\+::vector$<$ double $>$ \&t, const std\+::vector$<$ double $>$ \&y, const int method, const std\+::vector$<$ double $>$ \&boundary\+\_\+condition)
+\begin{DoxyCompactList}\small\item\em Interpolate the values of the polynomial at the given nodes. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classPPInterpolate_a16bb21e5534fc516d3446f6cb20e77f5}{PPInterpolate}} (const std\+::vector$<$ double $>$ \&t, const std\+::vector$<$ double $>$ \&y, const int method, const std\+::vector$<$ double $>$ \&boundary\+\_\+condition, const int check)
+\begin{DoxyCompactList}\small\item\em Construct a new PPInterpolate$<$3, double$>$\+::\+PPInterpolate object. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classPPInterpolate_a81dc0973592f97982ad50280578a6fbe}{interpolate}} (const std\+::vector$<$ double $>$ \&t, const std\+::vector$<$ double $>$ \&y, const int method, const std\+::vector$<$ double $>$ \&boundary\+\_\+condition)
+\begin{DoxyCompactList}\small\item\em Construct a new PPInterpolate$<$3, double$>$\+::\+PPInterpolate object. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classPPInterpolate_a0f4b72f70ff62cf752abe855431732e0}\label{classPPInterpolate_a0f4b72f70ff62cf752abe855431732e0}} 
+{\bfseries PPInterpolate} (const std\+::vector$<$ mpf\+\_\+class $>$ \&t, const std\+::vector$<$ mpf\+\_\+class $>$ \&y, const int method, const std\+::vector$<$ mpf\+\_\+class $>$ \&boundary\+\_\+condition, const int check)
+\item 
+\mbox{\Hypertarget{classPPInterpolate_a2948f09d1b6e84cdd635b5ec2411e4dc}\label{classPPInterpolate_a2948f09d1b6e84cdd635b5ec2411e4dc}} 
+void {\bfseries interpolate} (const std\+::vector$<$ mpf\+\_\+class $>$ \&t, const std\+::vector$<$ mpf\+\_\+class $>$ \&y, const int method, const std\+::vector$<$ mpf\+\_\+class $>$ \&boundary\+\_\+condition)
+\item 
+\mbox{\Hypertarget{classPPInterpolate_a4ce1443aff55d343579062f31e4eaacf}\label{classPPInterpolate_a4ce1443aff55d343579062f31e4eaacf}} 
+{\bfseries PPInterpolate} (const std\+::vector$<$ mpf\+\_\+class $>$ \&t, const std\+::vector$<$ mpf\+\_\+class $>$ \&y, const int method, const std\+::vector$<$ mpf\+\_\+class $>$ \&boundary\+\_\+condition, const int check)
+\item 
+\mbox{\Hypertarget{classPPInterpolate_ad74b9d3a09e7ebfb96bbcc22e617b87c}\label{classPPInterpolate_ad74b9d3a09e7ebfb96bbcc22e617b87c}} 
+void {\bfseries interpolate} (const std\+::vector$<$ mpf\+\_\+class $>$ \&t, const std\+::vector$<$ mpf\+\_\+class $>$ \&y, const int method, const std\+::vector$<$ mpf\+\_\+class $>$ \&boundary\+\_\+condition)
+\item 
+\mbox{\Hypertarget{classPPInterpolate_a0883243b730cf29dc2e23c8f0d26d955}\label{classPPInterpolate_a0883243b730cf29dc2e23c8f0d26d955}} 
+{\bfseries PPInterpolate} (const std\+::vector$<$ mpf\+\_\+class $>$ \&t, const std\+::vector$<$ mpf\+\_\+class $>$ \&y, const int method, const std\+::vector$<$ mpf\+\_\+class $>$ \&boundary\+\_\+condition, const int check)
+\item 
+void \mbox{\hyperlink{classPPInterpolate_a620d45876169509d85b2f59990883803}{interpolate}} (const std\+::vector$<$ mpf\+\_\+class $>$ \&t, const std\+::vector$<$ mpf\+\_\+class $>$ \&y, const int method, const std\+::vector$<$ mpf\+\_\+class $>$ \&boundary\+\_\+condition)
+\end{DoxyCompactItemize}
+\doxysubsection*{Static Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static constexpr Eigen\+::\+Matrix$<$ Real, N, N $>$ \mbox{\hyperlink{classPPInterpolate_afa14e277a3e42d522a38cf166d1f568f}{Generate\+\_\+\+Cmatrix}} ()
+\begin{DoxyCompactList}\small\item\em Generate the C matrix for the PP-\/form, which will be explained in {\ttfamily interpolate} function. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\subsubsection*{template$<$int N, typename Real = double$>$\newline
+class PPInterpolate$<$ N, Real $>$}
+
+Interpolation using {\ttfamily \mbox{\hyperlink{classPPoly}{PPoly}}} class. 
+
+
+\begin{DoxyTemplParams}{Template Parameters}
+{\em N} & The order of the polynomial \\
+\hline
+{\em Real} & The type of the coefficients\\
+\hline
+\end{DoxyTemplParams}
+The class \mbox{\hyperlink{classPPInterpolate}{PPInterpolate}} is used to interpolate the data using the PP-\/form. The PP-\/form is a piecewise polynomial form, which is used to represent a piecewise polynomial function. In each interval $ [t_{i}, t_{i+1}] $, the polynomial is represented as $ p_i(x) = \sum_{j=0}^{N-1} a_{ij} (x-t_i)^j $. Details about the ppform can be found in {\ttfamily \mbox{\hyperlink{PPoly_8hpp}{PPoly.\+hpp}}}.
+
+The main thing this class does is to calculate the coefficients of the polynomial in each interval. 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classPPInterpolate_af385a8262049c7dd420bd7bf817cb413}\label{classPPInterpolate_af385a8262049c7dd420bd7bf817cb413}} 
+\index{PPInterpolate$<$ N, Real $>$@{PPInterpolate$<$ N, Real $>$}!PPInterpolate@{PPInterpolate}}
+\index{PPInterpolate@{PPInterpolate}!PPInterpolate$<$ N, Real $>$@{PPInterpolate$<$ N, Real $>$}}
+\doxysubsubsection{\texorpdfstring{PPInterpolate()}{PPInterpolate()}\hspace{0.1cm}{\footnotesize\ttfamily [1/3]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classPPInterpolate}{PPInterpolate}}$<$ 1, double $>$\+::\mbox{\hyperlink{classPPInterpolate}{PPInterpolate}} (\begin{DoxyParamCaption}\item[{const std\+::vector$<$ double $>$ \&}]{t,  }\item[{const std\+::vector$<$ double $>$ \&}]{y,  }\item[{const int}]{method,  }\item[{const std\+::vector$<$ double $>$ \&}]{boundary\+\_\+condition,  }\item[{const int}]{check }\end{DoxyParamCaption})}
+
+
+
+Construct a new PPInterpolate$<$1, double$>$\+::\+PPInterpolate object. 
+
+
+\begin{DoxyTemplParams}{Template Parameters}
+{\em N} & The order of the polynomial. Here N = 1. \\
+\hline
+{\em Real} & for the type of the coefficients. Here Real = double. \\
+\hline
+\end{DoxyTemplParams}
+
+\begin{DoxyParams}{Parameters}
+{\em t} & the nodes of the interpolation \\
+\hline
+{\em y} & the values of the interpolation \\
+\hline
+{\em method} & methods of interpolation, not used in linear case. \\
+\hline
+{\em boundary\+\_\+condition} & boundary condition, not used in linear case. \\
+\hline
+{\em check} & whether to check the order of t, default is 0. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classPPInterpolate_a47f08f56bc2f0bcc36a898bf98cc1f0e}\label{classPPInterpolate_a47f08f56bc2f0bcc36a898bf98cc1f0e}} 
+\index{PPInterpolate$<$ N, Real $>$@{PPInterpolate$<$ N, Real $>$}!PPInterpolate@{PPInterpolate}}
+\index{PPInterpolate@{PPInterpolate}!PPInterpolate$<$ N, Real $>$@{PPInterpolate$<$ N, Real $>$}}
+\doxysubsubsection{\texorpdfstring{PPInterpolate()}{PPInterpolate()}\hspace{0.1cm}{\footnotesize\ttfamily [2/3]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classPPInterpolate}{PPInterpolate}}$<$ 2, double $>$\+::\mbox{\hyperlink{classPPInterpolate}{PPInterpolate}} (\begin{DoxyParamCaption}\item[{const std\+::vector$<$ double $>$ \&}]{t,  }\item[{const std\+::vector$<$ double $>$ \&}]{y,  }\item[{const int}]{method,  }\item[{const std\+::vector$<$ double $>$ \&}]{boundary\+\_\+condition,  }\item[{const int}]{check }\end{DoxyParamCaption})}
+
+
+
+Construct a new PPInterpolate$<$2, double$>$\+::\+PPInterpolate object. 
+
+
+\begin{DoxyTemplParams}{Template Parameters}
+{\em N} & The order of the polynomial. Here N = 2. \\
+\hline
+{\em Real} & The type of the coefficients. Here Real = double. \\
+\hline
+\end{DoxyTemplParams}
+
+\begin{DoxyParams}{Parameters}
+{\em t} & The nodes of the interpolation \\
+\hline
+{\em y} & The values of the interpolation \\
+\hline
+{\em method} & The method of interpolation, 0 for periodic, 1 for complete. \\
+\hline
+{\em boundary\+\_\+condition} & The boundary condition. size of the boundary condition should bigger than 0, greater than 1 is ok, but just use the first one. \\
+\hline
+{\em check} & Whether to check the order of t. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classPPInterpolate_a16bb21e5534fc516d3446f6cb20e77f5}\label{classPPInterpolate_a16bb21e5534fc516d3446f6cb20e77f5}} 
+\index{PPInterpolate$<$ N, Real $>$@{PPInterpolate$<$ N, Real $>$}!PPInterpolate@{PPInterpolate}}
+\index{PPInterpolate@{PPInterpolate}!PPInterpolate$<$ N, Real $>$@{PPInterpolate$<$ N, Real $>$}}
+\doxysubsubsection{\texorpdfstring{PPInterpolate()}{PPInterpolate()}\hspace{0.1cm}{\footnotesize\ttfamily [3/3]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classPPInterpolate}{PPInterpolate}}$<$ 3, double $>$\+::\mbox{\hyperlink{classPPInterpolate}{PPInterpolate}} (\begin{DoxyParamCaption}\item[{const std\+::vector$<$ double $>$ \&}]{t,  }\item[{const std\+::vector$<$ double $>$ \&}]{y,  }\item[{const int}]{method,  }\item[{const std\+::vector$<$ double $>$ \&}]{boundary\+\_\+condition,  }\item[{const int}]{check }\end{DoxyParamCaption})}
+
+
+
+Construct a new PPInterpolate$<$3, double$>$\+::\+PPInterpolate object. 
+
+
+\begin{DoxyTemplParams}{Template Parameters}
+{\em N} & The order of the polynomial. Here N = 3. \\
+\hline
+{\em Real} & The type of the coefficients. Here Real = double. \\
+\hline
+\end{DoxyTemplParams}
+
+\begin{DoxyParams}{Parameters}
+{\em t} & The nodes of the interpolation. \\
+\hline
+{\em y} & The values of the interpolation. \\
+\hline
+{\em method} & The method used in the interpolation. 0 for periodic, 1 for complete, 2 for natural, others are not supported. \\
+\hline
+{\em boundary\+\_\+condition} & The boundary condition. size of the boundary condition should bigger than 1, greater than 2 is ok, but just use the first two. \\
+\hline
+{\em check} & Whether to check the order of t. \\
+\hline
+\end{DoxyParams}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classPPInterpolate_afa14e277a3e42d522a38cf166d1f568f}\label{classPPInterpolate_afa14e277a3e42d522a38cf166d1f568f}} 
+\index{PPInterpolate$<$ N, Real $>$@{PPInterpolate$<$ N, Real $>$}!Generate\_Cmatrix@{Generate\_Cmatrix}}
+\index{Generate\_Cmatrix@{Generate\_Cmatrix}!PPInterpolate$<$ N, Real $>$@{PPInterpolate$<$ N, Real $>$}}
+\doxysubsubsection{\texorpdfstring{Generate\_Cmatrix()}{Generate\_Cmatrix()}}
+{\footnotesize\ttfamily template$<$int N, typename Real $>$ \\
+constexpr Eigen\+::\+Matrix$<$ Real, N, N $>$ \mbox{\hyperlink{classPPInterpolate}{PPInterpolate}}$<$ N, Real $>$\+::Generate\+\_\+\+Cmatrix\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [constexpr]}, {\ttfamily [protected]}}
+
+
+
+Generate the C matrix for the PP-\/form, which will be explained in {\ttfamily interpolate} function. 
+
+\begin{DoxyReturn}{Returns}
+constexpr Eigen\+::\+Matrix$<$\+Real, N, N$>$
+\end{DoxyReturn}
+
+\begin{DoxyTemplParams}{Template Parameters}
+{\em N} & The order of the polynomial, \\
+\hline
+{\em Real} & The type of the real number. \\
+\hline
+\end{DoxyTemplParams}
+\begin{DoxyReturn}{Returns}
+constexpr Eigen\+::\+Matrix$<$\+Real, N, N$>$ 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classPPInterpolate_afb08b2889c7505a395c84e534575198d}\label{classPPInterpolate_afb08b2889c7505a395c84e534575198d}} 
+\index{PPInterpolate$<$ N, Real $>$@{PPInterpolate$<$ N, Real $>$}!getPoly@{getPoly}}
+\index{getPoly@{getPoly}!PPInterpolate$<$ N, Real $>$@{PPInterpolate$<$ N, Real $>$}}
+\doxysubsubsection{\texorpdfstring{getPoly()}{getPoly()}}
+{\footnotesize\ttfamily template$<$int N, typename Real $>$ \\
+\mbox{\hyperlink{classPPoly}{PPoly}}$<$ Real $>$ \mbox{\hyperlink{classPPInterpolate}{PPInterpolate}}$<$ N, Real $>$\+::get\+Poly}
+
+
+
+Get the poly object. 
+
+
+\begin{DoxyTemplParams}{Template Parameters}
+{\em N} & The order of the polynomial, \\
+\hline
+{\em Real} & The type of the real number. \\
+\hline
+\end{DoxyTemplParams}
+\begin{DoxyReturn}{Returns}
+\mbox{\hyperlink{classPPoly}{PPoly$<$\+Real$>$}} 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classPPInterpolate_a6a8d833f826d89194c9c364ebe97458f}\label{classPPInterpolate_a6a8d833f826d89194c9c364ebe97458f}} 
+\index{PPInterpolate$<$ N, Real $>$@{PPInterpolate$<$ N, Real $>$}!interpolate@{interpolate}}
+\index{interpolate@{interpolate}!PPInterpolate$<$ N, Real $>$@{PPInterpolate$<$ N, Real $>$}}
+\doxysubsubsection{\texorpdfstring{interpolate()}{interpolate()}\hspace{0.1cm}{\footnotesize\ttfamily [1/5]}}
+{\footnotesize\ttfamily void \mbox{\hyperlink{classPPInterpolate}{PPInterpolate}}$<$ 1, double $>$\+::interpolate (\begin{DoxyParamCaption}\item[{const std\+::vector$<$ double $>$ \&}]{t,  }\item[{const std\+::vector$<$ double $>$ \&}]{y,  }\item[{const int}]{method,  }\item[{const std\+::vector$<$ double $>$ \&}]{boundary\+\_\+condition }\end{DoxyParamCaption})}
+
+
+
+Interpolate the given data. 
+
+
+\begin{DoxyTemplParams}{Template Parameters}
+{\em N} & for the order of the polynomial. Here N = 1. \\
+\hline
+{\em Real} & for the type of the coefficients. Here Real = double. \\
+\hline
+\end{DoxyTemplParams}
+
+\begin{DoxyParams}{Parameters}
+{\em t} & the nodes of the interpolation \\
+\hline
+{\em y} & the values of the interpolation \\
+\hline
+{\em method} & methods of interpolation, not used in linear case. \\
+\hline
+{\em boundary\+\_\+condition} & boundary condition, not used in linear case. \\
+\hline
+\end{DoxyParams}
+In linear case, we just use the linear function to interpolate the data in each interval.
+
+So the form is \[ y = y_i + \frac{y_{i+1} - y_i}{t_{i+1} - t_i} (x - t_i) \]
+
+Store the coefficients and use them to construct the {\ttfamily \mbox{\hyperlink{classPPoly}{PPoly}}} object.\mbox{\Hypertarget{classPPInterpolate_ade46dcaa580aa337c20ad8eb59307482}\label{classPPInterpolate_ade46dcaa580aa337c20ad8eb59307482}} 
+\index{PPInterpolate$<$ N, Real $>$@{PPInterpolate$<$ N, Real $>$}!interpolate@{interpolate}}
+\index{interpolate@{interpolate}!PPInterpolate$<$ N, Real $>$@{PPInterpolate$<$ N, Real $>$}}
+\doxysubsubsection{\texorpdfstring{interpolate()}{interpolate()}\hspace{0.1cm}{\footnotesize\ttfamily [2/5]}}
+{\footnotesize\ttfamily void \mbox{\hyperlink{classPPInterpolate}{PPInterpolate}}$<$ 2, double $>$\+::interpolate (\begin{DoxyParamCaption}\item[{const std\+::vector$<$ double $>$ \&}]{t,  }\item[{const std\+::vector$<$ double $>$ \&}]{y,  }\item[{const int}]{method,  }\item[{const std\+::vector$<$ double $>$ \&}]{boundary\+\_\+condition }\end{DoxyParamCaption})}
+
+
+
+Interpolate the values of the polynomial at the given nodes. 
+
+
+\begin{DoxyTemplParams}{Template Parameters}
+{\em N} & The order of the polynomial. Here N = 2. \\
+\hline
+{\em Real} & The type of the coefficients. Here Real = double. \\
+\hline
+\end{DoxyTemplParams}
+
+\begin{DoxyParams}{Parameters}
+{\em t} & The nodes of the interpolation \\
+\hline
+{\em y} & The values of the interpolation \\
+\hline
+{\em method} & The method of interpolation, 0 for periodic, 1 for complete (given one derivative at the beginning point). \\
+\hline
+{\em boundary\+\_\+condition} & The boundary condition. size of the boundary condition should bigger than 0, greater than 1 is ok, but just use the first one. \\
+\hline
+\end{DoxyParams}
+The Quadratic Spline have the following form\+: \[ p_i(x) = c_{i,0} + c_{i,1}(x - t_i) + c_{i,2}(x - t_i)^2, x\in [t_i, t_{i+1}]. \]
+
+By the values given at the nodes, we have \[ c_{i,0} = p_i(t_i) = y_i, \]
+
+By the continouous of the function, we have \[ y_{i+1} = p_i(t_{i+1}) = y_i + c_{i,1}(t_{i+1} - t_i) + c_{i,2}(t_{i+1} - t_i)^2. \]
+
+To make sure the continuous of the first derivative, we have \[ c_{i+1, 1} = c_{i, 1} + 2c_{i, 2}(t_{i+1} - t_i). \]
+
+Combine the two equations above, we have \[ c_{i,1} + c_{i+1, 1} = 2 f[t_i, t_{i+1}], \quad c_{i, 2} = \frac{ f[t_i, t_{i+1}] - c_{i, 1} } {t_{i+1} - t_i} = \frac{ c_{i+1, 1} - c_{i, 1} } {2 (t_{i+1} - t_i)}. \]
+
+Hence, for $c_{i,1}$ we already have $N-1$ equations, and we need one more equation to solve the problem.
+
+{\bfseries{Periodic boundary condition.}}
+
+The preiodic boundary condition assure that \[ p_1^{\prime}(t_1) = p_{N-1}^{\prime}(t_N) = p_N^{\prime}(t_N) \Rightarrow c_{1,1} = c_{N, 1}. \]
+
+Add the equation to the system, we can solve the coefficients.
+
+For the piecewise polynomial only needs $ N-1 $ polynomials, which explains the loop condition.
+
+Finally, we can construct the {\ttfamily \mbox{\hyperlink{classPPoly}{PPoly}}} object.
+
+\begin{DoxyNote}{Note}
+For the matrix here is a sparse matrix, we use the {\ttfamily Eigen\+::\+Sparse\+Matrix} class. And the solver is {\ttfamily Eigen\+::\+Sparse\+LU} to solve the sparse linear system.
+\end{DoxyNote}
+{\bfseries{Complete boundary condition.}}
+
+The complete boundary condition means that all derivatives at t\mbox{[}0\mbox{]} are given in boundary\+\_\+condition. So $c_{1,1} = m_0$ is given, directly add it to the system.
+
+For the form is very easy, we just use iteration \[ c_{i+1, 1} = 2 f[t_i, t_{i+1}] - c_{i, 1} \] to solve the coefficients.
+
+Finally, we can construct the {\ttfamily \mbox{\hyperlink{classPPoly}{PPoly}}} object.
+
+
+\begin{DoxyExceptions}{Exceptions}
+{\em std\+::invalid\+\_\+argument} & if method is not 0,1\\
+\hline
+\end{DoxyExceptions}
+\mbox{\Hypertarget{classPPInterpolate_a81dc0973592f97982ad50280578a6fbe}\label{classPPInterpolate_a81dc0973592f97982ad50280578a6fbe}} 
+\index{PPInterpolate$<$ N, Real $>$@{PPInterpolate$<$ N, Real $>$}!interpolate@{interpolate}}
+\index{interpolate@{interpolate}!PPInterpolate$<$ N, Real $>$@{PPInterpolate$<$ N, Real $>$}}
+\doxysubsubsection{\texorpdfstring{interpolate()}{interpolate()}\hspace{0.1cm}{\footnotesize\ttfamily [3/5]}}
+{\footnotesize\ttfamily void \mbox{\hyperlink{classPPInterpolate}{PPInterpolate}}$<$ 3, double $>$\+::interpolate (\begin{DoxyParamCaption}\item[{const std\+::vector$<$ double $>$ \&}]{t,  }\item[{const std\+::vector$<$ double $>$ \&}]{y,  }\item[{const int}]{method,  }\item[{const std\+::vector$<$ double $>$ \&}]{boundary\+\_\+condition }\end{DoxyParamCaption})}
+
+
+
+Construct a new PPInterpolate$<$3, double$>$\+::\+PPInterpolate object. 
+
+
+\begin{DoxyTemplParams}{Template Parameters}
+{\em N} & The order of the polynomial. Here N = 3. \\
+\hline
+{\em Real} & The type of the coefficients. Here Real = double. \\
+\hline
+\end{DoxyTemplParams}
+
+\begin{DoxyParams}{Parameters}
+{\em t} & The nodes of the interpolation. \\
+\hline
+{\em y} & The values of the interpolation. \\
+\hline
+{\em method} & The method used in the interpolation. 0 for periodic, 1 for complete, 2 for natural, 3 for not-\/a-\/knot. \\
+\hline
+{\em boundary\+\_\+condition} & The boundary condition. size of the boundary condition should bigger than 1, greater than 2 is ok, but just use the first two. \\
+\hline
+\end{DoxyParams}
+The PP-\/form polynomial have the following form\+: \[ p_i(x) = c_{i,0} + c_{i,1}(x-x_i) + c_{i,2}(x-x_i)^2 + c_{i,3}(x-x_i)^3, x \in [x_i,x_{i+1}] \]
+
+We let \[ A = \begin{pmatrix} m_1 \\ m_2 \\ \vdots \\ m_n \\ \end{pmatrix} \]
+
+We have\+: \[ \lambda_i m_{i-1} + 2m_i + \mu_i m_{i+1} = 3\mu_i f[x_i, x_{i+1}] + 3\lambda_i f[x_{i-1}, x_i], \] which gives the first $n-2$ equations.
+
+{\bfseries{Periodic Cubic Spline}}.
+
+For periodic boundary condition, we have\+: \[ m_1 = m_n, \quad M_1 = M_n. \] The first one is easy to add in the matrix, we only need to represent $M_i$ by $m_i$.
+
+By simply compute we can have, ( $M_n$ is at the right interval of the last function, so more complex) \[M_1 = 2\frac{3K_1-2m_1-m_2}{x_2-x_1}, \quad K_1=f[x_1,x_2],\] \[M_n = 2\frac{3K_{n-1}-2m_{n-1}-m_n}{x_n-x_{n-1}} + 6\frac{m_{n-1}+m_n-2K_{n-1}}{x_n-x_{n-1}}, \quad K_{n-1} = f[x_{n-1},x_{n}].\]
+
+So we have the last boundary condition as \[\frac{4}{x_2-x_1}m_1 + \frac{2}{x_2-x_1}m_2 + \frac{2}{x_n-x_{n-1}}m_{n-1} + \frac{4}{x_n-x_{n-1}}m_n = 6\frac{K_1}{x_2-x_1} + 6\frac{K_{n-1}}{x_n-x_{n-1}}.\]
+
+Then we can solve the system of linear equations.
+
+Finally compute the coefficients of the cubic spline by \[ c_{i,0} = y_i,\quad c_{i,1} = m_i, \quad c_{i,2} = \frac{3K_i - 2m_{i+1} - m_i}{x_{i+1} - x_i}, \quad c_{i,3} = \frac{m_i - 2K_i + m_{i+1}}{(x_{i+1} - x_i)^2}. \] Then we can construct the {\ttfamily \mbox{\hyperlink{classPPoly}{PPoly}}} object.
+
+\begin{DoxyNote}{Note}
+For the matrix here is a sparse matrix, we use the {\ttfamily Eigen\+::\+Sparse\+Matrix} class. And the solver is {\ttfamily Eigen\+::\+Sparse\+LU} to solve the sparse linear system.
+\end{DoxyNote}
+{\bfseries{Complete Cubic Spline}}
+
+Complete Cubic Spline gives the first derivative at the beginning point and the last point. So we have \[ c_{1,1} = m_0, \quad c_{n,1} = m_{n}. \]
+
+Directly add the equations to the system, we can solve the coefficients. Then we can construct the {\ttfamily \mbox{\hyperlink{classPPoly}{PPoly}}} object.
+
+\begin{DoxyNote}{Note}
+For the matrix here is a sparse matrix, we use the {\ttfamily Eigen\+::\+Sparse\+Matrix} class. And the solver is {\ttfamily Eigen\+::\+Sparse\+LU} to solve the sparse linear system.
+\end{DoxyNote}
+{\bfseries{Natural Cubic Spline}}
+
+Natural Cubic Spline means that the second derivative at the beginning point and the last point are zero.
+
+Here we use the theorem \[ \mu_i M_{i-1} + 2 M_i + \lambda_i M_{i+1} = 6 f[x_{i-1}, x_{i}, x_{i+1}], \quad i = 2,3,\cdots,n-1. \]
+
+And use \[ M_1 = 0, \quad M_n = 0. \]
+
+We can solve the coefficients.
+
+Finally, we compute the coefficients of the pp-\/form polynomial by \[ c_{i,0} = y_i, \quad c_{i,1} = f[x_i,x_{i+1}] - \frac{1}{6} (M_{i+1}+2M_i)(x_{i+1}-x_i),\quad c_{i,2} = \frac{M_i}{2}, \quad c_{i,3} = \frac{M_{i+1}-M_i}{6(x_{i+1}-x_i)}. \]
+
+For the beginning point and the last point, we make use of \[ M_1 = 0, \quad M_n = 0, \] to simplify the calculation.
+
+Finally we can construct the {\ttfamily \mbox{\hyperlink{classPPoly}{PPoly}}} object.
+
+\begin{DoxyNote}{Note}
+For the matrix here is a sparse matrix, we use the {\ttfamily Eigen\+::\+Sparse\+Matrix} class. And the solver is {\ttfamily Eigen\+::\+Sparse\+LU} to solve the sparse linear system.
+\end{DoxyNote}
+
+\begin{DoxyExceptions}{Exceptions}
+{\em std\+::invalid\+\_\+argument} & if method is not 0,1,2\\
+\hline
+\end{DoxyExceptions}
+\mbox{\Hypertarget{classPPInterpolate_a620d45876169509d85b2f59990883803}\label{classPPInterpolate_a620d45876169509d85b2f59990883803}} 
+\index{PPInterpolate$<$ N, Real $>$@{PPInterpolate$<$ N, Real $>$}!interpolate@{interpolate}}
+\index{interpolate@{interpolate}!PPInterpolate$<$ N, Real $>$@{PPInterpolate$<$ N, Real $>$}}
+\doxysubsubsection{\texorpdfstring{interpolate()}{interpolate()}\hspace{0.1cm}{\footnotesize\ttfamily [4/5]}}
+{\footnotesize\ttfamily void \mbox{\hyperlink{classPPInterpolate}{PPInterpolate}}$<$ 3, mpf\+\_\+class $>$\+::interpolate (\begin{DoxyParamCaption}\item[{const std\+::vector$<$ mpf\+\_\+class $>$ \&}]{t,  }\item[{const std\+::vector$<$ mpf\+\_\+class $>$ \&}]{y,  }\item[{const int}]{method,  }\item[{const std\+::vector$<$ mpf\+\_\+class $>$ \&}]{boundary\+\_\+condition }\end{DoxyParamCaption})}
+
+Natural Cubic Spline\mbox{\Hypertarget{classPPInterpolate_a25842fc4d47cb59baf6c56e87040b5e9}\label{classPPInterpolate_a25842fc4d47cb59baf6c56e87040b5e9}} 
+\index{PPInterpolate$<$ N, Real $>$@{PPInterpolate$<$ N, Real $>$}!interpolate@{interpolate}}
+\index{interpolate@{interpolate}!PPInterpolate$<$ N, Real $>$@{PPInterpolate$<$ N, Real $>$}}
+\doxysubsubsection{\texorpdfstring{interpolate()}{interpolate()}\hspace{0.1cm}{\footnotesize\ttfamily [5/5]}}
+{\footnotesize\ttfamily template$<$int N, typename Real $>$ \\
+void \mbox{\hyperlink{classPPInterpolate}{PPInterpolate}}$<$ N, Real $>$\+::interpolate (\begin{DoxyParamCaption}\item[{const std\+::vector$<$ Real $>$ \&}]{t,  }\item[{const std\+::vector$<$ Real $>$ \&}]{y,  }\item[{const int}]{method = {\ttfamily 0},  }\item[{const std\+::vector$<$ Real $>$ \&}]{boundary\+\_\+condition = {\ttfamily std\+:\+:vector$<$Real$>$(N,~0.0)} }\end{DoxyParamCaption})}
+
+Here are the details of the interpolation\+: Let the polynomial for the interval \mbox{[}x\+\_\+i, x\+\_\+\{i+1\}\mbox{]} be defined as\+: \[ p_i(x) = y_i + C_{i,1}(x-x_i) + \cdots + C_{i,N}(x-x_i)^N \] and for the next interval $[x_{i+1}, x_{i+2}]$ as\+: \[ p_{i+1}(x) = y_{i+1} + C_{i+1,1}(x-x_{i+1}) + \cdots + C_{i+1,N}(x-x_{i+1})^N \]
+
+By requiring continuity at the boundary $x_{i+1}$, i.\+e., $p_i(x_{i+1}) = p_{i+1}(x_{i+1})$, define\+: \[ \Delta x_i = x_{i+1} - x_i, \quad \Delta y_i = y_{i+1} - y_i \]
+
+The coefficient $C_{i,N}$ is then computed as\+: \[ C_{i,N} = \frac{\Delta y_i - C_{i,1}\Delta x_i - \cdots - C_{i,N-1}\Delta x_i^{N-1}}{\Delta x_i^N} \]
+
+By matching the $j$-\/th derivatives at $x_{i+1}$, i.\+e., $p_i^{(j)}(x_{i+1}) = p_{i+1}^{(j)}(x_{i+1})$, we derive\+: \[ C_{i+1,j} = \sum_{k=0}^{N-j} C_{j+k}^{k} C_{i,j+k} (\Delta x_i)^k \]
+
+Replacing $C_{i,N}$ in the above equation, we get\+: \[ C_{i+1,j} = \sum_{k=0}^{N-j-1} C_{j+k}^{k} C_{i,j+k} (\Delta x_i)^k + C_{N}^{N-j} \frac{\Delta y_i - C_{i,1}\Delta x_i - \cdots - C_{i,N-1}(\Delta x_i)^{N-1}}{(\Delta x_i)^j} \]
+
+The matrix equation is then \[ b_i + A_i C_i = C_{i+1}. \]
+
+Here we have \[ b_i = \begin{pmatrix} \frac{C_{N}^{N-1} }{\Delta x_i} \Delta y_i\\ \frac{C_{N}^{N-2} }{(\Delta x_i)^2} \Delta y_i \\ \vdots \\ \frac{C_{N}^{1} }{(\Delta x_i)^{N-1}} \Delta y_i \\ \end{pmatrix} \quad C_i = \begin{pmatrix} C_{i,1} \\ C_{i,2} \\ \vdots \\ C_{i,N-1} \\ \end{pmatrix} \]
+
+\[ A_i = \begin{pmatrix} C_1^0 \Delta x_i & C_2^1 (\Delta x_i)^2 & \cdots & C_{N-1}^{N-2} (\Delta x_i)^{N-2} \\ 0 & C_2^0 \Delta x_i & \cdots & C_{N-1}^{N-3} (\Delta x_i)^{N-3} \\ \vdots & \vdots & \ddots & \vdots \\ 0 & 0 & \cdots & C_{N-1}^0 \Delta x_i \\ \end{pmatrix} - \begin{pmatrix} C_{N}^{N-1} \frac{\Delta x_i}{\Delta x_i} & C_{N}^{N-1} \frac{(\Delta x_i)^2}{\Delta x_i} & \cdots & C_{N}^{N-1} \frac{(\Delta x_i)^{N-1}}{\Delta x_i} \\ C_{N}^{N-2} \frac{\Delta x_i}{(\Delta x_i)^2} & C_{N}^{N-2} \frac{(\Delta x_i)^2}{(\Delta x_i)^2} & \cdots & C_{N}^{N-2} \frac{(\Delta x_i)^{N-1}}{(\Delta x_i)^2} \\ \vdots & \vdots & \ddots & \vdots \\ C_{N}{1} \frac{\Delta x_i}{(\Delta x_i)^{N-1}} & C_{N}^{1} \frac{(\Delta x_i)^2}{(\Delta x_i)^{N-1}} & \cdots & C_{N}^{1} \frac{(\Delta x_i)^{N-1}}{(\Delta x_i)^{N-1}} \\ \end{pmatrix} \]
+
+I have used many ways to reduce the complexity of the algorithm, like use {\ttfamily Generate\+\_\+\+Cmatrix} to precompute the $ C_i^j $ by using the recurrence relation\+: \[ C_i^j = C_{i-1}^{j-1} + C_{i-1}^j, \] and store the value of $ \Delta x_i $ and $ \Delta y_i $ in the {\ttfamily dx} and {\ttfamily dy} variables.
+
+{\bfseries{Periodic Condition}}
+
+For the periodic condition, we have \[ C_1 = C_{N}. \]
+
+So we use two matrices, {\ttfamily A\+\_\+ahead} and {\ttfamily A\+\_\+behind}, to store the coefficients of the polynomial. We initially set {\ttfamily A\+\_\+ahead} and {\ttfamily A\+\_\+behind} to be the identity matrix, and {\ttfamily b\+\_\+ahead} and {\ttfamily b\+\_\+behind} to be zero vectors. \[ A_{\text{ahead}} = A_i A_{\text{ahead}}, b_{\text{ahead}} = A_i b_{\text{ahead}} + b_i, \\ A_{\text{behind}} = A_i^{-1} A_{\text{behind}}, b_{\text{behind}} = A_i^{-1} b_{\text{behind}} - A_i^{-1} b_i, \]
+
+When {\ttfamily ahead} is less than {\ttfamily behind}, we compute the coefficients of the polynomial using the matrix equation. Which means $C_1$ go ahead and $C_N$ go behind.
+
+When {\ttfamily ahead} is equal to {\ttfamily behind}, we let $k = ahead$, then we have \[ C_k = A_{\text{ahead}} C_1 + b_{\text{ahead}}, \quad C_k = A_{\text{behind}} C_N + b_{\text{behind}}. \]
+
+Then we can get the final equation \[ (A_{\text{ahead}} - A_{\text{behind}}) C_1 = b_{\text{behind}} - b_{\text{ahead}}. \]
+
+Finally, use iteration and the relation we can get the whole coefficients of the polynomial.
+
+{\bfseries{Complete Condition}}
+
+This condition is based on all the derivates at the beginning point are given.
+
+Use the same iteration to compute the coefficients.\mbox{\Hypertarget{classPPInterpolate_ab7105d399404dfe3f34f2c7c8c69d89f}\label{classPPInterpolate_ab7105d399404dfe3f34f2c7c8c69d89f}} 
+\index{PPInterpolate$<$ N, Real $>$@{PPInterpolate$<$ N, Real $>$}!operator()@{operator()}}
+\index{operator()@{operator()}!PPInterpolate$<$ N, Real $>$@{PPInterpolate$<$ N, Real $>$}}
+\doxysubsubsection{\texorpdfstring{operator()()}{operator()()}}
+{\footnotesize\ttfamily template$<$int N, typename Real $>$ \\
+Real \mbox{\hyperlink{classPPInterpolate}{PPInterpolate}}$<$ N, Real $>$\+::operator() (\begin{DoxyParamCaption}\item[{Real}]{x }\end{DoxyParamCaption}) const}
+
+
+
+Evaluate the polynomial at a given point. 
+
+
+\begin{DoxyTemplParams}{Template Parameters}
+{\em N} & The order of the polynomial, \\
+\hline
+{\em Real} & The type of the real number. \\
+\hline
+\end{DoxyTemplParams}
+
+\begin{DoxyParams}{Parameters}
+{\em x} & The point to evaluate the polynomial at. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Real The value of the polynomial at the given point. 
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+src/include/\mbox{\hyperlink{PPInterpolate_8hpp}{PPInterpolate.\+hpp}}\item 
+src/include/\mbox{\hyperlink{PPInterpolate_8tpp}{PPInterpolate.\+tpp}}\end{DoxyCompactItemize}
