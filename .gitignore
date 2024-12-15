@@ -6,7 +6,7 @@
 !*.cc
 !*.h
 !*.hpp
-!*.mds
+!*.md
 !*.tex
 !*.py
 !Theoretical/*/*.tex
@@ -23,3 +23,5 @@ Programming/Chapter1/latex/*
 Programming/Chapter1/html/*
 Programming/Chapter2/latex/*
 Programming/Chapter2/html/*
+!Programming/Chapter3/src/*
+!Programming/Chapter3/doc/report.pdf
