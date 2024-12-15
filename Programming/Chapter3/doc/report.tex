@@ -198,7 +198,7 @@ Then, use the \textbf{Periodic Condition} we can have
     \end{subfigure}
 \end{figure}
 
-For the evenly Spaced knots, we can also draw similiar pictures
+For the \textbf{Evenly Spaced} knots, we can also draw similiar pictures
 \begin{figure}[H]
     \centering
     \begin{subfigure}[b]{0.35\textwidth}
@@ -332,7 +332,42 @@ The program is simple, just use the difinition of divided difference to calculat
 \end{figure}
 
 
-\section{Appendix I. Error Estimation of Splines}
+\section{Appendix I. Verify that PP-form and B-form are equivalent}
+
+In this section, we will design several experiments to verify that PP-form and B-form are equivalent under same knots and boundary condition. 
+The result is obvious, because these conditions determine a unique polynomial in $\mathbb{S}_{n}^{n-1}$, which is proved in the book. The B-form is just 
+the representation under a new basis, we can also use Bernstein polynomial as basis, which is not the focus of this section.
+
+We choose the following functions to fit
+\begin{itemize}
+    \item $f(x) = 3+8x+4x^2+6x^3$
+    \item $f(x) = \frac{1}{1 + e^{-x}}$
+    \item $f(x) = \sin x + e^{-x}$
+\end{itemize}
+
+And here is the results, with $N = 10$.
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}[b]{0.45\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{../figure/SplineTest1.png}
+        \caption{$f(x) = 3+8x+4x^2+6x^3$}
+    \end{subfigure}
+    \begin{subfigure}[b]{0.45\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{../figure/SplineTest2.png}
+        \caption{$f(x) = \frac{1}{1 + e^{-x}}$}
+    \end{subfigure}
+    \\ 
+    \begin{subfigure}[b]{0.45\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{../figure/SplineTest3.png}
+        \caption{$f(x) = \sin x + e^{-x}$}
+    \end{subfigure}
+\end{figure}
+
+
+\section{Appendix II. Error Estimation of Splines}
 
 Under the same knots and boundary condition, the PP-form and B-form are equivalent,
 so we just need to consider the PP-form.
@@ -436,7 +471,7 @@ And by LeastSquares, we can approx the rate of convergence as followings
 \end{table}
 
 
-\section{Appendix II. Error Estimation of Ball Fitting}
+\section{Appendix III. Error Estimation of Ball Fitting}
 
 \subsection{I. Stereographic projection}
 

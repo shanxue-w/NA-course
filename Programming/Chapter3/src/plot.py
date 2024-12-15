@@ -121,10 +121,28 @@ def drawF(filename:str):
     # 调整布局
     plt.tight_layout()
     plt.savefig('./figure/' + filename.split('/')[-1].replace('.txt', '.png'))
+    plt.close()
 
 
 drawF('result/F_1.txt')
 drawF('result/F_2.txt')
+
+def drawTest(filename:str):
+    data = np.loadtxt(filename, delimiter=',')
+    x = data[:,0]
+    y_exact = data[:,1]
+    y_pp = data[:,2]
+    y_bs = data[:,3]
+    plt.plot(x, y_exact, label='Exact')
+    plt.plot(x, y_pp, label='PP-form')
+    plt.plot(x, y_bs, label='Bspline')
+    plt.legend()
+    plt.savefig('./figure/' + filename.split('/')[-1].replace('.txt', '.png'))
+    plt.close()
+
+drawTest('result/SplineTest1.txt')
+drawTest('result/SplineTest2.txt')
+drawTest('result/SplineTest3.txt')
 
 # draw('log.txt')
 

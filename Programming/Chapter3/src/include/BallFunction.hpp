@@ -1,3 +1,14 @@
+/**
+ * @file BallFunction.hpp
+ * @author WangHao (3220104819@zju.edu.cn)
+ * @brief Implement the Ball Function Class
+ * @version 0.1
+ * @date 2024-12-15
+ *
+ * @copyright Copyright (c) 2024
+ *
+ */
+
 #ifndef __BALLFUNCTION_HPP__
 #define __BALLFUNCTION_HPP__
 

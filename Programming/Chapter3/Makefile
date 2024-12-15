@@ -15,7 +15,7 @@ INCLUDE_DIRS = $(shell find $(INCLUDE_DIR) -type d)
 INCLUDE_FLAGS = $(patsubst %,-I%,$(INCLUDE_DIRS))
 ADDRESS_FLAG = -fsanitize=address
 
-CXXFLAGS = $(INCLUDE_FLAGS) $(GMP_FLAX) $(EIGEN_FLAX) $(JSONCPP_FLAX) -std=c++17 -Wall -Wextra -Werror -pedantic -O3 -fuse-linker-plugin -mavx -mfma -march=native -fPIC -funroll-loops -fprefetch-loop-arrays -fomit-frame-pointer -fopenmp 
+CXXFLAGS = $(INCLUDE_FLAGS) $(GMP_FLAX) $(EIGEN_FLAX) $(JSONCPP_FLAX) -std=c++17 -Wall -Wextra -Werror -pedantic -O2 -fuse-linker-plugin -mavx -mfma -fPIC -fopenmp 
 
 SRC_FILES = $(shell find $(SRC_DIR) -name '*.cc')
 
