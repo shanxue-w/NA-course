@@ -162,7 +162,82 @@ $\norm{u_1} = (\sum_{i=1}^{N} 1^2) ^{\frac{1}{2}} = 2 \sqrt{3}$, $v_1 = \frac{u_
 
 $\langle u_2, v_1 \rangle = \sum_{i=1}^{N} u_2(t_i) \frac{1}{2 \sqrt{3}} = 13 \sqrt{3}$, $\hat{u}_2 = u_2 - \langle u_2, v_1 \rangle v_1 = x - \frac{13}{2}$, $v_2 = \frac{x - \frac{13}{2}}{\sqrt{143}}$. 
 
-$\langle u_3, v_1 \rangle = \frac{325}{\sqrt{3}}$, $\langle u_3, v_2 \rangle = \frac{1859}{\sqrt{143}}$, $\hat{u}_3 = x^2 - 13 x + \frac{91}{3}$, $v_3 = $
+$\langle u_3, v_1 \rangle = \frac{325}{\sqrt{3}}$, $\langle u_3, v_2 \rangle = \frac{1859}{\sqrt{143}}$, $\hat{u}_3 = x^2 - 13 x + \frac{91}{3}$, $v_3 = \frac{\sqrt{3003}}{2002}(x^2 - 13 x + \frac{91}{3}) $
 
+
+\subsection*{b. Find Best Approxmiation}
+
+We can simpily get that 
+\begin{equation}
+    \langle y, v_1 \rangle \approx 479.778073696579, \quad \langle y, v_2 \rangle \approx 49.25465438941768, \quad \langle y, v_3 \rangle \approx 330.3306671357499.
+\end{equation}
+
+So finally we can get the best approxmiation
+\begin{equation}
+    \begin{aligned}
+        \varphi (x) &= \langle y, v_1 \rangle v_1 + \langle y, v_2 \rangle v_2 + \langle y, v_3 \rangle v_3 \\
+         &= 9.041958041958038 x^2 -113.4265734265734 x + 385.9999999999999.
+    \end{aligned}
+\end{equation}
+
+Same as the result in the book.
+
+\subsection*{c. Which can be reused}
+
+The way here can be reused for $y_i$, because the basis won't change, we just need to recalculate the inner product is enough. 
+
+The way in book will need to recalculate all datas, which may be time consuming.
+
+This method can reduce the computational cost when the $y_i$ changes. 
+
+
+\section*{V. Prove Theorem 5.66 and Lemma 5.67}
+
+\subsection*{Theorem 5.66}
+
+We have 
+\begin{equation}
+    A = V\Sigma U^*, A^+ y = \sum_{j=1}^{r} \frac{1}{\sigma_j} \langle y, v_j \rangle u_j = U \Sigma^{+} V^* y.
+\end{equation}
+
+So we can also get that 
+\begin{equation}
+    A^+ = U \Sigma^{+} V^*,
+\end{equation}
+
+Then we have 
+\begin{equation}
+    A A^+ A = V\Sigma U^* U \Sigma^{+} V^* V\Sigma U^* = V\Sigma U^* = V \text{diag} \{I_r, 0\} \Sigma U^* = V\Sigma U^* = A.
+\end{equation}
+
+For PDI-2, we have
+\begin{equation}
+    A^+ A A^+ = U \Sigma^{+} V^* V\Sigma U^* U \Sigma^{+} V^* = U \Sigma^{+} V^* = A^+.
+\end{equation}
+
+For PDI-3, we have
+\begin{equation}
+    \begin{aligned}
+        (A A^+)^* &= (V\Sigma U^* U \Sigma^{+} V^*)^* = V \text{diag} \{I_r, 0\} V^* = A A^+, \\
+        (A^+ A)^* &= (U \Sigma^{+} V^* V\Sigma U^*)^* = U \text{diag} \{I_r, 0\} U^* = A^+ A.
+    \end{aligned}
+\end{equation}
+
+Therefore, we have proved Theorem 5.66.
+
+\subsection*{Lemma 5.67}
+
+If A has linearly independent columns, then we have $A^* A$ is invertible. If A has linearly independent columns, then we have $A^* A$ is invertible. To prove $A^+ = (A^* A)^{-1} A^*$,
+we only need to prove $A^* A A^+ = A^*$, which we have
+\begin{equation}
+    A^* A A^+ = U \Sigma^* V^* V \Sigma U^* U \Sigma^{+} V^* = U \Sigma V^* = A^*.
+\end{equation}
+
+For the right inverse, because $A$ has linearly independent rows, we have $A A^*$ is invertible. We only need to prove $A^+ A A^* = A^*$, which we have
+\begin{equation}
+    A^+ A A^* = U \Sigma^{+} V^* V \Sigma U^* U \Sigma^* V^* = U \Sigma V^* = A^*.
+\end{equation}
+
+Therefore, we have proved Lemma 5.67.
 
 \end{document}
