@@ -1,0 +1,274 @@
+\documentclass[a4paper]{article}
+\usepackage[affil-it]{authblk}
+\usepackage{ctex}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsfonts}
+\usepackage{amsthm}
+\usepackage{physics}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{listings}
+\usepackage{color}
+\usepackage{float}
+\usepackage{subcaption}
+\usepackage{caption}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\hypersetup{colorlinks=true, linkcolor=blue, citecolor=blue, urlcolor=blue}
+
+
+\usepackage{geometry}
+\geometry{margin=1.5cm, vmargin={0pt,1cm}}
+\setlength{\topmargin}{-1cm}
+\setlength{\paperheight}{29.7cm}
+\setlength{\textheight}{25.3cm}
+
+\begin{document}
+
+\title{Numerical Analysis homework \# 6}
+
+\author{王昊 Wang Hao 3220104819
+  \thanks{Electronic address: \texttt{3220104819@zju.edu.cn}}}
+\affil{(Mathematics and Applied Mathematics 2201), Zhejiang University }
+
+
+\date{Due time: \today}
+
+\maketitle
+
+\section*{I. Simpson's Rule}
+
+\subsection*{a. Simpson's rule can be done by interpolation.}
+
+When interpolating $y(t)$ by $p_3(-1) = y(-1), p_3(0) = y(0), p_3^{\prime} (0) = y_3^{\prime} (0), p_3(1) = y(1)$, we can know that 
+\begin{equation}
+    p_3(x) = y(-1) + [y(0) - y(-1)] (x+1) + [y^{\prime}(0) - y(0) + y(-1)] x(x+1) + \frac{y(1)-2y^{\prime}(0)-y(-1)}{2} x^2 (x+1).
+\end{equation}
+So we have
+\begin{equation}
+    \int_{-1}^{1} p_3(x) \mathrm{d}x = \frac{y(-1) + 4y(0) + y(1)}{3} = \frac{2}{6} [y(-1) + 4y(0) + y(1)],
+\end{equation}
+which is the Simpson's rule. 
+
+\subsection*{b. Derive the error term of Simpson's rule.}
+
+For the interpolation, we know that 
+\begin{equation}
+    y(x) - p_3(x) = \frac{y^{(4)} (\xi)}{4!} (x+1)x^2(x-1), \quad \xi \in [-1,1].
+\end{equation}
+
+So we have 
+\begin{equation}
+  \begin{aligned}
+    \int_{-1}^{1} [y(x) - p_3(x)] \mathrm{d} x  &= \frac{y^{(4)} (\xi)}{4!} \int_{-1}^{1} (x+1)x^2(x-1) \mathrm{d} x
+      &= y^{(4)} (\eta) \int_{-1}^{1} (x+1)x^2(x-1) \mathrm{d} x \\
+      &= -\frac{1}{90} y^{(4)} (\eta), \eta \in [-1, 1]. \\
+      &= - \frac{(b-a)^5}{2880} y^{(4)} (\eta), \eta \in [-1, 1].
+  \end{aligned}
+\end{equation}
+
+The above $\eta \in [-1, 1]$ can be replaced by $\eta \in (-1, 1)$ by a little analysis.
+
+
+\subsection*{c. Composite Simpson's rule.}
+
+We divide the interval $[-1, 1]$ to $2n$ parts, and each interval is of length $h = \frac{2}{2n} = \frac{1}{n}$. So in each interval, the simpson' rule is 
+\begin{equation}
+    \int_{x_{2k}}^{x_{2k+2}} p_3(x) \mathrm{d} x = \frac{h}{3} [y(x_{2k}) + 4y(x_{2k+1}) + y(x_{2k+2})].
+\end{equation}
+
+Adding all the intervals together, we can get the composite Simpson's rule
+\begin{equation}
+    I_N (y) = \frac{h}{3} [y(x_0) + 2 \sum_{k=1}^{n-1} y(x_{2k}) + 4 \sum_{k=0}^{n-1} y(x_{2k+1}) + y(x_{2n})].
+\end{equation}
+
+In each interval, the error term is 
+\begin{equation}
+    E_k = -\frac{h^5}{90} y^{(4)} (\eta_k), \quad \eta_k \in [x_{2k}, x_{2k+2}].
+\end{equation}
+
+So the total error is 
+\begin{equation}
+  \begin{aligned}
+    E = \sum_{k=0}^{n-1} E_k &= -\frac{h^5}{90} \sum_{k=0}^{n-1} y^{(4)} (\eta_k) \\
+    &= -\frac{h^5}{90} n y^{(4)} (\eta), \quad \eta \in (-1, 1) \\
+    &= -\frac{h^4}{180} (b-a) y^{(4)} (\eta), \quad \eta \in (-1, 1) \\
+    &= -\frac{h^4}{90} y^{(4)} (\eta), \quad \eta \in (-1, 1).
+  \end{aligned}
+\end{equation}
+
+\section*{II. Minimum intervals needed for a given error}
+
+\subsection*{a. Composite Trapezoidal rule}
+We know that the error term of composite trapezoidal rule is
+\begin{equation}
+    E = -\frac{h^2}{12} (b-a) y^{(2)} (\xi), \quad \xi \in (a, b), \quad h = \frac{b-a}{n}.
+\end{equation}
+
+For the function $f = e^{-x^2}$, we know that 
+\begin{equation}
+    f^{\prime} = -2x e^{-x^2}, \quad f^{\prime \prime} = (4x^2 - 2) e^{-x^2}.
+\end{equation}
+
+So we can get 
+\begin{equation}
+    M = \max_{x \in [0, 1]} |f^{\prime \prime} (x)| = 2. 
+\end{equation}
+
+So we have 
+\begin{equation}
+    \abs{E} \leq \frac{h^2}{12} M \leq 0.5 \times 10^{-6}, \Rightarrow n \geq 577.4. 
+\end{equation}
+
+So the minimum intervals needed is $n = 578$.
+
+\subsection*{b. Composite Simpson's rule}
+
+We know that the error term of composite Simpson's rule is
+\begin{equation}
+    E = -\frac{h^4}{180}(b-a) y^{(4)} (\xi), \quad \xi \in (a, b), \quad h = \frac{b-a}{2n}.
+\end{equation}
+
+And that 
+\begin{equation}
+    f^{(4)} = (16x^4 - 48x^2 + 12) e^{-x^2}, \Rightarrow M = \max_{x \in [0, 1]} |f^{(4)} (x)| = 12.
+\end{equation}
+
+So we have
+\begin{equation}
+    \abs{E} \leq \frac{h^4}{180} M \leq 0.5 \times 10^{-6}, \Rightarrow n \geq 4.78.
+\end{equation}
+
+So the minimum $n = 5$, need to have $2n = 10$ intervals. 
+
+
+\section*{III. Gauss Quadrature Formula}
+
+\subsection*{a. Construct $\pi_2(t)$}
+
+We have 
+\begin{equation}
+    \int_{0}^{\infty} t^m \rho(t) \,\mathrm{d}t = m!. 
+\end{equation}
+
+To construct basis, we only to have $1, t$ to be done is ok, which means 
+\begin{equation}
+  \begin{aligned}
+    \int_{0}^{\infty} \rho(t) \pi_2(t) \,\mathrm{d}t &= 0, \\
+    \int_{0}^{\infty} \rho(t) t \pi_2(t) \,\mathrm{d}t &= 0.
+  \end{aligned}
+\end{equation}
+
+So we have 
+\begin{equation}
+    \begin{cases}
+      2 + a + b = 0, \\
+      6 + 2a + b = 0. 
+    \end{cases}
+    \Rightarrow a = -4, b = 2.
+\end{equation}
+
+Therefore we have 
+\begin{equation}
+    \pi_2 (t) = t^2 - 4t + 2. 
+\end{equation}
+
+\subsection*{b. Two-point Gauss-Leguerre formula}
+We have 
+\begin{equation}
+    \pi_2 (t) = t^2 - 4t + 2 = 0, \Rightarrow t = 2 \pm \sqrt{2}, \Rightarrow t_1 = 2 - \sqrt{2}, t_2 = 2 + \sqrt{2}.
+\end{equation}
+
+For the weight, we have 
+\begin{equation}
+    \begin{aligned}
+        \int_{0}^{\infty} \rho(t) \,\mathrm{d}t &= \omega_1 1 + \omega_2 1 = 1, \\
+        \int_{0}^{\infty} \rho(t) t \,\mathrm{d}t &= \omega_1 t_1 + \omega_2 t_2 = 1. 
+    \end{aligned}
+\end{equation}
+
+So we can have 
+\begin{equation}
+    \omega_1 = \frac{2 + \sqrt{2}}{4}, \quad \omega_2 = \frac{2 - \sqrt{2}}{4}.
+\end{equation}
+
+Make the Hermite polynomial at $t_1, t_2$, denoted as $H_3(t)$, then we have 
+\begin{equation}
+    f(t) = H_3(t) + \frac{f^{(4)} (\xi)}{4!} (t - t_1)^2 (t - t_2)^2 = H_3(t) + \frac{f^{(4)} (\xi)}{4!} \pi_2^2(t).
+\end{equation}
+
+Then we have 
+\begin{equation}
+  \begin{aligned}
+    \int_{0}^{\infty} f(t) \rho(t) \,\mathrm{d}t &= \int_{0}^{\infty} H_3(t) \rho(t) \,\mathrm{d}t + \frac{f^{(4)} (\xi)}{4!} \int_{0}^{\infty} \pi_2^2(t) \rho(t) \,\mathrm{d}t \\
+    &= \omega_1 f(t_1) + \omega_2 f(t_2) + \frac{f^{(4)} (\tau)}{4!} \int_{0}^{\infty} \pi_2^2(t) \rho(t) \,\mathrm{d}t \\
+    &= \omega_1 f(t_1) + \omega_2 f(t_2) + \frac{f^{(4)} (\tau)}{6}, \quad \tau \in (0, \infty).
+  \end{aligned}
+\end{equation}
+
+\subsection*{c. Application of the formula}
+
+For $f(t) = \frac{1}{1+t}$, we have 
+\begin{equation}
+    I_G = \omega_1 f(t_1) + \omega_2 f(t_2) = \frac{4}{7} \approx 0.57142857142857142857. 
+\end{equation}
+
+So we have 
+\begin{equation}
+    \frac{f^{(t)} (\tau)}{6} = I - I_G \Rightarrow \tau \approx 1.7613. 
+\end{equation}
+
+
+\section*{VI. Reminder of Gauss Formulas}
+
+\subsection*{a. Seek $h_m$ and $q_m$}
+It's easy to know that 
+\begin{equation}
+    \ell_m(t) = \frac{\prod_{i \ne m} (t - x_i)}{\prod_{i \ne m} (x_m - x_i)}. 
+\end{equation}
+
+We have 
+\begin{equation}
+    p(x_m) = f_m, \quad p^{\prime} (x_m) = f^{\prime}_m. 
+\end{equation}
+
+So we have 
+\begin{equation}
+    \begin{aligned}
+        (a_m + b_m x_m) f_m + (c_m +d_m x_m) f^{\prime}_m &= f_m \\
+        (b_m + 2 (a_m + b_m x_m) \ell^{\prime}_m (x_m)) f_m + (d_m + 2 (c_m + d_m x_m) \ell^{\prime}_m (x_m)) f^{\prime}_m &= f^{\prime}_m \\
+        \ell_m^{\prime} (x_m) &= \sum_{i \ne m} \frac{1}{x_m - x_i}, \\
+    \end{aligned}
+\end{equation}
+
+Therefore, we can have 
+\begin{equation}
+    a_m = 1 + 2\sum_{i \ne m} \frac{x_m}{x_m - x_i} , b_m = -2\sum_{i \ne m} \frac{1}{x_m - x_i}, c_m = -x_m, d_m = 1.
+\end{equation}
+
+\subsection*{b. A New Quadrature Rule}
+
+For any $p \in \mathbb{P}_{2n-1}$, the above formula can represent it, so we have 
+\begin{equation}
+    \int_{a}^{b} p(x)\,\mathrm{d}t = I_n (p) =  \sum_{k=1}^{n} [w_k p(x_k) + \mu_k p^{\prime}(x_k)] = \int_{a}^{b} \sum_{k=1}^{n}[h_m(t) p_m + q_m(t) p_{m}^{\prime}]  \,\mathrm{d}t.
+\end{equation}
+
+Therefore, we have 
+\begin{equation}
+    w_k = \int_{a}^{b} (a_m + b_m t) \ell_m^2(t) \,\mathrm{d}t, \quad \mu_k = \int_{a}^{b} (c_m + d_m t) \ell_m^2(t) \,\mathrm{d}t.
+\end{equation}
+
+\subsection*{c. Condition of $x_m$ or $q_m(t)$}
+
+We have 
+\begin{equation}
+    \mu_k = \int_{a}^{b} (t - x_k) \ell_k^2(t) \,\mathrm{d}t = \int_{a}^{b} (t - x_k) \qty(\frac{\prod_{i \ne k} (t - x_i)}{\prod_{i \ne k} (x_k - x_i)})^2 \,\mathrm{d}t = 0, \forall k=1, \cdots, n.
+\end{equation}
+
+This the condition that $x_k$ must satisfy.
+
+And we can know there are $n$ equations and $n$ varibles, so we can solve this problem.
+
+
+\end{document}
