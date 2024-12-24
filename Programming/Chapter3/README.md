@@ -6,6 +6,8 @@
 make all && make run && make plot && make doxygen
 ```
 
+### 具体类依赖关系建议查看`doxygen`生成的文档，html和pdf都有。
+
 部分文件说明：
 - `src/`
     - `include/`: 项目包含所有头文件

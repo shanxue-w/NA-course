@@ -18,7 +18,7 @@ main(void)
         y[i] = sin(x[i].get_d());
     }
 
-    PPInterpolate<4, mpf_class> inter(x, y, 0);
+    PPInterpolate<5, mpf_class> inter(x, y, 0);
     PPoly<mpf_class>            poly    = inter.getPoly();
     mpf_class                   max_err = mpf_class(0.0);
     for (double i = 0; i < 2 * M_PI; i += 1e-3)
@@ -30,7 +30,7 @@ main(void)
         }
     }
     std::cout << "PP-form max error: " << max_err << std::endl;
-    BInterpolate<4, mpf_class> inter2(x, y, 0);
+    BInterpolate<5, mpf_class> inter2(x, y, 0);
     max_err = mpf_class(0.0);
     for (double i = 0; i < 2 * M_PI; i += 1e-3)
     {

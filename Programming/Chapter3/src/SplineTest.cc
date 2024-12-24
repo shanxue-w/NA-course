@@ -25,6 +25,7 @@ func3(double x)
 int
 main()
 {
+    std::cout << "======================SplineTest======================" << std::endl;
     int                 N = 10;
     std::vector<double> t(N), y(N);
     std::vector<double> boundary_condition = {0, 0};
@@ -83,5 +84,6 @@ main()
     }
     fout.close();
 
+    std::cout << "======================SplineTest======================" << std::endl;
     return 0;
 }

@@ -364,6 +364,35 @@ And here is the results, with $N = 10$.
         \includegraphics[width=\textwidth]{../figure/SplineTest3.png}
         \caption{$f(x) = \sin x + e^{-x}$}
     \end{subfigure}
+    \caption{PP-form and B-form are equivalent}
+    \label{FIG:APPENDIX1:1}
+\end{figure}
+
+Also, all results in Question E are also interpolated by both PP-form and B-form, and the results are the same, here just choose some of them to show, more results can be found in the \textbf{../figure/} folder.
+
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}[b]{0.45\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{../figure/E_heart_cum_PP160.png}
+        \caption{PP-form}
+    \end{subfigure}
+    \begin{subfigure}[b]{0.45\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{../figure/E_heart_cum_B160.png}
+        \caption{Bspline}
+    \end{subfigure}
+    \\
+    \begin{subfigure}[b]{0.45\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{../figure/E_2_cum_PP160.png}
+        \caption{PP-form}
+    \end{subfigure}
+    \begin{subfigure}[b]{0.45\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{../figure/E_2_cum_B160.png}
+        \caption{Bspline}
+    \end{subfigure}
 \end{figure}
 
 
@@ -533,7 +562,19 @@ Here we have
 
 So what we do is to interpolate $\theta(t)$ and $\varphi(t)$, also the same strategy as above, we can establish the error estimation.
 
+\section{Appendix IV. Implement High Order Splines}
 
+I have implemented the \textbf{PP-form} and \textbf{BSpline} with any order, and have tested them with the following functions. 
+\begin{itemize}
+    \item $f(x) = \sin\qty(x)$ 
+    \item $f(x) = 3+8x+4x^2+6x^3$
+    \item $f(x) = \frac{1}{1 + e^{-x}}$
+    \item $f(x) = \sin\qty(x) + e^{-x}$
+\end{itemize}
 
+The results of this part has already put in Fig\ref{FIG:APPENDIX1:1}.
+
+\section{Appendix V. Implement with Jsoncpp}
+This part is not so difficult, just look at the file \path{../src/testjson.cc} to check the implementation.
 
 \end{document}

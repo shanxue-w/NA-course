@@ -11,6 +11,7 @@ f(double x)
 int
 main(void)
 {
+    std::cout << "======================OrderAnalysis======================" << std::endl;
     int n = 30;
 
     std::vector<int>    N_lists;
@@ -56,5 +57,6 @@ main(void)
     std::cout << "Order 2 convergence rate: " << -MinLeastSquare(x_lists, y_lists_order2) << std::endl;
     std::cout << "Order 3 convergence rate: " << -MinLeastSquare(x_lists, y_lists_order3) << std::endl;
 
+    std::cout << "======================OrderAnalysis======================" << std::endl;
     return 0;
 }

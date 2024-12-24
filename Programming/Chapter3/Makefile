@@ -32,7 +32,7 @@ TARGETS = $(patsubst $(MAIN_DIR)/%.cc, $(BIN_DIR)/%, $(MAIN_FILES))
 
 # TARGETS = $(patsubst ./src/%.cc, $(BIN_DIR)/%, $(MAIN_FILES))
 
-all: $(OBJ_FILES) $(TARGETS) run plot doxygen
+all: $(OBJ_FILES) $(TARGETS) run plot doc
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.cc
 	@mkdir -p $(OBJ_DIRS)
@@ -47,7 +47,7 @@ $(TARGETS): $(BIN_DIR)/%: $(MAIN_DIR)/%.cc $(OBJ_FILES)
 	@mkdir -p $(BIN_DIR)
 	$(CXX) $< $(OBJ_FILES) -o $@ $(CXXFLAGS)
 
-doxygen: plot
+doc: plot
 	doxygen Doxyfile
 	cd doc/design_pdf && make && mv refman.pdf design.pdf && make clean
 	cd doc && make && make clean
